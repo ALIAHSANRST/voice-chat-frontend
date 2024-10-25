@@ -1,6 +1,7 @@
 'use client';
-import { createContext, useState, useEffect, useRef } from 'react';
+import { createContext, useState, useEffect, useRef, useContext } from 'react';
 import dynamic from 'next/dynamic';
+import { SocketContext } from './SocketContext';
 
 const AgoraRTCProviderPrimitive = dynamic(
     () =>
@@ -12,6 +13,9 @@ const AgoraContext = createContext();
 
 const AgoraProvider = ({ children }) => {
     const clientConfigRef = useRef({ codec: 'vp8', mode: 'rtc' });
+
+    const { socket } = useContext(SocketContext);
+
     const [client, setClient] = useState(null);
     const [localAudioTrack, setLocalAudioTrack] = useState(null);
     const [remoteUsers, setRemoteUsers] = useState([]);
@@ -20,6 +24,7 @@ const AgoraProvider = ({ children }) => {
     const [localUserId, setLocalUserId] = useState(null);
     const [error, setError] = useState(null);
     const [agoraRTC, setAgoraRTC] = useState(null);
+
 
     useEffect(() => {
         const initSdk = async () => {
@@ -112,17 +117,100 @@ const AgoraProvider = ({ children }) => {
         }
     };
 
+
+    const downsampleBuffer = (buffer, inputSampleRate, outputSampleRate) => {
+        if (outputSampleRate === inputSampleRate) {
+            return buffer;
+        }
+        const sampleRateRatio = inputSampleRate / outputSampleRate;
+        const newLength = Math.round(buffer.length / sampleRateRatio);
+        const result = new Float32Array(newLength);
+        let offsetResult = 0;
+        let offsetBuffer = 0;
+
+        while (offsetResult < result.length) {
+            const nextOffsetBuffer = Math.round((offsetResult + 1) * sampleRateRatio);
+            let accumulator = 0;
+            let count = 0;
+            for (let i = offsetBuffer; i < nextOffsetBuffer && i < buffer.length; i++) {
+                accumulator += buffer[i];
+                count++;
+            }
+            result[offsetResult] = accumulator / count;
+            offsetResult++;
+            offsetBuffer = nextOffsetBuffer;
+        }
+        return result;
+    };
+
     const publishAudio = async () => {
         if (!agoraRTC || !client) return;
         try {
             const audioTrack = await agoraRTC.createMicrophoneAudioTrack();
             await client.publish(audioTrack);
             setLocalAudioTrack(audioTrack);
+
+            let audioBufferQueue = []; // Buffer to accumulate audio data
+            let bufferDuration = 500; // Send data every 500ms
+
+            // Get raw audio data using MediaStream
+            const mediaStream = audioTrack.getMediaStreamTrack();
+            const audioContext = new AudioContext();
+            const mediaStreamSource = audioContext.createMediaStreamSource(new MediaStream([mediaStream]));
+            console.log(audioContext, 'audioContext')
+            // Create a ScriptProcessorNode to capture the audio buffer
+            const scriptProcessor = audioContext.createScriptProcessor(8192, 1, 1);
+
+            mediaStreamSource.connect(scriptProcessor);
+            scriptProcessor.connect(audioContext.destination);
+
+            // Helper to convert Float32Array to 16-bit PCM
+            const convertFloat32ToPCM = (input) => {
+                const output = new Int16Array(input.length);
+                for (let i = 0; i < input.length; i++) {
+                    const s = Math.max(-1, Math.min(1, input[i])); // Clamp value between -1 and 1
+                    output[i] = s < 0 ? s * 0x8000 : s * 0x7FFF; // Convert to 16-bit PCM
+                }
+                return output;
+            };
+
+
+            // Capture audio buffer data in real time
+            // scriptProcessor.onaudioprocess = (audioProcessingEvent) => {
+            //     const audioBuffer = audioProcessingEvent.inputBuffer.getChannelData(0); // Raw PCM data
+            //     audioBufferQueue.push(...audioBuffer);
+
+            //     // Aggregate audio and send to the server every 500ms (or another interval)
+            //     if (audioBufferQueue.length >= audioContext.sampleRate * (bufferDuration / 1000)) {
+            //         // Convert the accumulated buffer from Float32Array to PCM
+            //         const pcmBuffer = convertFloat32ToPCM(audioBufferQueue);
+
+            //         // Send the audio data to the backend as PCM
+            //         socket.emit('getAudio', pcmBuffer, localUserId);
+
+            //         // Clear the buffer after sending
+            //         audioBufferQueue = [];
+            //     }
+            // };
+
+            scriptProcessor.onaudioprocess = (audioProcessingEvent) => {
+                const audioBuffer = audioProcessingEvent.inputBuffer.getChannelData(0); // Raw PCM data
+                const downsampledBuffer = downsampleBuffer(audioBuffer, 48000, 44100); // Resample from 48000 to 44100 Hz
+                audioBufferQueue.push(...downsampledBuffer);
+
+                if (audioBufferQueue.length >= audioContext.sampleRate * (bufferDuration / 1000)) {
+                    const pcmBuffer = convertFloat32ToPCM(audioBufferQueue);
+                    socket.emit('getAudio', pcmBuffer, localUserId);
+                    audioBufferQueue = [];
+                }
+            };
+
         } catch (err) {
             console.error('Failed to publish audio:', err);
             setError(err);
         }
     };
+
 
     return (
         <AgoraRTCProviderPrimitive client={client}>

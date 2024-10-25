@@ -1,10 +1,11 @@
 'use client';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { AgoraContext } from '@/context/voiceContext';
 import CallButton from './CallButton';
 import MuteButton from './MuteButton';
 import VideoControls from './VideoControls';
 import '../app/chat/chat.css';
+import Transcipt from './Transcipt';
 
 const VoiceChat = () => {
     const {
@@ -17,6 +18,13 @@ const VoiceChat = () => {
         remoteUsers,
         localUserId
     } = useContext(AgoraContext);
+
+    const [transcript, setTranscript] = useState('')
+
+    const leaveChannelHandler = () => {
+        leaveChannel()
+        setTranscript('')
+    }
 
     return (
         <div className="voice-chat-container">
@@ -32,7 +40,7 @@ const VoiceChat = () => {
                 <div className="controls-container">
                     <VideoControls />
                     <MuteButton onClick={toggleMute} isMuted={isMuted} />
-                    <button className="leave-button" onClick={leaveChannel}>
+                    <button className="leave-button" onClick={() => leaveChannelHandler()}>
                         Leave
                     </button>
 
@@ -54,6 +62,8 @@ const VoiceChat = () => {
                     </div>
                 </div>
             )}
+
+            <Transcipt transcript={transcript} setTranscript={setTranscript} />
         </div>
     );
 };
