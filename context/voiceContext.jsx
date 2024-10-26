@@ -150,52 +150,30 @@ const AgoraProvider = ({ children }) => {
             await client.publish(audioTrack);
             setLocalAudioTrack(audioTrack);
 
-            let audioBufferQueue = []; // Buffer to accumulate audio data
-            let bufferDuration = 500; // Send data every 500ms
+            let audioBufferQueue = [];
+            let bufferDuration = 500;
 
-            // Get raw audio data using MediaStream
             const mediaStream = audioTrack.getMediaStreamTrack();
             const audioContext = new AudioContext();
             const mediaStreamSource = audioContext.createMediaStreamSource(new MediaStream([mediaStream]));
-            console.log(audioContext, 'audioContext')
-            // Create a ScriptProcessorNode to capture the audio buffer
+
             const scriptProcessor = audioContext.createScriptProcessor(8192, 1, 1);
 
             mediaStreamSource.connect(scriptProcessor);
             scriptProcessor.connect(audioContext.destination);
 
-            // Helper to convert Float32Array to 16-bit PCM
             const convertFloat32ToPCM = (input) => {
                 const output = new Int16Array(input.length);
                 for (let i = 0; i < input.length; i++) {
-                    const s = Math.max(-1, Math.min(1, input[i])); // Clamp value between -1 and 1
-                    output[i] = s < 0 ? s * 0x8000 : s * 0x7FFF; // Convert to 16-bit PCM
+                    const s = Math.max(-1, Math.min(1, input[i]));
+                    output[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
                 }
                 return output;
             };
 
-
-            // Capture audio buffer data in real time
-            // scriptProcessor.onaudioprocess = (audioProcessingEvent) => {
-            //     const audioBuffer = audioProcessingEvent.inputBuffer.getChannelData(0); // Raw PCM data
-            //     audioBufferQueue.push(...audioBuffer);
-
-            //     // Aggregate audio and send to the server every 500ms (or another interval)
-            //     if (audioBufferQueue.length >= audioContext.sampleRate * (bufferDuration / 1000)) {
-            //         // Convert the accumulated buffer from Float32Array to PCM
-            //         const pcmBuffer = convertFloat32ToPCM(audioBufferQueue);
-
-            //         // Send the audio data to the backend as PCM
-            //         socket.emit('getAudio', pcmBuffer, localUserId);
-
-            //         // Clear the buffer after sending
-            //         audioBufferQueue = [];
-            //     }
-            // };
-
             scriptProcessor.onaudioprocess = (audioProcessingEvent) => {
-                const audioBuffer = audioProcessingEvent.inputBuffer.getChannelData(0); // Raw PCM data
-                const downsampledBuffer = downsampleBuffer(audioBuffer, 48000, 44100); // Resample from 48000 to 44100 Hz
+                const audioBuffer = audioProcessingEvent.inputBuffer.getChannelData(0);
+                const downsampledBuffer = downsampleBuffer(audioBuffer, 48000, 44100);
                 audioBufferQueue.push(...downsampledBuffer);
 
                 if (audioBufferQueue.length >= audioContext.sampleRate * (bufferDuration / 1000)) {
