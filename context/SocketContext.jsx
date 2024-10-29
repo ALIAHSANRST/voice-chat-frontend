@@ -8,7 +8,6 @@ const SocketProvider = ({ children, user }) => {
     const [socket, setSocket] = useState(null);
 
     useEffect(() => {
-        console.log('useEffect running')
         const connectSocket = () => {
             try {
                 const initSocket = io(`${process.env.NEXT_PUBLIC_BASE_SOCKET_URL}`, {

@@ -173,12 +173,12 @@ const AgoraProvider = ({ children }) => {
 
             scriptProcessor.onaudioprocess = (audioProcessingEvent) => {
                 const audioBuffer = audioProcessingEvent.inputBuffer.getChannelData(0);
-                const downsampledBuffer = downsampleBuffer(audioBuffer, 48000, 44100);
-                audioBufferQueue.push(...downsampledBuffer);
+                // const downsampledBuffer = downsampleBuffer(audioBuffer, 48000, 44100);
+                audioBufferQueue.push(...audioBuffer);
 
                 if (audioBufferQueue.length >= audioContext.sampleRate * (bufferDuration / 1000)) {
-                    const pcmBuffer = convertFloat32ToPCM(audioBufferQueue);
-                    socket.emit('getAudio', pcmBuffer, localUserId);
+                    // const pcmBuffer = convertFloat32ToPCM(audioBufferQueue);
+                    socket.emit('getAudio', audioBufferQueue, localUserId);
                     audioBufferQueue = [];
                 }
             };
