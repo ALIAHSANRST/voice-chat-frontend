@@ -3,6 +3,7 @@ import { createContext, useState, useEffect, useRef, useContext } from 'react';
 import dynamic from 'next/dynamic';
 import { SocketContext } from './SocketContext';
 
+
 const AgoraRTCProviderPrimitive = dynamic(
     () =>
         import('agora-rtc-react').then(({ AgoraRTCProvider }) => AgoraRTCProvider),
@@ -13,9 +14,7 @@ const AgoraContext = createContext();
 
 const AgoraProvider = ({ children }) => {
     const clientConfigRef = useRef({ codec: 'vp8', mode: 'rtc' });
-
     const { socket } = useContext(SocketContext);
-
     const [client, setClient] = useState(null);
     const [localAudioTrack, setLocalAudioTrack] = useState(null);
     const [remoteUsers, setRemoteUsers] = useState([]);
@@ -24,7 +23,6 @@ const AgoraProvider = ({ children }) => {
     const [localUserId, setLocalUserId] = useState(null);
     const [error, setError] = useState(null);
     const [agoraRTC, setAgoraRTC] = useState(null);
-
 
     useEffect(() => {
         const initSdk = async () => {
@@ -117,32 +115,6 @@ const AgoraProvider = ({ children }) => {
         }
     };
 
-
-    const downsampleBuffer = (buffer, inputSampleRate, outputSampleRate) => {
-        if (outputSampleRate === inputSampleRate) {
-            return buffer;
-        }
-        const sampleRateRatio = inputSampleRate / outputSampleRate;
-        const newLength = Math.round(buffer.length / sampleRateRatio);
-        const result = new Float32Array(newLength);
-        let offsetResult = 0;
-        let offsetBuffer = 0;
-
-        while (offsetResult < result.length) {
-            const nextOffsetBuffer = Math.round((offsetResult + 1) * sampleRateRatio);
-            let accumulator = 0;
-            let count = 0;
-            for (let i = offsetBuffer; i < nextOffsetBuffer && i < buffer.length; i++) {
-                accumulator += buffer[i];
-                count++;
-            }
-            result[offsetResult] = accumulator / count;
-            offsetResult++;
-            offsetBuffer = nextOffsetBuffer;
-        }
-        return result;
-    };
-
     const publishAudio = async () => {
         if (!agoraRTC || !client) return;
         try {
@@ -173,12 +145,11 @@ const AgoraProvider = ({ children }) => {
 
             scriptProcessor.onaudioprocess = (audioProcessingEvent) => {
                 const audioBuffer = audioProcessingEvent.inputBuffer.getChannelData(0);
-                // const downsampledBuffer = downsampleBuffer(audioBuffer, 48000, 44100);
                 audioBufferQueue.push(...audioBuffer);
 
                 if (audioBufferQueue.length >= audioContext.sampleRate * (bufferDuration / 1000)) {
-                    // const pcmBuffer = convertFloat32ToPCM(audioBufferQueue);
-                    socket.emit('getAudio', audioBufferQueue, localUserId);
+                    const pcmBuffer = convertFloat32ToPCM(audioBufferQueue);
+                    socket.emit('getAudio', pcmBuffer, localUserId);
                     audioBufferQueue = [];
                 }
             };
@@ -188,7 +159,6 @@ const AgoraProvider = ({ children }) => {
             setError(err);
         }
     };
-
 
     return (
         <AgoraRTCProviderPrimitive client={client}>
