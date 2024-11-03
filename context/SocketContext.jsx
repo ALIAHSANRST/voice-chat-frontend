@@ -1,12 +1,26 @@
 'use client';
-import { createContext, useState, useEffect } from 'react';
-import { io } from 'socket.io-client';
+
+import { createContext, useContext, useEffect, useState } from 'react';
+import io from 'socket.io-client';
 
 const SocketContext = createContext();
 
-const SocketProvider = ({ children, user }) => {
+export const useSocket = () => {
+    return useContext(SocketContext);
+};
+
+export const SocketProvider = ({ children }) => {
     const [socket, setSocket] = useState(null);
 
+    // useEffect(() => {
+    //     const socketIo = io();
+
+    //     setSocket(socketIo);
+
+    //     return () => {
+    //         socketIo.disconnect();
+    //     };
+    // }, []);
     useEffect(() => {
         const connectSocket = () => {
             try {
@@ -33,14 +47,12 @@ const SocketProvider = ({ children, user }) => {
                 socket.disconnect();
             }
         };
-    }, [user]);
+    }, []);
 
-    console.log('socket', socket)
+
     return (
-        <SocketContext.Provider value={{ socket }}>
+        <SocketContext.Provider value={socket}>
             {children}
         </SocketContext.Provider>
     );
 };
-
-export { SocketContext, SocketProvider };

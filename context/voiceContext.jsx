@@ -1,8 +1,6 @@
 'use client';
-import { createContext, useState, useEffect, useRef, useContext } from 'react';
+import { createContext, useState, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
-import { SocketContext } from './SocketContext';
-
 
 const AgoraRTCProviderPrimitive = dynamic(
     () =>
@@ -14,9 +12,9 @@ const AgoraContext = createContext();
 
 const AgoraProvider = ({ children }) => {
     const clientConfigRef = useRef({ codec: 'vp8', mode: 'rtc' });
-    const { socket } = useContext(SocketContext);
     const [client, setClient] = useState(null);
     const [localAudioTrack, setLocalAudioTrack] = useState(null);
+    const [remoteAudioTrack, setRemoteAudioTrack] = useState(null);
     const [remoteUsers, setRemoteUsers] = useState([]);
     const [isMuted, setIsMuted] = useState(false);
     const [isJoined, setIsJoined] = useState(false);
@@ -46,6 +44,7 @@ const AgoraProvider = ({ children }) => {
             if (mediaType === 'audio') {
                 client.subscribe(user, mediaType).then(() => {
                     user.audioTrack.play();
+                    setRemoteAudioTrack(user.audioTrack);
                     setRemoteUsers((prevUsers) => {
                         const exists = prevUsers.find((u) => u.uid === user.uid);
                         return exists ? prevUsers : [...prevUsers, user];
@@ -58,6 +57,7 @@ const AgoraProvider = ({ children }) => {
 
         const handleUserUnpublished = (user) => {
             setRemoteUsers((prevUsers) => prevUsers.filter((u) => u.uid !== user.uid));
+            setRemoteAudioTrack(null);
         };
 
         client.on('user-published', handleUserPublished);
@@ -97,6 +97,11 @@ const AgoraProvider = ({ children }) => {
                 localAudioTrack.close();
                 setLocalAudioTrack(null);
             }
+            if (remoteAudioTrack) {
+                remoteAudioTrack.stop();
+                remoteAudioTrack.close();
+                setRemoteAudioTrack(null);
+            }
             setRemoteUsers([]);
         } catch (err) {
             console.error('Failed to leave channel:', err);
@@ -121,39 +126,6 @@ const AgoraProvider = ({ children }) => {
             const audioTrack = await agoraRTC.createMicrophoneAudioTrack();
             await client.publish(audioTrack);
             setLocalAudioTrack(audioTrack);
-
-            let audioBufferQueue = [];
-            let bufferDuration = 500;
-
-            const mediaStream = audioTrack.getMediaStreamTrack();
-            const audioContext = new AudioContext();
-            const mediaStreamSource = audioContext.createMediaStreamSource(new MediaStream([mediaStream]));
-
-            const scriptProcessor = audioContext.createScriptProcessor(8192, 1, 1);
-
-            mediaStreamSource.connect(scriptProcessor);
-            scriptProcessor.connect(audioContext.destination);
-
-            const convertFloat32ToPCM = (input) => {
-                const output = new Int16Array(input.length);
-                for (let i = 0; i < input.length; i++) {
-                    const s = Math.max(-1, Math.min(1, input[i]));
-                    output[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
-                }
-                return output;
-            };
-
-            scriptProcessor.onaudioprocess = (audioProcessingEvent) => {
-                const audioBuffer = audioProcessingEvent.inputBuffer.getChannelData(0);
-                audioBufferQueue.push(...audioBuffer);
-
-                if (audioBufferQueue.length >= audioContext.sampleRate * (bufferDuration / 1000)) {
-                    const pcmBuffer = convertFloat32ToPCM(audioBufferQueue);
-                    socket.emit('getAudio', pcmBuffer, localUserId);
-                    audioBufferQueue = [];
-                }
-            };
-
         } catch (err) {
             console.error('Failed to publish audio:', err);
             setError(err);
@@ -166,6 +138,7 @@ const AgoraProvider = ({ children }) => {
                 value={{
                     client,
                     localAudioTrack,
+                    remoteAudioTrack,
                     remoteUsers,
                     isMuted,
                     isJoined,
