@@ -2,11 +2,11 @@
 import React, { useContext } from 'react';
 import { AgoraContext } from '@/context/voiceContext';
 
-const CallButton = ({ onClick }) => {
+const CallButton = ({ onClick, text }) => {
     const { isJoined } = useContext(AgoraContext);
     return (
         <button onClick={onClick}>
-            {isJoined ? 'Leave' : 'Start Audio Chat'}
+            {isJoined ? 'Leave' : text}
         </button>
     );
 };

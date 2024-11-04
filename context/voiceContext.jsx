@@ -40,6 +40,8 @@ const AgoraProvider = ({ children }) => {
     useEffect(() => {
         if (!client) return;
 
+
+
         const handleUserPublished = (user, mediaType) => {
             if (mediaType === 'audio') {
                 client.subscribe(user, mediaType).then(() => {
@@ -109,6 +111,28 @@ const AgoraProvider = ({ children }) => {
         }
     };
 
+    const leaveTest = async () => {
+        if (!client) return;
+        try {
+            await client.leave();
+            setIsJoined(false);
+            if (localAudioTrack) {
+                localAudioTrack.stop();
+                localAudioTrack.close();
+                setLocalAudioTrack(null);
+            }
+            if (remoteAudioTrack) {
+                remoteAudioTrack.stop();
+                remoteAudioTrack.close();
+                setRemoteAudioTrack(null);
+            }
+            setRemoteUsers([]);
+        } catch (err) {
+            console.error('Failed to leave channel:', err);
+            setError(err);
+        }
+    };
+
     const toggleMute = async () => {
         if (!localAudioTrack) return;
         try {
@@ -145,6 +169,7 @@ const AgoraProvider = ({ children }) => {
                     error,
                     joinChannel,
                     leaveChannel,
+                    leaveTest,
                     toggleMute,
                     publishAudio,
                     localUserId,
