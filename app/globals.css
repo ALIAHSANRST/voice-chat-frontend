@@ -40,3 +40,11 @@ a {
     color-scheme: dark;
   }
 }
+
+
+.link {
+  text-decoration: underline;
+  color: #0000ff;
+  width: 100%;
+  text-align: right;
+}
