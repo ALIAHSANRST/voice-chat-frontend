@@ -9,10 +9,10 @@ const baseApi = axios.create({
 });
 
 baseApi.interceptors.request.use((config) => {
-    const bearerToken = sessionStorage.getItem("token");
+    const bearerToken = JSON.parse(sessionStorage.getItem("token"));
     if (bearerToken) {
-        config.headers.Authorization = `JWT ${bearerToken}`;
-        config.headers["x-access-token"] = `JWT ${bearerToken}`;
+        config.headers.Authorization = `${bearerToken}`;
+        config.headers["x-access-token"] = `${bearerToken}`;
     }
     return config;
 });

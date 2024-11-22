@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
@@ -14,9 +14,12 @@ const validationSchema = Yup.object().shape({
     password: Yup.string().min(8, 'Password must be at least 8 characters long').required('Password is required'),
 });
 
-const page = () => {
-    const { login } = useAuthContext()
-    const router = useRouter()
+const Page = () => {
+    const { login } = useAuthContext();
+    const router = useRouter();
+
+    const [isAdminLogin, setIsAdminLogin] = useState(false);
+
     return (
         <Formik
             initialValues={{
@@ -25,14 +28,18 @@ const page = () => {
             }}
             validationSchema={validationSchema}
             onSubmit={(values, { setSubmitting }) => {
-                setSubmitting(true)
+                setSubmitting(true);
+                const payload = {
+                    ...values,
+                    ...(isAdminLogin && { isAdmin: true }),
+                };
                 const callback = (success) => {
                     setSubmitting(false);
                     if (success) {
                         router.push('/test');
                     }
-                }
-                login({ payload: values, callback })
+                };
+                login({ payload, callback });
             }}
         >
             {({
@@ -46,7 +53,7 @@ const page = () => {
             }) => (
                 <form onSubmit={handleSubmit}>
                     <div className="container w-50 d-flex flex-column justify-content-center vh-100">
-                        <h3>Login to your Account</h3>
+                        <h3>{isAdminLogin ? 'Login to your Admin Account' : 'Login to your Account'}</h3>
 
                         <FloatingLabel controlId="floatingInput" label="Email address" className="mb-3">
                             <Form.Control
@@ -74,12 +81,19 @@ const page = () => {
                             <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
                         </FloatingLabel>
 
-                        <div className='mb-2'>
-                            <Link href={'/signup'} className="link" ><p> Create a new account</p></Link>
+                        <div className="mb-2">
+                            <Link href={'/signup'} className="link"><p>Create a new account</p></Link>
                         </div>
 
-                        <Button type="submit" className="w-100" disabled={isSubmitting}>
+                        <Button type="submit" className="w-100 mb-2" disabled={isSubmitting}>
                             Submit
+                        </Button>
+                        <Button
+                            variant="secondary"
+                            className="w-100"
+                            onClick={() => setIsAdminLogin((prev) => !prev)}
+                        >
+                            {isAdminLogin ? 'Switch to User Login' : 'Login with Admin'}
                         </Button>
                     </div>
                 </form>
@@ -88,4 +102,4 @@ const page = () => {
     );
 };
 
-export default page
+export default Page;

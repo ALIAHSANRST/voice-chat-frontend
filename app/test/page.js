@@ -8,6 +8,9 @@ import { AgoraContext } from '@/context/voiceContext';
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import '../chat/chat.css';
 import Loader from '@/Components/Loader';
+import { useAuthContext } from '@/context/authContext';
+import moment from 'moment';
+import Link from 'next/link';
 
 const page = () => {
     const {
@@ -22,6 +25,7 @@ const page = () => {
         localAudioTrack,
         remoteAudioTrack
     } = useContext(AgoraContext);
+    const { user } = useAuthContext()
 
     const socket = useSocket();
 
@@ -59,8 +63,8 @@ const page = () => {
     useEffect(() => {
         if (socket == null) return;
 
-        socket.on('testScore', (score, completeTranscriptExam) => {
-            setFinalScore(score);
+        socket.on('testScore', (exam_score, completeTranscriptExam) => {
+            setFinalScore(exam_score);
             setReceivedTranscript(completeTranscriptExam);
             setIsLoading(false)
         })
@@ -122,7 +126,7 @@ const page = () => {
 
     const handleLeaveTest = () => {
         leaveTest();
-        socket.emit('leaveTest');
+        socket.emit('leaveTest', user?.user?._id);
         setIsLoading(true)
     }
 
@@ -170,11 +174,22 @@ const page = () => {
                 loading &&
                 <Loader />
             }
-
+            {
+                console.log(finalScore, 'finalScore')
+            }
             {(finalScore) && (
                 <div className='transcript'>
                     <div className='current-transcript'>
                         Final Score: {finalScore} out of 100
+                        <br />
+                        <Link href={'/exam-history'}>View Previous Scores</Link>
+                        {/* {finalScore?.map(exam_score => {
+                            return (
+                                <div>
+                                    <p>{exam_score.score + 'score on' + moment(exam_score.date).format('MM-DD-YYYY')}</p>
+                                </div>
+                            )
+                        })} */}
                     </div>
                 </div>
             )}

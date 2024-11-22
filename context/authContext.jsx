@@ -35,7 +35,13 @@ export const AuthProvider = ({ children }) => {
 
     const login = async ({ payload, callback }) => {
         try {
-            const response = await baseApi.post('/auth/login', payload)
+            let response;
+            console.log(payload, 'payload')
+            if (payload.isAdmin) {
+                response = await baseApi.post('/auth/adminLogin', payload)
+            } else {
+                response = await baseApi.post('/auth/login', payload)
+            }
             setUser(response.data);
             showSuccessToast('Login successful');
             sessionStorage.setItem('user', JSON.stringify(response.data));
@@ -43,7 +49,7 @@ export const AuthProvider = ({ children }) => {
             callback(true)
         } catch (error) {
             console.log(error, 'error')
-            showErrorToast(error.response.data.message);
+            showErrorToast(error?.response?.data?.message || "Something went wrong!");
             callback(false)
         }
     }

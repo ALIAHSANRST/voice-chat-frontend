@@ -12,6 +12,8 @@ function Header() {
             <Container>
                 <Navbar.Brand href="#home">Globalie</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Nav.Link className='me-3' href="/test">Test</Nav.Link>
+                <Nav.Link className='ms-auto' href="/exam-history">Exam History</Nav.Link>
                 <Navbar.Collapse id="basic-navbar-nav">
                     <NavDropdown className="ms-auto" title={`${user?.user?.username || 'Anonymous User'}`} id="basic-nav-dropdown">
                         <NavDropdown.Item onClick={logout} >Logout</NavDropdown.Item>

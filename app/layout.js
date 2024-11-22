@@ -30,10 +30,15 @@ export default function RootLayout({ children }) {
   const user = { usr_id_pk: 'exampleUserId' };
   const router = useRouter()
   useEffect(() => {
+    const user = JSON.parse(sessionStorage.getItem('user'))
     const token = sessionStorage.getItem('token')
     if (JSON.parse(token)) {
-      if (router.pathname !== '/test') {
-        router.push('/test')
+      if (user.user.role === 'admin') {
+        router.push('/admin/dashboard')
+      } else {
+        if (router.pathname === '/') {
+          router.push('/test')
+        }
       }
     } else {
       router.push('/login')
