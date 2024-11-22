@@ -25,11 +25,12 @@ export const SocketProvider = ({ children }) => {
         const connectSocket = () => {
             try {
                 const initSocket = io(`${process.env.NEXT_PUBLIC_BASE_SOCKET_URL}`, {
+                    path: '/socket.io',
                     reconnection: true,
                     reconnectionAttempts: Infinity,
                     reconnectionDelay: 1000,
                     reconnectionDelayMax: 5000,
-                    transports: ['websocket'],
+                    transports: ['websocket', 'polling'],
                     // query: {
                     //     userId: user?.usr_id_pk
                     // }
