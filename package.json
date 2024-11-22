@@ -10,19 +10,25 @@
   },
   "dependencies": {
     "@aws-sdk/client-transcribe-streaming": "^3.675.0",
+    "@mui/icons-material": "^6.1.8",
+    "@mui/material": "^6.1.8",
     "agora-rtc-react": "^2.3.0",
     "agora-rtc-sdk-ng": "^4.22.1",
     "aws-sdk": "^2.1691.0",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
     "formik": "^2.4.6",
+    "material-react-table": "^3.0.1",
+    "moment": "^2.30.1",
     "next": "14.2.15",
     "p-queue": "^8.0.1",
     "react": "^18",
     "react-bootstrap": "^2.10.5",
     "react-dom": "^18",
+    "react-quill": "^2.0.0",
     "react-toastify": "^10.0.6",
     "socket.io-client": "^4.8.0",
+    "voicechat": "file:",
     "yup": "^1.4.0"
   }
 }
