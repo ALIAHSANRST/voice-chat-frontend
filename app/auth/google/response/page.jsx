@@ -30,6 +30,13 @@ const GoogleAuthResponsePage = () => {
         router.push('/');
       }
     }
+
+    if (!success) {
+      const error = searchParams.get('error');
+      const message = searchParams.get('message');
+      showErrorToast(message);
+      console.error(error);
+    }
   }, [router, searchParams]);
 
   return <LoaderFullScreen message="Logging in with Google..." />
