@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Col, Container, Row, Form, InputGroup } from 'react-bootstrap';
+import { Col, Container, Row, Form, InputGroup, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faEraser, faG, faHome, faUserPlus, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { faLine } from '@fortawesome/free-brands-svg-icons';
@@ -161,14 +161,14 @@ const SignInPage = () => {
               </div>
 
               <div className='d-flex gap-3 w-100'>
-                <button className='btn btn-outline-secondary w-100'>
+                <Button variant='outline-secondary' className='w-100' href={`${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/google`}>
                   <FontAwesomeIcon icon={faG} className='me-3' />
-                  Sign in with Google
-                </button>
-                <button className='btn btn-outline-secondary w-100'>
+                  Sign up with Google
+                </Button>
+                <Button variant='outline-secondary' className='w-100' href={`${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/line`}>
                   <FontAwesomeIcon icon={faLine} className='me-3' />
-                  Sign in with Line
-                </button>
+                  Sign up with Line
+                </Button>
               </div>
             </Form>
           </Formik>
