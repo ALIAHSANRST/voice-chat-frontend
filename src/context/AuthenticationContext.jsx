@@ -13,20 +13,31 @@ export const useAuthenticationContext = () => {
 };
 
 export const AuthenticationProvider = ({ children }) => {
-  const [currentUser, setCurrenUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
   const [isCheckingUserStatus, setIsCheckingUserStatus] = useState(true);
 
   useEffect(() => {
     const _currentUser = JSON.parse(sessionStorage.getItem('user'));
     if (!_currentUser) {
-      if (window.location.pathname !== '/') {
+      const publicPaths = ['/', '/sign-up', '/sign-in', '/logout', '/auth/line/response', '/auth/google/response'];
+      const currentPath = window.location.pathname.toLowerCase();
+
+      if (!publicPaths.includes(currentPath)) {
         window.location.href = '/';
         window.onload = () => setIsCheckingUserStatus(false);
-      } else { setIsCheckingUserStatus(false) }
+      } else {
+        setIsCheckingUserStatus(false);
+      }
+
       return;
     }
 
-    setCurrenUser(_currentUser)
+    if (window.location.pathname.toLowerCase() === '/logout') {
+      Logout();
+      return;
+    }
+
+    setCurrentUser(_currentUser)
 
     const isAdmin = _currentUser.account_type === "admin"
     const isUser = _currentUser.account_type === "user"
@@ -49,14 +60,18 @@ export const AuthenticationProvider = ({ children }) => {
     try {
       const response = await BaseAPI.post('/auth/signup', payload)
       sessionStorage.setItem('user', JSON.stringify(response.data.user));
-      sessionStorage.setItem('token', JSON.stringify(response.data.token));
+      sessionStorage.setItem('token', response.data.token);
 
-      setCurrenUser(response.data.user);
+      setCurrentUser(response.data.user);
       showSuccessToast('Successfully Signed Up!');
       callback(response.data.user)
     } catch (error) {
       console.log(`Error in SignUpLocal: ${error}`)
-      showErrorToast(error?.response?.data?.message || "Something Went Wrong!");
+      showErrorToast(
+        error?.response?.data?.errors?.[0]?.message ||
+        error?.response?.data?.message ||
+        "Something Went Wrong!"
+      );
       callback(null)
     }
   }
@@ -76,18 +91,22 @@ export const AuthenticationProvider = ({ children }) => {
         return;
       }
 
-      setCurrenUser(response.data.user);
+      setCurrentUser(response.data.user);
       showSuccessToast('Successfully Signed In!');
       callback(response.data.user)
     } catch (error) {
       console.log(`Error in SignInLocal: ${error}`)
-      showErrorToast(error?.response?.data?.message || "Something Went Wrong!");
+      showErrorToast(
+        error?.response?.data?.errors?.[0]?.message ||
+        error?.response?.data?.message ||
+        "Something Went Wrong!"
+      );
       callback(null)
     }
   }
 
   const Logout = () => {
-    setCurrenUser(null);
+    setCurrentUser(null);
     sessionStorage.removeItem('user');
     sessionStorage.removeItem('token');
     window.location.href = '/';
@@ -96,7 +115,7 @@ export const AuthenticationProvider = ({ children }) => {
   return (
     <AuthenticationContext.Provider value={{
       currentUser,
-      setCurrenUser,
+      setCurrentUser,
       SignUpLocal,
       SignInLocal,
       Logout

@@ -59,7 +59,7 @@ const SignUpSchema = Yup.object().shape({
     .min(8, 'Must Be At Least 8 Characters!')
     .max(50, 'Cannot Exceed 50 Characters!')
     .matches(
-      /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/,
+      /^(?=.*[0-9])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]{8,}$/,
       'Must Contain At Least One Number And One Special Character!'
     )
     .required('Required!'),
