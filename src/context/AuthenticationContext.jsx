@@ -56,7 +56,11 @@ export const AuthenticationProvider = ({ children }) => {
       callback(response.data.user)
     } catch (error) {
       console.log(`Error in SignUpLocal: ${error}`)
-      showErrorToast(error?.response?.data?.message || "Something Went Wrong!");
+      showErrorToast(
+        error?.response?.data?.errors?.[0]?.message ||
+        error?.response?.data?.message ||
+        "Something Went Wrong!"
+      );
       callback(null)
     }
   }
@@ -81,7 +85,11 @@ export const AuthenticationProvider = ({ children }) => {
       callback(response.data.user)
     } catch (error) {
       console.log(`Error in SignInLocal: ${error}`)
-      showErrorToast(error?.response?.data?.message || "Something Went Wrong!");
+      showErrorToast(
+        error?.response?.data?.errors?.[0]?.message ||
+        error?.response?.data?.message ||
+        "Something Went Wrong!"
+      );
       callback(null)
     }
   }
