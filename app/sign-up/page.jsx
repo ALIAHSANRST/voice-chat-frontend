@@ -239,11 +239,11 @@ const SignUpPage = () => {
               </div>
 
               <div className='d-flex gap-3 w-100'>
-                <Button variant='outline-secondary' className='w-100' href={`${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/google`}>
+                <Button variant='outline-secondary' className='w-100' href={`${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/google_oauth`}>
                   <FontAwesomeIcon icon={faG} className='me-3' />
                   Sign up with Google
                 </Button>
-                <Button variant='outline-secondary' className='w-100' href={`${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/line`}>
+                <Button variant='outline-secondary' className='w-100' href={`${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/line_oauth`}>
                   <FontAwesomeIcon icon={faLine} className='me-3' />
                   Sign up with Line
                 </Button>
