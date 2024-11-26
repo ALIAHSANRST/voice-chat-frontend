@@ -7,7 +7,7 @@ import LoaderFullScreen from "@/src/components/LoaderFullScreen";
 import { useAuthenticationContext } from "@/src/context/AuthenticationContext";
 import { showErrorToast } from "@/src/components/Toast";
 
-const GoogleAuthResponsePage = () => {
+const LineAuthResponsePage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { setCurrentUser } = useAuthenticationContext();
@@ -42,7 +42,7 @@ const GoogleAuthResponsePage = () => {
     }
   }, [router, searchParams]);
 
-  return <LoaderFullScreen message="Logging in with Google..." />
+  return <LoaderFullScreen message="Logging in with LINE..." />
 }
 
-export default GoogleAuthResponsePage;
+export default LineAuthResponsePage;
