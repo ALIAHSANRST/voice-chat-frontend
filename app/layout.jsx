@@ -10,7 +10,7 @@ import { AgoraProvider } from "@/src/context/VoiceContext";
 
 export const metadata = {
   title: "Globalie",
-  description: 'Globalie - A Voice Chat Application for Everyone!',
+  description: 'Globalie is ... TBD',
 }
 
 const RootLayout = ({ children }) => {
