@@ -3,9 +3,6 @@ const INITIAL_VALUES = {
   email: '',
   password: '',
   confirmPassword: '',
-  industry: '',
-  role: '',
-  region: '',
 }
 
 export {

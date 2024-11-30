@@ -157,57 +157,6 @@ const SignUpPage = () => {
                 </InputGroup>
               </Container>
 
-              <Row className='g-3'>
-                <Col lg={6} md={12}>
-                  <Container className="p-0 mb-3">
-                    <Form.Label htmlFor="industry">Industry</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="industry"
-                      placeholder="Industry"
-                      disabled={formik.isSubmitting}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.industry}
-                      isInvalid={formik.touched.industry && !!formik.errors.industry}
-                    />
-                    <Form.Control.Feedback type="invalid">{formik.errors.industry}</Form.Control.Feedback>
-                  </Container>
-                </Col>
-
-                <Col lg={6} md={12}>
-                  <Container className="p-0 mb-3">
-                    <Form.Label htmlFor="role">Role</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="role"
-                      placeholder="Role"
-                      disabled={formik.isSubmitting}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.role}
-                      isInvalid={formik.touched.role && !!formik.errors.role}
-                    />
-                    <Form.Control.Feedback type="invalid">{formik.errors.role}</Form.Control.Feedback>
-                  </Container>
-                </Col>
-              </Row>
-
-              <Container className="p-0 mb-3">
-                <Form.Label htmlFor="region">Region</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="region"
-                  placeholder="Region"
-                  disabled={formik.isSubmitting}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.region}
-                  isInvalid={formik.touched.region && !!formik.errors.region}
-                />
-                <Form.Control.Feedback type="invalid">{formik.errors.region}</Form.Control.Feedback>
-              </Container>
-
               <div className="d-flex gap-3 mt-3 w-100">
                 <Link className='btn btn-outline-secondary' href={'/'}>
                   <FontAwesomeIcon icon={faHome} />

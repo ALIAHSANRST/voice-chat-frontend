@@ -33,9 +33,6 @@ const SignInSchema = Yup.object().shape({
  * @property {string} email - Valid email address with proper domain
  * @property {string} password - Password (8-50 chars, must contain number and special char)
  * @property {string} confirmPassword - Must match password exactly
- * @property {string} industry - User's industry sector (2-50 chars)
- * @property {string} region - User's geographical region (2-50 chars) 
- * @property {string} role - User's role/position (2-50 chars)
  */
 const SignUpSchema = Yup.object().shape({
   fullname: Yup.string()
@@ -67,24 +64,6 @@ const SignUpSchema = Yup.object().shape({
   confirmPassword: Yup.string()
     .oneOf([Yup.ref('password'), null], 'Passwords Must Match!')
     .required('Required!'),
-
-  industry: Yup.string()
-    .min(2, 'Must Be At Least 2 Characters!')
-    .max(50, 'Cannot Exceed 50 Characters!')
-    .required('Required!')
-    .trim(),
-
-  region: Yup.string()
-    .min(2, 'Must Be At Least 2 Characters!')
-    .max(50, 'Cannot Exceed 50 Characters!')
-    .required('Required!')
-    .trim(),
-
-  role: Yup.string()
-    .min(2, 'Must Be At Least 2 Characters!')
-    .max(50, 'Cannot Exceed 50 Characters!')
-    .required('Required!')
-    .trim()
 });
 
 export {
