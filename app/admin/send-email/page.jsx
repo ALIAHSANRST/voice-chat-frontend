@@ -12,13 +12,12 @@ const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import { SendEmail } from './axios';
 import { INITIAL_VALUES } from './values'
 import AdminLayout from '../layout';
-import { SendEmailSchema } from '@/src/validation';
-import TextField from '@/src/components/TextField';
-import CustomAlertDialogue from '@/src/components/CustomAlertDialogue';
-import usePageTitle from '@/src/hooks/usePageTitle';
+import { ADMIN_VALIDATION } from '@/src/validation';
+import { COMMON_COMPONENTS } from '@/src/components';
+import { usePageTitle } from '@/src/hooks';
 
 const SendEmailPage = () => {
-  usePageTitle('Send Email');
+  usePageTitle({ title: 'Send Email', isAdmin: true });
 
   const [initialValues, setInitialValues] = useState({ ...INITIAL_VALUES });
   const [isLoading, setIsLoading] = useState(false);
@@ -34,7 +33,7 @@ const SendEmailPage = () => {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: initialValues,
-    validationSchema: SendEmailSchema,
+    validationSchema: ADMIN_VALIDATION.Email.SendEmailSchema,
     onSubmit: () => { setShowConfirmationDialogue(true) }
   });
 
@@ -45,7 +44,7 @@ const SendEmailPage = () => {
           <Form onSubmit={formik.handleSubmit}>
             <Row>
               <Col xl={12}>
-                <TextField
+                <COMMON_COMPONENTS.TextField
                   name='subject'
                   disabled={isLoading}
                   formik={formik}
@@ -55,7 +54,7 @@ const SendEmailPage = () => {
               </Col>
 
               <Col xl={12}>
-                <TextField
+                <COMMON_COMPONENTS.TextField
                   name='title'
                   formik={formik}
                   disabled={isLoading}
@@ -115,7 +114,7 @@ const SendEmailPage = () => {
 
       {
         showClearDialogue &&
-        <CustomAlertDialogue
+        <COMMON_COMPONENTS.CustomAlertDialogue
           title='Warning'
           positiveMessage='Proceed'
           negativeMessage='Cancel'
@@ -128,12 +127,12 @@ const SendEmailPage = () => {
           show={showClearDialogue}
           handleClose={() => setShowClearDialogue(false)}>
           <p>Are you sure you want to clear this form?</p>
-        </CustomAlertDialogue>
+        </COMMON_COMPONENTS.CustomAlertDialogue>
       }
 
       {
         showConfirmationDialogue &&
-        <CustomAlertDialogue
+        <COMMON_COMPONENTS.CustomAlertDialogue
           title='Confirmation'
           positiveMessage='Proceed'
           negativeMessage='Cancel'
@@ -147,7 +146,7 @@ const SendEmailPage = () => {
           handleClose={() => setShowConfirmationDialogue(false)}>
           <p>Are you sure you want to send this email to all users?</p>
           <p>This action cannot be undone!</p>
-        </CustomAlertDialogue>
+        </COMMON_COMPONENTS.CustomAlertDialogue>
       }
     </Container>
   );

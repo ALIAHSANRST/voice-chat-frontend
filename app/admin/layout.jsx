@@ -6,19 +6,16 @@ import { usePathname, useRouter } from "next/navigation";
 import { Menu, menuClasses, MenuItem, Sidebar, sidebarClasses } from "react-pro-sidebar";
 import {
   Dashboard,
-  PeopleRounded,
   Menu as MenuIcon,
   Logout,
   QuestionAnswer,
-  NewspaperRounded,
   Email,
   AssignmentRounded,
-  PlaylistAddCheck,
-  ListAlt,
 } from '@mui/icons-material';
 
 import './layout.css'
-import CustomAlertDialogue from '@/src/components/CustomAlertDialogue'
+import { COMMON_COMPONENTS } from '@/src/components';
+import { ROUTES } from "@/src/utils/routes";
 
 const SidebarHead = () => {
   const titleStyles = {
@@ -63,7 +60,9 @@ const SideBarSeparator = ({ title }) => {
 
 const CustomMenuItem = ({ path, title, icon }) => {
   const pathname = usePathname();
-  let isActive = pathname.toLowerCase().trim() === path.toLowerCase();
+  let isActive = path === ROUTES.ADMIN_HOME.path
+    ? pathname.toLowerCase().trim() === path.toLowerCase()
+    : pathname.toLowerCase().trim().startsWith(path.toLowerCase());
 
   return (
     <MenuItem
@@ -76,17 +75,16 @@ const CustomMenuItem = ({ path, title, icon }) => {
   );
 };
 
-const GetTitleInfo = () => {
+const GetTitleInfo = (pathname) => {
   const pathToTitle = {
-    '/admin/exam-results': 'Exam Results',
-    '/admin/exam-script': 'Exam Script',
-    '/admin/send-email': 'Send Email',
-    '/admin': 'Dashboard',
+    [ROUTES.ADMIN_FEEDBACK_MODULE.path]: 'Feedback',
+    [ROUTES.ADMIN_EXAM_MODULE.path]: 'Exam',
+    [ROUTES.ADMIN_SEND_EMAIL.path]: 'Send Email',
+    [ROUTES.ADMIN_HOME.path]: 'Dashboard',
   }
 
-  const pathname = usePathname();
-  const title = pathToTitle[pathname];
-  const path = Object.keys(pathToTitle).find(path => pathname.includes(path));
+  const path = Object.keys(pathToTitle).find(path => pathname.toLowerCase().includes(path));
+  const title = pathToTitle[path];
 
   return { path, title };
 }
@@ -115,6 +113,7 @@ const AdminLayout = ({ children }) => {
   };
 
   const router = useRouter();
+  const pathname = usePathname();
 
   const [sidebarToggled, setSidebarToggled] = useState(false);
   const [showClearDialogue, setShowClearDialogue] = useState(false);
@@ -139,12 +138,12 @@ const AdminLayout = ({ children }) => {
         <Sidebar rootStyles={SideBarRootStyles} breakPoint='md' toggled={sidebarToggled}>
           <SidebarHead />
           <Menu rootStyles={MenuRootStyles}>
-            <CustomMenuItem title='Dashboard' path={'/admin'} icon={<Dashboard />} />
+            <CustomMenuItem title='Dashboard' path={ROUTES.ADMIN_HOME.path} icon={<Dashboard />} />
             <SideBarSeparator title='Management' />
-            <CustomMenuItem title='Exam Results' path={'/admin/exam-results'} icon={<AssignmentRounded />} />
-            <CustomMenuItem title='Exam Script' path={'/admin/exam-script'} icon={<ListAlt />} />
+            <CustomMenuItem title='Exam' path={ROUTES.ADMIN_EXAM_MODULE.path} icon={<AssignmentRounded />} />
+            <CustomMenuItem title='Feedback' path={ROUTES.ADMIN_FEEDBACK_MODULE.path} icon={<QuestionAnswer />} />
             <SideBarSeparator title='Utilities' />
-            <CustomMenuItem title='Send Email' path={'/admin/send-email'} icon={<Email />} />
+            <CustomMenuItem title='Send Email' path={ROUTES.ADMIN_SEND_EMAIL.path} icon={<Email />} />
           </Menu>
         </Sidebar>
       </div>
@@ -153,33 +152,32 @@ const AdminLayout = ({ children }) => {
           <button id='menu-toggle-button' onClick={() => setSidebarToggled(!sidebarToggled)}>
             <MenuIcon />
           </button>
-          <p onClick={() => GetTitleInfo().path} style={{
+          <p onClick={() => GetTitleInfo(pathname).path} style={{
             margin: 0,
-            // textTransform: 'uppercase',
             display: 'inline-block',
             fontSize: '1.3rem',
             fontWeight: 'bold',
             cursor: 'pointer',
-          }}>{GetTitleInfo().title}</p>
+          }}>{GetTitleInfo(pathname).title}</p>
           <button style={{ marginLeft: 'auto' }} id='logout-button' onClick={() => setShowClearDialogue(true)}>
             <Logout />
           </button>
         </div>
         {
           showClearDialogue
-            ? <CustomAlertDialogue
+            ? <COMMON_COMPONENTS.AlertDialogue
               title='Warning'
               positiveMessage='Yes'
               negativeMessage='No'
               positiveCallback={() => {
-                router.push('/logout');
+                router.push('/auth/logout');
                 setShowClearDialogue(false);
               }}
               negativeCallback={() => setShowClearDialogue(false)}
               show={showClearDialogue}
               handleClose={() => setShowClearDialogue(false)}>
               <p>Are you sure you want to logout?</p>
-            </CustomAlertDialogue>
+            </COMMON_COMPONENTS.AlertDialogue>
             : null
         }
         {children}

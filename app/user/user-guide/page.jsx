@@ -10,10 +10,10 @@ import StepThreeImage from '@/public/images/user-guide/step_03.png'
 import StepFourImage from '@/public/images/user-guide/step_04.png'
 import StepFiveImage from '@/public/images/user-guide/step_05.png'
 
-import usePageTitle from "@/src/hooks/usePageTitle";
+import { usePageTitle } from '@/src/hooks';
 
 const UserGuidePage = () => {
-  usePageTitle('User Guide')
+  usePageTitle({ title: 'User Guide' })
 
   const router = useRouter()
   const [currentStep, setCurrentStep] = useState(1)

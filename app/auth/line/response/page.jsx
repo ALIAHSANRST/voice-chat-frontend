@@ -3,14 +3,13 @@
 import { useEffect } from "react";
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import LoaderFullScreen from "@/src/components/LoaderFullScreen";
-import { useAuthenticationContext } from "@/src/context/AuthenticationContext";
-import { showErrorToast } from "@/src/components/Toast";
+import { COMMON_COMPONENTS } from "@/src/components";
+import { COMMON_CONTEXT } from "@/src/context";
 
 const LineAuthResponsePage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { setCurrentUser } = useAuthenticationContext();
+  const { setCurrentUser, setToken } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext();
 
   useEffect(() => {
     const success = searchParams.get('success');
@@ -18,10 +17,8 @@ const LineAuthResponsePage = () => {
     const token = searchParams.get('token');
 
     if (success && userData && token) {
-      sessionStorage.setItem('user', JSON.stringify(userData));
-      sessionStorage.setItem('token', token);
-
       setCurrentUser(userData);
+      setToken(token);
 
       if (userData?.account_type === 'admin') {
         router.push(`/${userData.account_type}`);
@@ -37,12 +34,12 @@ const LineAuthResponsePage = () => {
       const message = searchParams.get('message');
       console.error(error);
 
-      showErrorToast(message);
-      setTimeout(() => router.push('/sign-in'), 3000);
+      COMMON_COMPONENTS.Toast.showErrorToast(message);
+      setTimeout(() => router.push('/auth/sign-in'), 3000);
     }
   }, [router, searchParams]);
 
-  return <LoaderFullScreen message="Logging in with LINE..." />
+  return <COMMON_COMPONENTS.LoaderFullScreen message="Logging in with LINE..." />
 }
 
 export default LineAuthResponsePage;
