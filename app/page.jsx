@@ -12,10 +12,10 @@ import {
 import Link from "next/link";
 
 import LightLogo from "@/public/images/logo/light.jpeg";
-import { useAuthenticationContext } from "@/src/context/AuthenticationContext";
+import { COMMON_CONTEXT } from '@/src/context';
 
 const HomePage = () => {
-  const { currentUser } = useAuthenticationContext();
+  const { currentUser } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext();
 
   return (
     <div className="vh-100 d-flex flex-column justify-content-center align-items-center">
@@ -34,11 +34,11 @@ const HomePage = () => {
         {
           !currentUser && (
             <div className="d-flex gap-3 p-4 w-100">
-              <Link className="btn btn-outline-success w-100" href='/sign-up'>
+              <Link className="btn btn-outline-success w-100" href='/auth/sign-up'>
                 <FontAwesomeIcon icon={faUserPlus} className="me-3" />
                 Sign Up
               </Link>
-              <Link className="btn btn-primary w-100" href='/sign-in'>
+              <Link className="btn btn-primary w-100" href='/auth/sign-in'>
                 <FontAwesomeIcon icon={faSignInAlt} className="me-3" />
                 Sign In
               </Link>
@@ -49,7 +49,7 @@ const HomePage = () => {
         {
           currentUser && (
             <div className="d-flex gap-3 p-4 w-100">
-              <Link className="btn btn-outline-danger w-100" href='/logout'>
+              <Link className="btn btn-outline-danger w-100" href='/auth/logout'>
                 <FontAwesomeIcon icon={faSignOutAlt} className="me-3" />
                 Logout
               </Link>

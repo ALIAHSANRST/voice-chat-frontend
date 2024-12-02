@@ -2,15 +2,15 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap"
+import { Button, Col, Row } from "react-bootstrap"
 import { useRouter } from "next/navigation";
 
 import LightLogo from "@/public/images/logo/light.jpeg";
-import CustomAlertDialogue from "@/src/components/CustomAlertDialogue";
-import { useAuthenticationContext } from "@/src/context/AuthenticationContext";
+import { COMMON_COMPONENTS } from '@/src/components';
+import { COMMON_CONTEXT } from '@/src/context';
 
 const UserHomePage = () => {
-  const { currentUser } = useAuthenticationContext();
+  const { currentUser } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext();
   const router = useRouter();
 
   const [showAlertDialogue, setShowAlertDialogue] = useState(false);
@@ -95,31 +95,31 @@ const UserHomePage = () => {
 
       {
         showAlertDialogue &&
-        <CustomAlertDialogue
+        <COMMON_COMPONENTS.AlertDialogue
           title='Info'
           positiveMessage='Okay'
           positiveCallback={() => setShowAlertDialogue(false)}
           show={showAlertDialogue}
           handleClose={() => setShowAlertDialogue(false)}>
           <p>Under Development!</p>
-        </CustomAlertDialogue>
+        </COMMON_COMPONENTS.AlertDialogue>
       }
 
       {
         showLogoutDialogue &&
-        <CustomAlertDialogue
+        <COMMON_COMPONENTS.AlertDialogue
           title='Warning'
           positiveMessage='Yes'
           negativeMessage='No'
           positiveCallback={() => {
-            router.push('/logout');
+            router.push('/auth/logout');
             setShowLogoutDialogue(false);
           }}
           negativeCallback={() => setShowLogoutDialogue(false)}
           show={showLogoutDialogue}
           handleClose={() => setShowLogoutDialogue(false)}>
           <p>Are you sure you want to logout?</p>
-        </CustomAlertDialogue>
+        </COMMON_COMPONENTS.AlertDialogue>
       }
     </div>
   )

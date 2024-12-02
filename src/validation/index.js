@@ -1,12 +1,16 @@
-import { SignInSchema, SignUpSchema } from "./authentication.validate";
-import { SendEmailSchema } from "./email.validate";
-import { ExamScriptSchema } from "./examScript.validate";
-import { FeedbackSchema } from "./feedback.validate";
+'use client';
 
-export {
-  SignUpSchema,
-  SignInSchema,
-  SendEmailSchema,
-  ExamScriptSchema,
-  FeedbackSchema
-};
+export const ADMIN_VALIDATION = {
+  Email: require('./admin/email.validate'),
+  ExamScript: require('./admin/examScript.validate'),
+  Feedback: require('./admin/feedback.validate'),
+  Exam: require('./admin/exam/index.validate').default
+}
+
+export const COMMON_VALIDATION = {
+  Authentication: require('./common/authentication.validate'),
+}
+
+export const USER_VALIDATION = {
+  Feedback: require('./user/feedback.validate'),
+}

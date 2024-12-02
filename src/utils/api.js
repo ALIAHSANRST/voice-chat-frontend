@@ -1,5 +1,7 @@
+'use client';
+
 import axios from "axios";
-import { showErrorToast } from "../components/Toast";
+import { COMMON_COMPONENTS } from "@/src/components";
 
 const BaseAPI = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_BASE_API_URL}`,
@@ -10,7 +12,7 @@ const BaseAPI = axios.create({
 });
 
 BaseAPI.interceptors.request.use((config) => {
-  const bearerToken = sessionStorage.getItem("token");
+  const bearerToken = JSON.parse(localStorage.getItem("token"));
   if (bearerToken) {
     config.headers.Authorization = `${bearerToken}`;
     config.headers["x-access-token"] = `${bearerToken}`;
@@ -24,15 +26,13 @@ BaseAPI.interceptors.response.use(
   },
   (error) => {
     if (error.response && error.response.status === 401) {
-      sessionStorage.clear();
       if (!window.location.pathname.includes("sign-in")) {
-        window.location.href = "/sign-in";
+        window.location.href = "/auth/logout";
       }
     } else if (error.code === 'ECONNABORTED' || error.code === 'ERR_NETWORK') {
-      showErrorToast('Sever Timed Out! Please Try Again Later!')
-      sessionStorage.clear();
+      COMMON_COMPONENTS.Toast.showErrorToast('Sever Timed Out! Please Try Again Later!')
       if (!window.location.pathname.includes("sign-in")) {
-        window.location.href = "/sign-in";
+        window.location.href = "/auth/logout";
       }
     }
     return Promise.reject(error);
