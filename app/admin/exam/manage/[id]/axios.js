@@ -193,7 +193,7 @@ const AddExam = async ({ payload, setIsLoading, router }) => {
     const response = await BaseAPI.post(ENDPOINT, data)
 
     COMMON_COMPONENTS.Toast.showSuccessToast(response?.data?.message || 'Exam Added Successfully!')
-    router.push(ROUTES.ADMIN_EXAM_MANAGE.path)
+    router.push(ROUTES.ADMIN_EXAM_MANAGE.path) // fixed path
   } catch (error) {
     console.error('Exam > ManagePage > Add:', error)
     COMMON_COMPONENTS.Toast.showErrorToast(error?.response?.data?.message || 'Failed To Add Exam!')
