@@ -20,10 +20,9 @@ const ROUTES = {
   ADMIN_EXAM_MODULE: { path: '/admin/exam', isProtected: true, name: 'Exam' },
   ADMIN_EXAM_RESULTS: { path: '/admin/exam/results', isProtected: true, name: 'View Results' },
   ADMIN_EXAM_MANAGE: { path: '/admin/exam/manage', isProtected: true, name: 'Manage Exams' },
+  ADMIN_EXAM_MANAGE_ADD: { path: '/admin/exam/manage/add', isProtected: true, name: 'Add Exam' },
   ADMIN_EXAM_SENTENCES: { path: '/admin/exam/sentences', isProtected: true, name: 'Manage Sentences' },
   ADMIN_EXAM_SENTENCES_ADD: { path: '/admin/exam/sentences/add', isProtected: true, name: 'Add Sentence' },
-  ADMIN_EXAM_RUBRICS: { path: '/admin/exam/rubrics', isProtected: true, name: 'Manage Rubrics' },
-  ADMIN_EXAM_RUBRICS_ADD: { path: '/admin/exam/rubrics/add', isProtected: true, name: 'Add Rubric' },
 
   // [ADMIN] OTHER ROUTES
   ADMIN_SEND_EMAIL: { path: '/admin/send-email', isProtected: true, name: 'Send Email' },

@@ -1,3 +1,4 @@
 export default {
-  Sentence: require('./sentence.validate')
+  Exam: require('./exam.validate'),
+  Sentence: require('./sentence.validate'),
 }
