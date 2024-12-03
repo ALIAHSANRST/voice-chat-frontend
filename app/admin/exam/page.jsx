@@ -28,17 +28,13 @@ const ExamPage = () => {
       href: ROUTES.ADMIN_EXAM_RESULTS.path,
     },
     {
-      title: 'Manage Exams',
-      href: ROUTES.ADMIN_EXAM_MANAGE.path,
-    },
-    {
       title: 'Manage Sentences',
       href: ROUTES.ADMIN_EXAM_SENTENCES.path,
     },
     {
-      title: 'Manage Rubrics',
-      href: ROUTES.ADMIN_EXAM_RUBRICS.path,
-    }
+      title: 'Manage Exams',
+      href: ROUTES.ADMIN_EXAM_MANAGE.path,
+    },
   ];
 
   return (

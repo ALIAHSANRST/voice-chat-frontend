@@ -23,7 +23,7 @@ import { usePageTitle } from '@/src/hooks';
 import { ROUTES } from '@/src/utils/routes';
 
 /**
- * SentencesPage Component
+ * ExamsManagePage Component
  * 
  * Displays a paginated table of exam sentences with search, delete and view capabilities.
  * Implements debounced search and optimized re-renders using React hooks.
@@ -35,7 +35,7 @@ import { ROUTES } from '@/src/utils/routes';
  * - Loading states
  * - Confirmation dialog for delete action
  */
-const SentencesPage = () => {
+const ExamsManagePage = () => {
   // set page title
   usePageTitle({
     title: [
@@ -101,8 +101,41 @@ const SentencesPage = () => {
         Cell: ({ row }) => <span className='text-wrap'>{row.original.index}</span>
       },
       {
-        accessorKey: 'text', header: 'Sentence', grow: true,
-        Cell: ({ row }) => <span className='text-wrap'>{row.original.text}</span>
+        accessorKey: 'name', header: 'Title', grow: true,
+        Cell: ({ row }) => <span className='text-wrap'>{row.original.name}</span>
+      },
+      {
+        accessorKey: 'total_marks', header: 'Marks', maxSize: 0, grow: false,
+        Cell: ({ row }) => <span className='text-wrap'>{row.original.total_marks}</span>
+      },
+      {
+        accessorKey: 'limit', header: 'Limit', maxSize: 0, grow: false,
+        // Cell: ({ row }) => <span className='text-wrap'>{row.original.limit}</span>
+      },
+      {
+        accessorKey: 'complexity_levels', header: 'Complexity', maxSize: 0, grow: false,
+        Cell: ({ row }) => {
+          const complexityBadges = {
+            easy: { bg: 'bg-success', label: 'Easy' },
+            medium: { bg: 'bg-dark', label: 'Medium' },
+            hard: { bg: 'bg-danger', label: 'Hard' }
+          };
+
+          return (
+            <div className="d-flex gap-1">
+              {row.original.complexity_levels.map((level, index) => {
+                const complexity = level.toLowerCase();
+                const badge = complexityBadges[complexity];
+
+                return (
+                  <span key={index} className={`badge ${badge.bg}`}>
+                    {badge.label}
+                  </span>
+                );
+              })}
+            </div>
+          );
+        }
       },
       {
         accessorKey: 'status', header: 'Status', maxSize: 0, grow: false,
@@ -118,31 +151,6 @@ const SentencesPage = () => {
               row.original.status === 'Inactive' &&
               <span className='badge bg-danger'>
                 {row.original.status}
-              </span>
-            }
-          </>
-        )
-      },
-      {
-        accessorKey: 'complexity_level', header: 'Complexity', maxSize: 0, grow: false,
-        Cell: ({ row }) => (
-          <>
-            {
-              row.original.complexity_level === 'Easy' &&
-              <span className='badge bg-success'>
-                {row.original.complexity_level}
-              </span>
-            }
-            {
-              row.original.complexity_level === 'Medium' &&
-              <span className='badge bg-dark'>
-                {row.original.complexity_level}
-              </span>
-            }
-            {
-              row.original.complexity_level === 'Hard' &&
-              <span className='badge bg-danger'>
-                {row.original.complexity_level}
               </span>
             }
           </>
@@ -185,10 +193,10 @@ const SentencesPage = () => {
   return (
     <ADMIN_COMPONENTS.ContentWrapper>
       <ADMIN_COMPONENTS.DataTable.Header
-        title='Exam Sentences'
+        title='Manage Exams'
         actions={[
           {
-            href: ROUTES.ADMIN_EXAM_SENTENCES_ADD.path,
+            href: ROUTES.ADMIN_EXAM_MANAGE_ADD.path,
             label: 'Add',
             icon: faPlus,
             variant: 'outline-secondary'
@@ -220,8 +228,8 @@ const SentencesPage = () => {
               const { DeleteAction, EditAction, ViewAction } = ADMIN_COMPONENTS.DataTable.RowActions;
               return [
                 DeleteAction({ onClick: () => handleDelete(row.original._id) }),
-                EditAction({ href: `${ROUTES.ADMIN_EXAM_SENTENCES.path}/${row.original._id}?edit=true` }),
-                ViewAction({ href: `${ROUTES.ADMIN_EXAM_SENTENCES.path}/${row.original._id}?view=true` })
+                EditAction({ href: `${ROUTES.ADMIN_EXAM_MANAGE.path}/${row.original._id}?edit=true` }),
+                ViewAction({ href: `${ROUTES.ADMIN_EXAM_MANAGE.path}/${row.original._id}?view=true` })
               ];
             })()}
           />
@@ -246,6 +254,6 @@ const SentencesPage = () => {
   );
 };
 
-SentencesPage.getLayout = (page) => <AdminLayout>{page}</AdminLayout>;
+ExamsManagePage.getLayout = (page) => <AdminLayout>{page}</AdminLayout>;
 
-export default SentencesPage;
+export default ExamsManagePage;

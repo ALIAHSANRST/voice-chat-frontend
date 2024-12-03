@@ -1,10 +1,9 @@
 'use client';
 
 export const ADMIN_VALIDATION = {
-  Email: require('./admin/email.validate'),
-  ExamScript: require('./admin/examScript.validate'),
+  Exam: require('./admin/exam/index.validate').default,
   Feedback: require('./admin/feedback.validate'),
-  Exam: require('./admin/exam/index.validate').default
+  Email: require('./admin/email.validate'),
 }
 
 export const COMMON_VALIDATION = {
