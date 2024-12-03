@@ -1,6 +1,6 @@
 'use client'
 
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { debounce } from 'lodash';
 import {
   useCallback,
@@ -192,7 +192,13 @@ const SentencesPage = () => {
             label: 'Add',
             icon: faPlus,
             variant: 'outline-secondary'
-          }
+          },
+          {
+            href: ROUTES.ADMIN_EXAM_MODULE.path,
+            label: 'Back',
+            icon: faArrowLeft,
+            variant: 'outline-secondary'
+          },
         ]}
       />
 

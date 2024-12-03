@@ -69,18 +69,20 @@ const Header = ({
         <Title {...titleProps}>
           {title}
         </Title>
-        {actions?.map((action, index) => (
-          <ActionButton
-            key={`action-${index}`}
-            href={action.href}
-            onClick={action.onClick}
-            variant={action.variant}
-            {...action.extraProps}
-          >
-            {action.icon && <FontAwesomeIcon icon={action.icon} />}
-            {action.label}
-          </ActionButton>
-        ))}
+        <div className="d-flex gap-2">
+          {actions?.map((action, index) => (
+            <ActionButton
+              key={`action-${index}`}
+              href={action.href}
+              onClick={action.onClick}
+              variant={action.variant}
+              {...action.extraProps}
+            >
+              {action.icon && <FontAwesomeIcon icon={action.icon} />}
+              {action.label}
+            </ActionButton>
+          ))}
+        </div>
       </HeaderContainer>
       {separator && <Separator {...separatorProps} />}
     </>

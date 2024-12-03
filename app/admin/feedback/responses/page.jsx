@@ -1,5 +1,6 @@
 'use client'
 
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { debounce } from 'lodash';
 import {
   useCallback,
@@ -128,7 +129,18 @@ const ResponsesPage = () => {
 
   return (
     <ADMIN_COMPONENTS.ContentWrapper>
-      <ADMIN_COMPONENTS.DataTable.Header title='Feedback Responses' />
+      <ADMIN_COMPONENTS.DataTable.Header
+        title='Feedback Responses'
+        actions={
+          [
+            {
+              href: ROUTES.ADMIN_FEEDBACK_MODULE.path,
+              label: 'Back',
+              icon: faArrowLeft,
+              variant: 'outline-secondary'
+            },
+          ]
+        } />
 
       <ADMIN_COMPONENTS.DataTable.Table
         rowCount={data?.totalRecords || 0}
