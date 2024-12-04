@@ -1,6 +1,6 @@
 'use client'
 
-import { faArrowLeft, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faPlus, faRandom } from '@fortawesome/free-solid-svg-icons';
 import { debounce } from 'lodash';
 import {
   useCallback,
@@ -105,12 +105,14 @@ const ExamsManagePage = () => {
         Cell: ({ row }) => <span className='text-wrap'>{row.original.name}</span>
       },
       {
+        accessorKey: 'is_free', header: 'Is Free?', maxSize: 0, grow: false,
+      },
+      {
         accessorKey: 'total_marks', header: 'Marks', maxSize: 0, grow: false,
         Cell: ({ row }) => <span className='text-wrap'>{row.original.total_marks}</span>
       },
       {
         accessorKey: 'limit', header: 'Limit', maxSize: 0, grow: false,
-        // Cell: ({ row }) => <span className='text-wrap'>{row.original.limit}</span>
       },
       {
         accessorKey: 'complexity_levels', header: 'Complexity', maxSize: 0, grow: false,
@@ -229,7 +231,14 @@ const ExamsManagePage = () => {
               return [
                 DeleteAction({ onClick: () => handleDelete(row.original._id) }),
                 EditAction({ href: `${ROUTES.ADMIN_EXAM_MANAGE.path}/${row.original._id}?edit=true` }),
-                ViewAction({ href: `${ROUTES.ADMIN_EXAM_MANAGE.path}/${row.original._id}?view=true` })
+                ViewAction({ href: `${ROUTES.ADMIN_EXAM_MANAGE.path}/${row.original._id}?view=true` }),
+                {
+                  type: 'custom',
+                  label: 'Random',
+                  icon: faRandom,
+                  href: `${ROUTES.ADMIN_EXAM_MANAGE_RANDOM.path.replace('[id]', row.original._id)}`,
+                  color: 'success'
+                }
               ];
             })()}
           />

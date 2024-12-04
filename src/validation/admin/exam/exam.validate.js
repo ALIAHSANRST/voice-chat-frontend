@@ -9,6 +9,7 @@ import * as Yup from 'yup';
  * @typedef {Object} ExamSchema
  * @property {string} name - The name of the exam
  * @property {string} description - The description of the exam
+ * @property {("yes"|"no")} is_free - Whether the exam is free or not
  * @property {number} total_marks - Total marks for the exam
  * @property {number} word_limit - Word limit for exam responses
  * @property {number} sentence_limit - Sentence limit for exam responses
@@ -26,6 +27,14 @@ const ExamSchema = Yup.object().shape({
     .min(10, 'At Least 10 Characters Long!')
     .max(500, 'Max 500 Characters!')
     .required('Required!'),
+
+  is_free: Yup.object({
+    label: Yup.string().required('Required!'),
+    value: Yup.string()
+      .typeError('Invalid')
+      .oneOf(['yes', 'no'], 'Invalid!')
+      .required('Required!')
+  }),
 
   total_marks: Yup.number()
     .min(0, 'At Least 0 Allowed!')
@@ -96,11 +105,19 @@ const ExamSchema = Yup.object().shape({
         upper_percentage: Yup.number()
           .min(0, 'At Least 0 Allowed!')
           .max(100, 'Max 100 Allowed!')
+          .test('greaterThanLower', 'Must Be >= Lower %',
+            function (value) {
+              return !value || !this.parent.lower_percentage || value >= this.parent.lower_percentage;
+            })
           .required('Required!'),
 
         lower_percentage: Yup.number()
           .min(0, 'At Least 0 Allowed!')
           .max(100, 'Max 100 Allowed!')
+          .test('lessThanUpper', 'Must Be <= Upper %',
+            function (value) {
+              return !value || !this.parent.upper_percentage || value <= this.parent.upper_percentage;
+            })
           .required('Required!')
       })
     )

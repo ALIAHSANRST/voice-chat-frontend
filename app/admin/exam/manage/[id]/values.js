@@ -27,6 +27,16 @@ const COMPLEXITY_LEVELS = Object.freeze([
 ]);
 
 /**
+ * Is Free options for exam
+ * @constant {Array<{value: string, label: string}>}
+ * @readonly
+ */
+const IS_FREE_OPTIONS = Object.freeze([
+  { value: 'yes', label: 'Yes' },
+  { value: 'no', label: 'No' },
+]);
+
+/**
  * Initial form values with default configuration
  * @constant {Object}
  * @property {string} name - Empty exam name
@@ -46,6 +56,7 @@ const COMPLEXITY_LEVELS = Object.freeze([
 const INITIAL_VALUES = Object.freeze({
   name: '',
   description: '',
+  is_free: IS_FREE_OPTIONS[0] || { value: 'yes', label: 'Yes' },
   total_marks: '',
   word_limit: '',
   sentence_limit: '',
@@ -59,7 +70,7 @@ const INITIAL_VALUES = Object.freeze({
 });
 
 // validate required constants before export
-if (!STATUS_OPTIONS?.length || !COMPLEXITY_LEVELS?.length) {
+if (!STATUS_OPTIONS?.length || !COMPLEXITY_LEVELS?.length || !IS_FREE_OPTIONS?.length) {
   throw new Error('Exam > Values: Required Configuration Options Are Missing or Invalid');
 }
 
@@ -67,4 +78,5 @@ export {
   INITIAL_VALUES,
   STATUS_OPTIONS,
   COMPLEXITY_LEVELS,
+  IS_FREE_OPTIONS,
 };

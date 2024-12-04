@@ -47,6 +47,7 @@ const FetchAllRecords = async ({ limit, page, query, setIsLoading, setData }) =>
       ...item,
       index: ((page * limit) + index + 1) - limit,
       title: CapitalizeWords(item?.name),
+      is_free: item?.is_free ? 'Yes' : 'No',
       total_marks: item?.total_marks,
       limit: `${item?.word_limit || item?.sentence_limit} ${item?.word_limit ? 'W' : 'S'}`,
       complexity_levels: item?.complexity_levels?.map(level => CapitalizeWords(level)),

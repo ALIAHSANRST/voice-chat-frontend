@@ -35,7 +35,7 @@ const GetExam = async ({
     }
 
     const {
-      name, description, total_marks, word_limit, sentence_limit,
+      name, description, is_free, total_marks, word_limit, sentence_limit,
       complexity_levels, rubrics_levels, status,
       updatedAt, createdAt, updatedBy, createdBy
     } = response.data.data
@@ -50,6 +50,9 @@ const GetExam = async ({
     setInitialValues({
       name: name || '',
       description: description || '',
+      is_free: is_free
+        ? { label: 'Yes', value: 'yes', }
+        : { label: 'No', value: 'no', },
       total_marks: total_marks || '',
       word_limit: word_limit || '',
       sentence_limit: sentence_limit || '',
@@ -103,7 +106,8 @@ const UpdateExam = async ({ payload, setIsLoading, router }) => {
         upper_percentage: level.upper_percentage,
         lower_percentage: level.lower_percentage
       })) || [],
-      status: payload.status?.value || null
+      status: payload.status?.value || null,
+      is_free: payload.is_free?.value === 'yes' ? true : false
     }
 
     if (payload.word_limit) data.word_limit = payload.word_limit
@@ -184,7 +188,8 @@ const AddExam = async ({ payload, setIsLoading, router }) => {
         upper_percentage: level.upper_percentage,
         lower_percentage: level.lower_percentage
       })),
-      status: payload.status?.value
+      status: payload.status?.value,
+      is_free: payload.is_free?.value === 'yes' ? true : false
     }
 
     if (payload.word_limit) data.word_limit = payload.word_limit
