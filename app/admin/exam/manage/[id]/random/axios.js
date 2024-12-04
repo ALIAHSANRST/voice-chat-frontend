@@ -26,15 +26,15 @@ const GetRandomExam = async ({ setIsLoading, setData, id, setError }) => {
     const ENDPOINT = `/exam/manage/random/${id}`;
     const response = await BaseAPI.get(ENDPOINT);
 
-    response.data.exam.info.complexity_levels = response.data.exam.info.complexity_levels.map(level => CapitalizeWords(level));
-    response.data.exam.sentences = response.data.exam.sentences.map(sentence => ({
-      ...sentence,
-      complexity_level: CapitalizeWords(sentence.complexity_level)
-    }));
-
     if (`${response.data.success}` !== 'true') {
       setError(response.data.message);
     } else {
+      response.data.exam.info.complexity_levels = response.data.exam.info.complexity_levels.map(level => CapitalizeWords(level));
+      response.data.exam.sentences = response.data.exam.sentences.map(sentence => ({
+        ...sentence,
+        complexity_level: CapitalizeWords(sentence.complexity_level)
+      }));
+
       setData(response.data);
     }
 
