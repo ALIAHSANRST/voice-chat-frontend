@@ -13,7 +13,7 @@ import { ADMIN_COMPONENTS, COMMON_COMPONENTS } from '@/src/components'
 import { ADMIN_CONSTANTS } from '@/src/utils/constants'
 import { ADMIN_VALIDATION } from '@/src/validation'
 import { AddExam, DeleteExam, GetExam, UpdateExam } from './axios'
-import { INITIAL_VALUES, STATUS_OPTIONS, COMPLEXITY_LEVELS } from './values'
+import { INITIAL_VALUES, STATUS_OPTIONS, COMPLEXITY_LEVELS, IS_FREE_OPTIONS } from './values'
 import { ROUTES } from '@/src/utils/routes'
 import { SelectMenuDisabledStyle } from '@/src/utils/styles'
 import { usePageTitle } from '@/src/hooks'
@@ -21,7 +21,7 @@ import { usePageTitle } from '@/src/hooks'
 // sub-components
 const BasicInfoForm = ({ formik, isView }) => (
   <Row>
-    <Col xl={12}>
+    <Col xl={9} lg={9} md={8} sm={12}>
       <COMMON_COMPONENTS.TextField
         name='name'
         disable={isView}
@@ -29,6 +29,29 @@ const BasicInfoForm = ({ formik, isView }) => (
         label='Title'
         placeholder='Enter Exam Title'
       />
+    </Col>
+
+    <Col xl={3} lg={3} md={4} sm={12}>
+      <Form.Group className='mb-3'>
+        <Form.Label>Is Free?</Form.Label>
+        <Select
+          styles={isView && SelectMenuDisabledStyle}
+          isDisabled={isView}
+          key='is_free'
+          name='is_free'
+          instanceId='is_free'
+          placeholder='Select Option'
+          isSearchable={false}
+          onChange={(data) => formik.setFieldValue('is_free', data)}
+          options={IS_FREE_OPTIONS}
+          value={formik.values.is_free}
+        />
+        {formik.errors.is_free && formik.touched.is_free && (
+          <Form.Text className='text-danger'>
+            {formik.errors.is_free.value}
+          </Form.Text>
+        )}
+      </Form.Group>
     </Col>
 
     <Col xl={12}>

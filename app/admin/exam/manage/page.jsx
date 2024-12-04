@@ -105,12 +105,14 @@ const ExamsManagePage = () => {
         Cell: ({ row }) => <span className='text-wrap'>{row.original.name}</span>
       },
       {
+        accessorKey: 'is_free', header: 'Is Free?', maxSize: 0, grow: false,
+      },
+      {
         accessorKey: 'total_marks', header: 'Marks', maxSize: 0, grow: false,
         Cell: ({ row }) => <span className='text-wrap'>{row.original.total_marks}</span>
       },
       {
         accessorKey: 'limit', header: 'Limit', maxSize: 0, grow: false,
-        // Cell: ({ row }) => <span className='text-wrap'>{row.original.limit}</span>
       },
       {
         accessorKey: 'complexity_levels', header: 'Complexity', maxSize: 0, grow: false,
