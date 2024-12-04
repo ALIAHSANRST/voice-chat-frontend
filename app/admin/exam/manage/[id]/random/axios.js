@@ -42,6 +42,7 @@ const GetRandomExam = async ({ setIsLoading, setData, id, setError }) => {
     COMMON_COMPONENTS.Toast.showErrorToast(
       error?.response?.data?.message || 'Failed To Generate Random Exam!'
     );
+    setError(error?.response?.data?.message || 'Failed To Generate Random Exam!');
   } finally {
     setIsLoading(false);
   }
