@@ -26,23 +26,19 @@ const GetRandomExam = async ({ setIsLoading, setData, id, setError }) => {
     const ENDPOINT = `/exam/manage/random/${id}`;
     const response = await BaseAPI.get(ENDPOINT);
 
-    if (`${response.data.success}` === 'true') {
-      response.data.exam.info.complexity_levels = response.data.exam.info.complexity_levels.map(level => CapitalizeWords(level));
-      response.data.exam.sentences = response.data.exam.sentences.map(sentence => ({
-        ...sentence,
-        complexity_level: CapitalizeWords(sentence.complexity_level)
-      }));
+    response.data.exam.info.complexity_levels = response.data.exam.info.complexity_levels.map(level => CapitalizeWords(level));
+    response.data.exam.sentences = response.data.exam.sentences.map(sentence => ({
+      ...sentence,
+      complexity_level: CapitalizeWords(sentence.complexity_level)
+    }));
 
-      setData(response.data);
-    } else {
-      setError(response.data.message);
-    }
+    setData(response.data);
   } catch (error) {
     console.error('Exam > [id] > Random > GetRandomExam:', error);
     COMMON_COMPONENTS.Toast.showErrorToast(
       error?.response?.data?.message || 'Failed To Generate Random Exam!'
     );
-    setError(error?.response?.data?.message || 'Failed To Generate Random Exam!');
+    setError(error?.response?.data?.error || 'Failed To Generate Random Exam!');
   } finally {
     setIsLoading(false);
   }
