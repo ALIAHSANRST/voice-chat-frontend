@@ -65,7 +65,7 @@ const RandomExamPage = () => {
     );
   }
 
-  if (error) {
+  if (error || !data || Object.keys(data).length === 0) {
     return (
       <ADMIN_COMPONENTS.ContentWrapper>
         <ADMIN_COMPONENTS.SomethingWentWrong message={error} />

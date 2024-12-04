@@ -26,9 +26,7 @@ const GetRandomExam = async ({ setIsLoading, setData, id, setError }) => {
     const ENDPOINT = `/exam/manage/random/${id}`;
     const response = await BaseAPI.get(ENDPOINT);
 
-    if (`${response.data.success}` !== 'true') {
-      setError(response.data.message);
-    } else {
+    if (`${response.data.success}` === 'true') {
       response.data.exam.info.complexity_levels = response.data.exam.info.complexity_levels.map(level => CapitalizeWords(level));
       response.data.exam.sentences = response.data.exam.sentences.map(sentence => ({
         ...sentence,
@@ -36,8 +34,9 @@ const GetRandomExam = async ({ setIsLoading, setData, id, setError }) => {
       }));
 
       setData(response.data);
+    } else {
+      setError(response.data.message);
     }
-
   } catch (error) {
     console.error('Exam > [id] > Random > GetRandomExam:', error);
     COMMON_COMPONENTS.Toast.showErrorToast(
