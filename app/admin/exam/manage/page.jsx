@@ -1,6 +1,6 @@
 'use client'
 
-import { faArrowLeft, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faPlus, faRandom } from '@fortawesome/free-solid-svg-icons';
 import { debounce } from 'lodash';
 import {
   useCallback,
@@ -231,7 +231,14 @@ const ExamsManagePage = () => {
               return [
                 DeleteAction({ onClick: () => handleDelete(row.original._id) }),
                 EditAction({ href: `${ROUTES.ADMIN_EXAM_MANAGE.path}/${row.original._id}?edit=true` }),
-                ViewAction({ href: `${ROUTES.ADMIN_EXAM_MANAGE.path}/${row.original._id}?view=true` })
+                ViewAction({ href: `${ROUTES.ADMIN_EXAM_MANAGE.path}/${row.original._id}?view=true` }),
+                {
+                  type: 'custom',
+                  label: 'Random',
+                  icon: faRandom,
+                  href: `${ROUTES.ADMIN_EXAM_MANAGE_RANDOM.path.replace('[id]', row.original._id)}`,
+                  color: 'success'
+                }
               ];
             })()}
           />
