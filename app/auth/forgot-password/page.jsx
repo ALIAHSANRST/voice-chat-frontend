@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Formik, useFormik } from 'formik';
+import styled from 'styled-components';
 
 import { INITIAL_VALUES } from './values';
 import { ICON_ASSETS } from '@/src/utils/assets';
