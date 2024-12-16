@@ -6,6 +6,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config as configCore } from "@fortawesome/fontawesome-svg-core";
 configCore.autoAddCss = false;
 
+import "./app.css";
 import { COMMON_CONTEXT, USER_CONTEXT } from "@/src/context";
 
 const App = ({ children }) => {

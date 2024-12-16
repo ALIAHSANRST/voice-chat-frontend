@@ -1,20 +1,26 @@
 'use client'
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { Col, Container, Row, Form, InputGroup, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faEraser, faG, faHome, faSignInAlt, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { faLine } from '@fortawesome/free-brands-svg-icons';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/navigation';
 import { Formik, useFormik } from 'formik';
+import styled from 'styled-components';
 
 import { INITIAL_VALUES } from './values';
-import LightLogo from "@/public/images/logo/light.jpeg";
-import { COMMON_CONTEXT } from '@/src/context';
+import { ICON_ASSETS } from '@/src/utils/assets';
 import { usePageTitle } from '@/src/hooks';
+import { COMMON_COLORS } from '@/src/utils/colors';
+import { COMMON_COMPONENTS } from '@/src/components';
+import { COMMON_CONTEXT } from '@/src/context';
 import { COMMON_VALIDATION } from '@/src/validation';
+
+const Container = styled.div`
+  width: 100%;
+  min-height: 100vh;
+  height: 100%;
+  display: flex;
+`
 
 const SignUpPage = () => {
   usePageTitle({ title: 'Sign Up' })
@@ -24,7 +30,6 @@ const SignUpPage = () => {
 
   const [initialValues, setInitialValues] = useState({ ...INITIAL_VALUES });
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   useEffect(() => {
     if (!currentUser) return
@@ -70,139 +75,79 @@ const SignUpPage = () => {
   })
 
   return (
-    <Container className='my-5'>
-      <Row className='border border-muted rounded-3 bg-white shadow-sm'>
-        <Col lg={5} md={12} className='d-flex p-5 flex-column justify-content-center align-items-center gap-3'>
-          <Image src={LightLogo} alt="Globalie" style={{
-            width: "15rem",
-            height: "auto",
-          }} />
+    <Container>
+      <div style={{ flex: 1 }}>
+        <Formik enableReinitialize>
+          <form onSubmit={formik.handleSubmit} method='POST'>
+            <COMMON_COMPONENTS.Auth.FormCard
+              title={'Create Account'}
+              description={'Enter your information below or continue with social media account'}>
 
-          <p className='text-muted fs-4'>
-            Welcome to <span className='fw-bold'>Globalie</span>
-          </p>
-        </Col>
-        <Col lg={7} md={12} className='p-lg-5 p-md-4 p-sm-4' style={{ backgroundColor: "#f5f5f5" }}>
-          <Formik enableReinitialize>
-            <Form className="d-flex flex-column" onSubmit={formik.handleSubmit} method='POST'>
-              <h3 className='mb-4 text-muted fw-normal'>Create an Account</h3>
+              <COMMON_COMPONENTS.Auth.SocialMedia />
+              <COMMON_COMPONENTS.Auth.OrSeperator />
 
-              <Container className="p-0 mb-3">
-                <Form.Label htmlFor="fullname">Full Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="fullname"
-                  placeholder="Full Name"
-                  disabled={formik.isSubmitting}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.fullname}
-                  isInvalid={formik.touched.fullname && !!formik.errors.fullname}
-                />
-                <Form.Control.Feedback type="invalid">{formik.errors.fullname}</Form.Control.Feedback>
-              </Container>
+              <COMMON_COMPONENTS.Auth.InputField
+                name={'fullname'}
+                label={'Full Name'}
+                placeholder={'Enter your full name'}
+                type={'text'}
+                leftIcon={ICON_ASSETS.USER_ICON}
+                value={formik.values.fullname}
+                onChange={formik.handleChange}
+                error={formik.errors.fullname}
+                disabled={formik.isSubmitting}
+              />
 
-              <Container className="p-0 mb-3">
-                <Form.Label htmlFor="email">Email Address</Form.Label>
-                <Form.Control
-                  type="email"
-                  name="email"
-                  placeholder="name@example.com"
-                  disabled={formik.isSubmitting}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.email}
-                  isInvalid={formik.touched.email && !!formik.errors.email}
-                />
-                <Form.Control.Feedback type="invalid">{formik.errors.email}</Form.Control.Feedback>
-              </Container>
+              <COMMON_COMPONENTS.Auth.InputField
+                name={'email'}
+                label={'Email'}
+                placeholder={'Enter your email'}
+                type={'email'}
+                leftIcon={ICON_ASSETS.SMS_ICON}
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                error={formik.errors.email}
+                disabled={formik.isSubmitting}
+              />
 
-              <Container className="p-0 mb-3">
-                <Form.Label htmlFor="password">Password</Form.Label>
-                <InputGroup>
-                  <Form.Control
-                    type={showPassword ? "text" : "password"}
-                    name="password"
-                    placeholder="Password"
-                    disabled={formik.isSubmitting}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.password}
-                    isInvalid={formik.touched.password && !!formik.errors.password}
-                  />
-                  <InputGroup.Text onClick={() => setShowPassword(!showPassword)} className='cursor-pointer rounded-end'>
-                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-                  </InputGroup.Text>
-                  <Form.Control.Feedback type="invalid">{formik.errors.password}</Form.Control.Feedback>
-                </InputGroup>
-              </Container>
+              <COMMON_COMPONENTS.Auth.InputField
+                name={'password'}
+                label={'Password'}
+                placeholder={'Enter your password'}
+                type={showPassword ? 'text' : 'password'}
+                leftIcon={ICON_ASSETS.LOCK_ICON}
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                error={formik.errors.password}
+                disabled={formik.isSubmitting}
+                rightIcon={
+                  <FontAwesomeIcon
+                    style={{ cursor: 'pointer', opacity: 0.8, color: COMMON_COLORS.AUTH.neutral_black }}
+                    icon={showPassword ? faEyeSlash : faEye}
+                    onClick={() => setShowPassword(!showPassword)} />
+                }
+              />
 
-              <Container className="p-0 mb-3">
-                <Form.Label htmlFor="confirmPassword">Confirm Password</Form.Label>
-                <InputGroup>
-                  <Form.Control
-                    type={showConfirmPassword ? "text" : "password"}
-                    name="confirmPassword"
-                    placeholder="Confirm Password"
-                    disabled={formik.isSubmitting}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.confirmPassword}
-                    isInvalid={formik.touched.confirmPassword && !!formik.errors.confirmPassword}
-                  />
-                  <InputGroup.Text onClick={() => setShowConfirmPassword(!showConfirmPassword)} className='cursor-pointer rounded-end'>
-                    <FontAwesomeIcon icon={showConfirmPassword ? faEyeSlash : faEye} />
-                  </InputGroup.Text>
-                  <Form.Control.Feedback type="invalid">{formik.errors.confirmPassword}</Form.Control.Feedback>
-                </InputGroup>
-              </Container>
+              <COMMON_COMPONENTS.Auth.Button
+                type={'submit'}
+                disabled={formik.isSubmitting}
+                text={'Sign Up'}
+              />
 
-              <div className="d-flex gap-3 mt-3 w-100">
-                <Link className='btn btn-outline-secondary' href={'/'}>
-                  <FontAwesomeIcon icon={faHome} />
-                </Link>
-                <button className='btn btn-outline-danger w-100' type='reset'>
-                  <FontAwesomeIcon icon={faEraser} className='me-3' />
-                  Reset
-                </button>
-                <Link className='btn btn-outline-primary w-100' href={'/sign-in'}>
-                  <FontAwesomeIcon icon={faSignInAlt} className="me-3" />
-                  Sign In
-                </Link>
-                <button className='btn btn-success w-100' type='submit' disabled={formik.isSubmitting}>
-                  <FontAwesomeIcon icon={faCheck} className="me-3" />
-                  Submit
-                </button>
-              </div>
-
-              <div className='d-flex gap-3 my-4 w-100 align-items-center'>
-                <div className='w-100' style={{
-                  borderTop: "1px solid #ccc",
-                  height: "1px"
-                }}></div>
-                <p className='text-muted m-0'>OR</p>
-                <div className='w-100' style={{
-                  borderTop: "1px solid #ccc",
-                  height: "1px"
-                }}></div>
-              </div>
-
-              <div className='d-flex gap-3 w-100'>
-                <Button variant='outline-secondary' className='w-100' href={`${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/google_oauth`}>
-                  <FontAwesomeIcon icon={faG} className='me-3' />
-                  Sign up with Google
-                </Button>
-                <Button variant='outline-secondary' className='w-100' href={`${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/line_oauth`}>
-                  <FontAwesomeIcon icon={faLine} className='me-3' />
-                  Sign up with Line
-                </Button>
-              </div>
-            </Form>
-          </Formik>
-        </Col>
-      </Row>
+              <COMMON_COMPONENTS.Auth.AlternativeFlow
+                link={'/auth/sign-in'}
+                linkText={'Login Now'}
+                text={'Already have an account?'}
+              />
+            </COMMON_COMPONENTS.Auth.FormCard>
+          </form>
+        </Formik>
+      </div>
+      <div style={{ flex: 1.5 }}>
+        <COMMON_COMPONENTS.Auth.SideCard />
+      </div>
     </Container>
-  );
+  )
 };
 
 export default SignUpPage

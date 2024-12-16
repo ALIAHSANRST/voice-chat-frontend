@@ -68,7 +68,21 @@ const SignUpSchema = Yup.object().shape({
     .required('Required!'),
 });
 
+/**
+ * Validation schema for user forgot password form
+ * Defines validation rules and error messages for each field
+ * 
+ * @typedef {Object} ForgotPasswordSchema
+ * @property {string} email - Valid email address with proper domain
+ */
+const ForgotPasswordSchema = Yup.object().shape({
+  email: Yup.string()
+    .email('Invalid Format!')
+    .required('Required!')
+});
+
 export {
   SignInSchema,
-  SignUpSchema
+  SignUpSchema,
+  ForgotPasswordSchema
 };
