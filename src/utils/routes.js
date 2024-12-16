@@ -4,6 +4,7 @@ const ROUTES = {
   SIGN_UP: { path: '/auth/sign-up', isProtected: false, name: 'Sign Up' },
   SIGN_IN: { path: '/auth/sign-in', isProtected: false, name: 'Sign In' },
   LOGOUT: { path: '/auth/logout', isProtected: false, name: 'Logout' },
+  FORGOT_PASSWORD: { path: '/auth/forgot-password', isProtected: false, name: 'Forgot Password' },
   LINE_OAUTH_RESPONSE: { path: '/auth/line/response', isProtected: false, name: 'Line OAuth' },
   GOOGLE_OAUTH_RESPONSE: { path: '/auth/google/response', isProtected: false, name: 'Google OAuth' },
 

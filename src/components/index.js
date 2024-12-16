@@ -17,6 +17,17 @@ export const ADMIN_COMPONENTS = {
 };
 
 export const COMMON_COMPONENTS = {
+  Auth: {
+    SideCard: require('./common/auth/SideCard').default,
+    FormCard: require('./common/auth/FormCard').default,
+    InputField: require('./common/auth/InputField').default,
+    UserModeToggle: require('./common/auth/UserModeToggle').default,
+    Button: require('./common/auth/Button').default,
+    SocialMedia: require('./common/auth/SocialMedia').default,
+    OrSeperator: require('./common/auth/OrSeperator').default,
+    AlternativeFlow: require('./common/auth/AlternativeFlow').default,
+    GoBack: require('./common/auth/GoBack').default,
+  },
   Loader: require('./common/Loader').default,
   LoaderFullScreen: require('./common/LoaderFullScreen').default,
   TextField: require('./common/TextField').default,
@@ -30,4 +41,10 @@ export const USER_COMPONENTS = {
   VideoControls: require('./user/VideoControls').default,
   VoiceChat: require('./user/VoiceChat').default,
   VoiceToText: require('./user/VoiceToText').default,
+
+  HeaderNavBar: require('./user/HeaderNavBar').default,
+  OutlinedButton: require('./user/OutlinedButton').default,
+  Stepper: require('./user/Stepper').default,
+  Button: require('./common/auth/Button').default,
+  CircularProgressWithLabel: require('./user/CircularProgressWithLabel').default,
 };
