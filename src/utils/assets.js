@@ -24,4 +24,6 @@ export const ICON_ASSETS = {
   LINE_ICON: '/images/icons/line-icon.svg',
   USER_ICON: '/images/icons/user-icon.svg',
   ARROW_BACK_ICON: '/images/icons/arrow-back-icon.svg',
+  CLOSE_BUTTON_ICON: '/images/icons/close-button-icon.svg',
+  FACE_MASK_ICON: '/images/icons/face-mask-icon.svg',
 }

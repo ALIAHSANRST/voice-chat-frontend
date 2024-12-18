@@ -14,13 +14,13 @@ const App = ({ children }) => {
     <html lang="en">
       <body>
         <ToastContainer />
-        <USER_CONTEXT.SocketContext.SocketProvider>
-          <COMMON_CONTEXT.AuthenticationContext.AuthenticationProvider>
+        <COMMON_CONTEXT.AuthenticationContext.AuthenticationProvider>
+          <USER_CONTEXT.SocketContext.SocketProvider>
             <USER_CONTEXT.VoiceContext.AgoraProvider>
               {children}
             </USER_CONTEXT.VoiceContext.AgoraProvider>
-          </COMMON_CONTEXT.AuthenticationContext.AuthenticationProvider>
-        </USER_CONTEXT.SocketContext.SocketProvider>
+          </USER_CONTEXT.SocketContext.SocketProvider>
+        </COMMON_CONTEXT.AuthenticationContext.AuthenticationProvider>
       </body>
     </html>
   )

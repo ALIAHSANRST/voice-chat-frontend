@@ -8,6 +8,7 @@ import styled from "styled-components"
 import { COMMON_ASSETS } from "@/src/utils/assets"
 import { USER_COLORS } from "@/src/utils/colors"
 import { COMMON_COMPONENTS, USER_COMPONENTS } from "@/src/components"
+import { COMMON_CONTEXT } from "@/src/context"
 
 const NavBar = styled.nav`
   width: 100%;
@@ -65,8 +66,10 @@ const ItemContainer = styled.div`
 `
 
 const HeaderNavBar = () => {
-  const [showLogoutDialogue, setShowLogoutDialogue] = useState(false);
   const router = useRouter();
+  const { currentUser } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext();
+
+  const [showLogoutDialogue, setShowLogoutDialogue] = useState(false);
 
   return (
     <NavBar>
@@ -76,17 +79,48 @@ const HeaderNavBar = () => {
         <ItemContainer data-active={true}>
           <Link href={'/user'}>Home</Link>
         </ItemContainer>
-        <ItemContainer>
-          <Link href={'#'}>My Lesson</Link>
-        </ItemContainer>
-        <ItemContainer>
-          <Link href={'#'}>History</Link>
-        </ItemContainer>
+        {
+          currentUser && (
+            <>
+              <ItemContainer>
+                <Link href={'#'}>My Lesson</Link>
+              </ItemContainer>
+              <ItemContainer>
+                <Link href={'#'}>History</Link>
+              </ItemContainer>
+            </>
+          )
+        }
+
+        {
+          !currentUser && (
+            <>
+              <ItemContainer>
+                <Link href={'#'}>About Us</Link>
+              </ItemContainer>
+              <ItemContainer>
+                <Link href={'#'}>Privacy Policy</Link>
+              </ItemContainer>
+            </>
+          )
+        }
       </WrapperContainer>
 
       <WrapperContainer style={{ gap: '1rem' }}>
         <USER_COMPONENTS.OutlinedButton text={'Request a tutor'} variant={'primary'} />
-        <USER_COMPONENTS.OutlinedButton text={'Logout'} variant={'danger'} onClick={() => setShowLogoutDialogue(true)} />
+        {
+          currentUser && (
+            <USER_COMPONENTS.OutlinedButton text={'Logout'} variant={'danger'} onClick={() => setShowLogoutDialogue(true)} />
+          )
+        }
+
+        {
+          !currentUser && (
+            <USER_COMPONENTS.OutlinedButton text={'Login'} variant={'secondary'} onClick={() => {
+              router.push('/auth/sign-in');
+            }} />
+          )
+        }
       </WrapperContainer>
 
       {
