@@ -51,17 +51,6 @@ const FormMetaInfo = ({
           </Col>
         }
         {
-          createdAt &&
-          <Col xl={3} lg={4} md={6} sm={12}>
-            <COMMON_COMPONENTS.TextField
-              name='createdAt'
-              disable={true}
-              label='Created At'
-              value={createdAt}
-            />
-          </Col>
-        }
-        {
           createdBy &&
           <Col xl={3} lg={4} md={6} sm={12}>
             <COMMON_COMPONENTS.TextField
@@ -69,6 +58,17 @@ const FormMetaInfo = ({
               disable={true}
               label='Created By'
               value={createdBy}
+            />
+          </Col>
+        }
+        {
+          createdAt &&
+          <Col xl={3} lg={4} md={6} sm={12}>
+            <COMMON_COMPONENTS.TextField
+              name='createdAt'
+              disable={true}
+              label='Created At'
+              value={createdAt}
             />
           </Col>
         }

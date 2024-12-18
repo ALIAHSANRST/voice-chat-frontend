@@ -64,6 +64,26 @@ export const USER_COLORS = {
     Stepper: {
       Text: '#394452',
       Border: '#DADEE3',
-    }
+    },
   },
+  FreeExam: {
+    Background: {
+      Page: '#F4F6F9',
+      Container: '#FFFFFF',
+    },
+    Text: {
+      Primary: '#1A1A1A',
+      Secondary: '#6D7580',
+    },
+    Border: '#EBEEF2',
+    TextContainer: {
+      Border: '#DADEE3',
+      Background: '#F4F6F9',
+      PrimaryText: '#1A1A1A',
+    },
+    AudioVisualizer: {
+      BarColor: '#0064FF',
+      RippleColor: '#0064FF',
+    }
+  }
 }

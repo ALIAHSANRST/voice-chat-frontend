@@ -47,4 +47,9 @@ export const USER_COMPONENTS = {
   Stepper: require('./user/Stepper').default,
   Button: require('./common/auth/Button').default,
   CircularProgressWithLabel: require('./user/CircularProgressWithLabel').default,
+
+  AudioVisualizer: {
+    Bar: require('./user/AudioVisualizer/BarAudioVisualizer').default,
+    Circular: require('./user/AudioVisualizer/CircularAudioVisualizer').default,
+  }
 };

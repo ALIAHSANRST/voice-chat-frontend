@@ -15,6 +15,10 @@ const StyledButton = styled.button`
   &:hover {
     background-color: ${COMMON_COLORS.AUTH.primary_blue_hover};
   }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 `;
 
 const Button = ({
@@ -22,9 +26,15 @@ const Button = ({
   disabled,
   text,
   onClick,
+  children,
   ...props
 }) => {
-  return <StyledButton type={type} disabled={disabled} onClick={onClick} {...props}>{text}</StyledButton>;
+  return (
+    <StyledButton type={type} disabled={disabled} onClick={onClick} {...props}>
+      {text && text}
+      {children && children}
+    </StyledButton>
+  );
 };
 
 export default Button;

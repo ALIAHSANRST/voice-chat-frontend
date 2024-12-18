@@ -1,14 +1,10 @@
 'use client'
 
-import Image from "next/image";
-import { useState } from "react";
-import { Button, Col, Row } from "react-bootstrap"
 import { useRouter } from "next/navigation";
-
-import LightLogo from "@/public/images/logo/light.jpeg";
-import { COMMON_COMPONENTS, USER_COMPONENTS } from '@/src/components';
-import { COMMON_CONTEXT } from '@/src/context';
 import styled from "styled-components";
+
+import { USER_COMPONENTS } from '@/src/components';
+import { COMMON_CONTEXT } from '@/src/context';
 import { USER_COLORS } from "@/src/utils/colors";
 import { USER_ASSETS } from "@/src/utils/assets";
 
@@ -86,6 +82,9 @@ const UserHomePage = () => {
             <USER_COMPONENTS.Button
               text={'Take a free exam'}
               style={{ width: '100%', maxWidth: '22.5rem' }}
+              onClick={() => {
+                router.push('/user/free-exam');
+              }}
             />
           </Container>
           <div style={{ flex: 1, display: 'flex', gap: '1rem', flexDirection: 'column', maxWidth: '35rem' }}>

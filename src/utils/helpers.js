@@ -29,7 +29,27 @@ const DataTableDateFormat = (dateStr, format = 'hh:mm A, DD-MM-YYYY', invalidTex
     : invalidText;
 };
 
+/**
+ * Converts a HEX color code to RGB or RGBA format
+ * @param {string} hex - The HEX color code (with or without #)
+ * @param {boolean} [includeAlpha=false] - Whether to return RGBA format
+ * @param {number} [alpha=1] - Alpha value for RGBA (0-1)
+ * @returns {string} Color in RGB/RGBA format
+ */
+const HexToRGBA = (hex, includeAlpha = false, alpha = 1) => {
+  const cleanHex = hex.replace('#', '');
+
+  const r = parseInt(cleanHex.substring(0, 2), 16);
+  const g = parseInt(cleanHex.substring(2, 4), 16);
+  const b = parseInt(cleanHex.substring(4, 6), 16);
+
+  return includeAlpha
+    ? `rgba(${r}, ${g}, ${b}, ${alpha})`
+    : `rgb(${r}, ${g}, ${b})`;
+};
+
 export {
   CapitalizeWords,
-  DataTableDateFormat
+  DataTableDateFormat,
+  HexToRGBA
 };
