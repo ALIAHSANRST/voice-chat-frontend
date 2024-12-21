@@ -40,7 +40,7 @@ const ResultMainContainer = styled.div`
   height: 100%;
   min-height: calc(100vh - 6rem);
   border-radius: 1rem;
-  padding: 0 3rem;
+  padding: 3rem;
   background-color: ${USER_COLORS.FreeExam.Background.Container};
 `
 
@@ -269,7 +269,7 @@ const ExamPage = () => {
     return <COMMON_COMPONENTS.LoaderFullScreen message={'Calculating Your Score...'} />
   }
 
-  if (!examResult) {
+  if (examResult) {
     return (
       <WrapperContainer>
         <ResultMainContainer>

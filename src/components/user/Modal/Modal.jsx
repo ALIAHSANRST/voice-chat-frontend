@@ -24,6 +24,13 @@ const ModalContainer = styled.div`
   background-color: ${USER_COLORS.Modal.Background};
   border-radius: 1.5rem;
   padding: 3rem;
+  max-height: 80vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   ${props => props.modalContainerStyle}
 `
 
