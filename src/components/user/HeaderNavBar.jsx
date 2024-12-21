@@ -9,6 +9,7 @@ import { COMMON_ASSETS } from "@/src/utils/assets"
 import { USER_COLORS } from "@/src/utils/colors"
 import { COMMON_COMPONENTS, USER_COMPONENTS } from "@/src/components"
 import { COMMON_CONTEXT } from "@/src/context"
+import { ROUTES } from "@/src/utils/routes"
 
 const NavBar = styled.nav`
   width: 100%;
@@ -77,7 +78,13 @@ const HeaderNavBar = () => {
 
       <WrapperContainer>
         <ItemContainer data-active={true}>
-          <Link href={'/user'}>Home</Link>
+          <Link href={
+            (() => {
+              if (!currentUser) return ROUTES.HOME.path;
+              if (currentUser?.account_type === 'user') return ROUTES.USER_HOME.path;
+              if (currentUser?.account_type === 'admin') return ROUTES.ADMIN_HOME.path;
+            })()
+          }>Home</Link>
         </ItemContainer>
         {
           currentUser && (
@@ -107,7 +114,11 @@ const HeaderNavBar = () => {
       </WrapperContainer>
 
       <WrapperContainer style={{ gap: '1rem' }}>
-        <USER_COMPONENTS.OutlinedButton text={'Request a tutor'} variant={'primary'} />
+        {
+          currentUser && currentUser?.account_type === 'user' && (
+            <USER_COMPONENTS.OutlinedButton text={'Request a tutor'} variant={'primary'} />
+          )
+        }
         {
           currentUser && (
             <USER_COMPONENTS.OutlinedButton text={'Logout'} variant={'danger'} onClick={() => setShowLogoutDialogue(true)} />
@@ -117,7 +128,7 @@ const HeaderNavBar = () => {
         {
           !currentUser && (
             <USER_COMPONENTS.OutlinedButton text={'Login'} variant={'secondary'} onClick={() => {
-              router.push('/auth/sign-in');
+              router.push(ROUTES.SIGN_IN.path);
             }} />
           )
         }
@@ -130,7 +141,7 @@ const HeaderNavBar = () => {
           positiveMessage='Yes'
           negativeMessage='No'
           positiveCallback={() => {
-            router.push('/auth/logout');
+            router.push(ROUTES.LOGOUT.path);
             setShowLogoutDialogue(false);
           }}
           negativeCallback={() => setShowLogoutDialogue(false)}

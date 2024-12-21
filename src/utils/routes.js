@@ -5,6 +5,7 @@ const ROUTES = {
   SIGN_IN: { path: '/auth/sign-in', isProtected: false, name: 'Sign In' },
   LOGOUT: { path: '/auth/logout', isProtected: false, name: 'Logout' },
   FORGOT_PASSWORD: { path: '/auth/forgot-password', isProtected: false, name: 'Forgot Password' },
+  FORGOT_PASSWORD_RESET: { path: '/auth/forgot-password/reset', isProtected: false, name: 'Forgot Password' },
   LINE_OAUTH_RESPONSE: { path: '/auth/line/response', isProtected: false, name: 'Line OAuth' },
   GOOGLE_OAUTH_RESPONSE: { path: '/auth/google/response', isProtected: false, name: 'Google OAuth' },
 
@@ -31,7 +32,8 @@ const ROUTES = {
 
   // USER ROUTES
   USER_HOME: { path: '/user', isProtected: true, name: 'User' },
-  USER_GUIDE: { path: '/user/user-guide', isProtected: true, name: 'User Guide' },
+  USER_FREE_EXAM: { path: '/user/free-exam', isProtected: false, name: 'Free Exam' },
+  USER_GIVE_FEEDBACK: { path: '/user/give-feedback', isProtected: true, name: 'Give Feedback' },
 }
 
 const GetPublicRoutes = () => {

@@ -34,7 +34,6 @@ const SignInSchema = Yup.object().shape({
  * @property {string} fullname - User's full name (3-30 characters)
  * @property {string} email - Valid email address with proper domain
  * @property {string} password - Password (8-50 chars, must contain number and special char)
- * @property {string} confirmPassword - Must match password exactly
  */
 const SignUpSchema = Yup.object().shape({
   fullname: Yup.string()
@@ -62,10 +61,6 @@ const SignUpSchema = Yup.object().shape({
       'Must Contain At Least One Number And One Special Character!'
     )
     .required('Required!'),
-
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password'), null], 'Passwords Must Match!')
-    .required('Required!'),
 });
 
 /**
@@ -81,8 +76,32 @@ const ForgotPasswordSchema = Yup.object().shape({
     .required('Required!')
 });
 
+/**
+ * Validation schema for user reset password form
+ * Defines validation rules and error messages for each field
+ * 
+ * @typedef {Object} ResetPasswordSchema
+ * @property {string} password - Password (8-50 chars, must contain number and special char)
+ * @property {string} confirmPassword - Confirm password (must match password)
+ */
+const ResetPasswordSchema = Yup.object().shape({
+  password: Yup.string()
+    .min(8, 'Must Be At Least 8 Characters!')
+    .max(50, 'Cannot Exceed 50 Characters!')
+    .matches(
+      /^(?=.*[0-9])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]{8,}$/,
+      'Must Contain At Least One Number And One Special Character!'
+    )
+    .required('Required!'),
+
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref('password'), null], 'Passwords Must Match!')
+    .required('Required!'),
+});
+
 export {
   SignInSchema,
   SignUpSchema,
-  ForgotPasswordSchema
+  ForgotPasswordSchema,
+  ResetPasswordSchema
 };

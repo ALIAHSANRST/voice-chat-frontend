@@ -47,7 +47,7 @@ export const AuthenticationProvider = ({ children }) => {
     if (isAdmin && module !== "admin") {
       window.location.href = ROUTES.ADMIN_HOME.path
     } else if (isUser && module !== "user") {
-      window.location.href = ROUTES.USER_GUIDE.path
+      window.location.href = ROUTES.USER_HOME.path
     }
 
     setIsCheckingUserStatus(false);

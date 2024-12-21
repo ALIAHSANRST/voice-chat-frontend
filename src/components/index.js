@@ -47,6 +47,11 @@ export const USER_COMPONENTS = {
   Stepper: require('./user/Stepper').default,
   Button: require('./common/auth/Button').default,
   CircularProgressWithLabel: require('./user/CircularProgressWithLabel').default,
+  Modal: {
+    Main: require('./user/Modal/Modal').default,
+    CheckBox: require('./user/Modal/CheckBox').default,
+    DotList: require('./user/Modal/DotList').default,
+  },
 
   AudioVisualizer: {
     Bar: require('./user/AudioVisualizer/BarAudioVisualizer').default,

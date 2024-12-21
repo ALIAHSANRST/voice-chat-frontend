@@ -15,6 +15,7 @@ import { COMMON_COLORS } from '@/src/utils/colors';
 import { COMMON_COMPONENTS } from '@/src/components';
 import { COMMON_CONTEXT } from '@/src/context';
 import { COMMON_VALIDATION } from '@/src/validation';
+import { ROUTES } from '@/src/utils/routes';
 
 const Container = styled.div`
   width: 100%;
@@ -35,15 +36,7 @@ const SignInPage = () => {
 
   useEffect(() => {
     if (!currentUser) return
-    // router.push(`/${currentUser.account_type}`)
-
-    if (currentUser?.account_type === 'admin') {
-      router.push('/admin');
-    } else if (currentUser?.account_type === 'user') {
-      router.push('/user/user-guide');
-    } else {
-      router.push('/');
-    }
+    router.push(`/${currentUser.account_type}`)
   }, [currentUser])
 
   const HandleSubmit = (values, { setSubmitting }) => {
@@ -56,12 +49,11 @@ const SignInPage = () => {
       if (!currentUser) return;
 
       if (currentUser?.account_type === 'admin') {
-        router.push('/admin');
+        router.push(ROUTES.ADMIN_HOME.path);
       } else if (currentUser?.account_type === 'user') {
-        // router.push('/user');
-        router.push('/user/user-guide');
+        router.push(ROUTES.USER_HOME.path);
       } else {
-        router.push('/');
+        router.push(ROUTES.HOME.path);
       }
     }
 

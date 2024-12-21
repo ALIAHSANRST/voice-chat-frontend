@@ -75,6 +75,7 @@ const InputField = ({
         padding: '0 1rem',
         fontSize: '0.875rem',
         fontWeight: '400',
+        margin: 0,
         color: COMMON_COLORS.AUTH.error,
       }}>{error}</p>}
     </div>

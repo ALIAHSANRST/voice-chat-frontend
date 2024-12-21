@@ -4,12 +4,16 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
 
+import ExamResult from './ExamResult';
+import SignInModal from './SignIn.modal';
+import { GetExamScript } from "./axios";
 import { USER_COLORS } from "@/src/utils/colors";
 import { ICON_ASSETS } from "@/src/utils/assets";
 import { COMMON_COMPONENTS, USER_COMPONENTS } from "@/src/components";
-import { GetExamScript } from "./axios";
 import { usePageTitle, useMicrophoneAudioData } from '@/src/hooks';
 import { USER_CONTEXT, COMMON_CONTEXT } from '@/src/context';
+import { ROUTES } from '@/src/utils/routes';
+import { GenerateRandomText } from '@/src/utils/helpers';
 
 const WrapperContainer = styled.div`
   width: 100%;
@@ -23,6 +27,20 @@ const MainContainer = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 1rem;
+  background-color: ${USER_COLORS.FreeExam.Background.Container};
+`
+
+const ResultMainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  width: 100%;
+  height: 100%;
+  min-height: calc(100vh - 6rem);
+  border-radius: 1rem;
+  padding: 0 3rem;
   background-color: ${USER_COLORS.FreeExam.Background.Container};
 `
 
@@ -113,7 +131,12 @@ const FooterContainer = styled.div`
 
 const ExamPage = () => {
   usePageTitle({ title: 'Free Exam' })
+
   const router = useRouter();
+  const { currentUser } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext()
+
+  const [showExamInstructions, setShowExamInstructions] = useState(currentUser ? true : false)
+  const [isAgreeToTerms, setIsAgreeToTerms] = useState(false);
 
   const {
     isJoined,
@@ -121,8 +144,6 @@ const ExamPage = () => {
     leaveTest,
     error,
   } = useContext(USER_CONTEXT.VoiceContext.AgoraContext);
-
-  const { currentUser } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext()
   const socket = USER_CONTEXT.SocketContext.useSocket();
 
   const [isLoadingExamScript, setIsLoadingExamScript] = useState(false);
@@ -141,6 +162,17 @@ const ExamPage = () => {
   const [isJoiningChannel, setIsJoiningChannel] = useState(false);
 
   useEffect(() => {
+    if (!currentUser) {
+      setIsLoadingExamScript(false);
+      setExamScript(GenerateRandomText({
+        minWords: 90,
+        maxWords: 120,
+        minWordLength: 5,
+        maxWordLength: 10,
+      }));
+      return;
+    }
+
     GetExamScript({ setIsLoadingExamScript, setExamScript, setExamMeta });
   }, []);
 
@@ -166,7 +198,10 @@ const ExamPage = () => {
     })
 
     socket.on('examResult', result => {
-      setExamResult(result);
+      setExamResult({
+        ...result,
+        rubrics: examMeta?.rubrics,
+      });
       setIsCalculatingScore(false);
     })
   }, [socket]);
@@ -210,11 +245,20 @@ const ExamPage = () => {
     }
   };
 
-  const HandleLeaveTest = async () => {
-    setIsCalculatingScore(true);
+  const HandleLeaveTest = async ({ calculatingScore = true }) => {
+    setIsCalculatingScore(calculatingScore);
     stopTranscribing();
     await leaveTest();
     socket.emit('leaveTest', currentUser?._id);
+  }
+
+  const HandleStartTest = () => {
+    setIsJoiningChannel(true);
+    joinChannel().then(() => {
+      startRecording();
+    }).finally(() => {
+      setIsJoiningChannel(false);
+    });
   }
 
   if (isLoadingExamScript) {
@@ -225,40 +269,71 @@ const ExamPage = () => {
     return <COMMON_COMPONENTS.LoaderFullScreen message={'Calculating Your Score...'} />
   }
 
-  if (examResult) {
+  if (!examResult) {
     return (
       <WrapperContainer>
-        <MainContainer>
-          <HeadingContainer>
-            <div>
-              <HeadingText>Assessment Result</HeadingText>
-              <SubHeadingText>
-                Your score is based on your reading speed and comprehension.
-              </SubHeadingText>
-            </div>
-            <IconButton onClick={() => {
-              router.push('/user');
-            }}>
-              <img src={ICON_ASSETS.CLOSE_BUTTON_ICON} alt="close-button" />
-            </IconButton>
-          </HeadingContainer>
-          <ContentContainer style={{ paddingBottom: '2.25rem' }}>
-            <ContentTextContainer>
-              <ContentText style={{ fontSize: '1.5rem' }}>
-                <small>Your Score:</small>
-                <span className='ms-2 badge bg-primary'>
-                  {examResult?.finalScore} / {examResult?.totalMarks}
-                </span>
-              </ContentText>
-            </ContentTextContainer>
-          </ContentContainer>
-        </MainContainer>
+        <ResultMainContainer>
+          <ExamResult data={examResult} />
+        </ResultMainContainer>
       </WrapperContainer>
     )
   }
 
   return (
     <WrapperContainer>
+      {
+        !currentUser &&
+        <SignInModal />
+      }
+
+      {
+        showExamInstructions && currentUser &&
+        <USER_COMPONENTS.Modal.Main
+          title={'Get Ready for Your Exam'}
+          subtitle={'Follow these steps to complete your exam successfully.'}>
+          <USER_COMPONENTS.Modal.DotList
+            dots={[
+              {
+                title: 'Audio Guidance',
+                subtitle: 'You will read a paragraph aloud into your microphone. Ensure you\'re in a quiet environment for the best results.'
+              },
+              {
+                title: 'Instructions for Reading',
+                subtitle: 'When you are ready, start reading the paragraph into the microphone. Take your time to read clearly.'
+              },
+              {
+                title: 'Starting the Exam',
+                subtitle: 'Click \'Start Reading\' button to begin when you are ready.'
+              },
+              {
+                title: 'Ending the Exam',
+                subtitle: 'Once you have completed reading all the paragraphs, click \'End Exam\' to finish.'
+              }
+            ]}
+          />
+          <USER_COMPONENTS.Modal.CheckBox
+            label={'I understand the instructions and I am ready to proceed with the exam.'}
+            onChange={() => setIsAgreeToTerms(!isAgreeToTerms)}
+            isChecked={isAgreeToTerms}
+            htmlFor={'exam-instructions'}
+          />
+          <USER_COMPONENTS.Button
+            text={'Continue'}
+            onClick={() => {
+              if (isAgreeToTerms) {
+                setShowExamInstructions(false);
+              } else {
+                COMMON_COMPONENTS.Toast.showInfoToast('Please agree to the terms and conditions to continue.');
+              }
+            }}
+            style={{
+              width: '100%',
+              marginTop: '1.5rem'
+            }}
+          />
+        </USER_COMPONENTS.Modal.Main>
+      }
+
       <MainContainer>
         <HeadingContainer>
           <div>
@@ -268,8 +343,8 @@ const ExamPage = () => {
             </SubHeadingText>
           </div>
           <IconButton onClick={() => {
-            HandleLeaveTest();
-            router.push('/user');
+            HandleLeaveTest({ calculatingScore: false });
+            router.push(ROUTES.USER_HOME.path);
           }}>
             <img src={ICON_ASSETS.CLOSE_BUTTON_ICON} alt="close-button" />
           </IconButton>
@@ -315,19 +390,12 @@ const ExamPage = () => {
               <USER_COMPONENTS.Button
                 disabled={!examScript}
                 style={{ paddingLeft: '2rem', paddingRight: '2rem' }}
-                onClick={isJoined ? HandleLeaveTest : () => {
-                  setIsJoiningChannel(true);
-                  joinChannel().then(() => {
-                    startRecording();
-                  }).finally(() => {
-                    setIsJoiningChannel(false);
-                  });
-                }}>
+                onClick={isJoined ? HandleLeaveTest : HandleStartTest}>
                 {
                   isJoiningChannel
                     ? <COMMON_COMPONENTS.Loader color='white' />
                     : isJoined
-                      ? "End"
+                      ? "End Reading"
                       : "Start Reading"
                 }
               </USER_COMPONENTS.Button>
