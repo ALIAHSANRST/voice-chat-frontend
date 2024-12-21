@@ -31,7 +31,6 @@ const SignInPage = () => {
   const { SignInLocal, currentUser } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext()
 
   const [initialValues, setInitialValues] = useState({ ...INITIAL_VALUES });
-  const [isAdmin, setIsAdmin] = useState(false)
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
@@ -57,7 +56,7 @@ const SignInPage = () => {
       }
     }
 
-    SignInLocal({ payload: values, callback: callback, isAdmin: isAdmin })
+    SignInLocal({ payload: values, callback: callback })
   }
 
   const formik = useFormik({
@@ -74,11 +73,6 @@ const SignInPage = () => {
             <COMMON_COMPONENTS.Auth.FormCard
               title={'Welcome Back'}
               description={'Enter your email and password to sign in'}>
-              <COMMON_COMPONENTS.Auth.UserModeToggle
-                mode={isAdmin}
-                setMode={setIsAdmin}
-              />
-
               <COMMON_COMPONENTS.Auth.SocialMedia />
               <COMMON_COMPONENTS.Auth.OrSeperator />
 
