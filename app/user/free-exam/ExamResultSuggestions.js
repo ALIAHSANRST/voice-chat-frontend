@@ -15,3 +15,5 @@ const GetSuggestion = (score) => {
   const index = Math.min(Math.floor(score / 10), 9);
   return SUGGESTIONS[index];
 }
+
+export { GetSuggestion };

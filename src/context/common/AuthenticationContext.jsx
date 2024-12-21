@@ -72,18 +72,9 @@ export const AuthenticationProvider = ({ children }) => {
     }
   }
 
-  const SignInLocal = async ({ payload, callback, isAdmin }) => {
+  const SignInLocal = async ({ payload, callback }) => {
     try {
       const response = await BaseAPI.post('/auth/login', payload);
-
-      if (
-        (response.data.user.account_type === "admin" && !isAdmin) ||
-        (response.data.user.account_type === "user" && isAdmin)
-      ) {
-        COMMON_COMPONENTS.Toast.showErrorToast("Invalid Email or Password!");
-        callback(null);
-        return;
-      }
 
       setCurrentUser(response.data.user);
       setToken(response.data.token);
