@@ -48,8 +48,46 @@ const HexToRGBA = (hex, includeAlpha = false, alpha = 1) => {
     : `rgb(${r}, ${g}, ${b})`;
 };
 
+/**
+ * Generates random text based on specified word count and word length parameters
+ * @param {Object} params - Parameters for text generation
+ * @param {number} [params.minWords=3] - Minimum number of words in generated text
+ * @param {number} [params.maxWords=10] - Maximum number of words in generated text
+ * @param {number} [params.minWordLength=3] - Minimum length of each word
+ * @param {number} [params.maxWordLength=8] - Maximum length of each word
+ * @returns {string} Randomly generated text meeting the specified criteria
+ */
+const GenerateRandomText = ({
+  minWords = 3,
+  maxWords = 10,
+  minWordLength = 3,
+  maxWordLength = 8
+} = {}) => {
+  // Generate random number of words within range
+  const numWords = Math.floor(Math.random() * (maxWords - minWords + 1)) + minWords;
+
+  // Characters to use for word generation
+  const chars = 'abcdefghijklmnopqrstuvwxyz';
+
+  // Generate array of random words
+  const words = Array(numWords).fill('').map(() => {
+    // Random length for this word
+    const wordLength = Math.floor(Math.random() * (maxWordLength - minWordLength + 1)) + minWordLength;
+
+    // Generate random word
+    return Array(wordLength)
+      .fill('')
+      .map(() => chars[Math.floor(Math.random() * chars.length)])
+      .join('');
+  });
+
+  return words.join(' ');
+};
+
+
 export {
   CapitalizeWords,
   DataTableDateFormat,
-  HexToRGBA
+  HexToRGBA,
+  GenerateRandomText
 };

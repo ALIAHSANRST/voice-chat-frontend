@@ -14,6 +14,7 @@ import { COMMON_COLORS } from '@/src/utils/colors';
 import { COMMON_COMPONENTS } from '@/src/components';
 import { COMMON_CONTEXT } from '@/src/context';
 import { COMMON_VALIDATION } from '@/src/validation';
+import { ROUTES } from '@/src/utils/routes';
 
 const Container = styled.div`
   width: 100%;
@@ -33,13 +34,7 @@ const SignUpPage = () => {
 
   useEffect(() => {
     if (!currentUser) return
-    // router.push(`/${currentUser.account_type}`)
-
-    if (currentUser?.account_type === 'admin') {
-      router.push(`/${currentUser.account_type}`)
-    } else {
-      router.push('/user/user-guide')
-    }
+    router.push(`/${currentUser.account_type}`)
   }, [currentUser])
 
   const HandleSubmit = (values, { setSubmitting }) => {
@@ -52,26 +47,24 @@ const SignUpPage = () => {
       if (!currentUser) return;
 
       if (currentUser?.account_type === 'admin') {
-        router.push('/admin');
+        router.push(ROUTES.ADMIN_HOME.path);
       } else if (currentUser?.account_type === 'user') {
-        // router.push('/user');
-        router.push('/user/user-guide');
+        router.push(ROUTES.USER_HOME.path);
       } else {
-        router.push('/');
+        router.push(ROUTES.HOME.path);
       }
     }
 
-    SignUpLocal({ payload: values, callback: callback })
+    SignUpLocal({
+      payload: { ...values, confirmPassword: values.password },
+      callback: callback
+    })
   }
 
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: COMMON_VALIDATION.Authentication.SignUpSchema,
     onSubmit: HandleSubmit,
-    onReset: () => {
-      setInitialValues({ ...INITIAL_VALUES })
-      formik.resetForm(formik.initialValues)
-    }
   })
 
   return (

@@ -7,6 +7,8 @@ import { USER_COMPONENTS } from '@/src/components';
 import { COMMON_CONTEXT } from '@/src/context';
 import { USER_COLORS } from "@/src/utils/colors";
 import { USER_ASSETS } from "@/src/utils/assets";
+import { usePageTitle } from "@/src/hooks";
+import { ROUTES } from "@/src/utils/routes";
 
 const MainContainer = styled.div`
   width: 100%;
@@ -52,6 +54,8 @@ const UserHomePage = () => {
   const { currentUser } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext();
   const router = useRouter();
 
+  usePageTitle({ title: currentUser?.fullname || 'User Home' })
+
   return (
     <MainContainer>
       <USER_COMPONENTS.HeaderNavBar />
@@ -82,9 +86,7 @@ const UserHomePage = () => {
             <USER_COMPONENTS.Button
               text={'Take a free exam'}
               style={{ width: '100%', maxWidth: '22.5rem' }}
-              onClick={() => {
-                router.push('/user/free-exam');
-              }}
+              onClick={() => router.push(ROUTES.USER_FREE_EXAM.path)}
             />
           </Container>
           <div style={{ flex: 1, display: 'flex', gap: '1rem', flexDirection: 'column', maxWidth: '35rem' }}>

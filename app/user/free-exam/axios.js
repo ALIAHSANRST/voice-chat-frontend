@@ -17,7 +17,10 @@ const GetExamScript = async ({
         const text = sentence.text.trim();
         return text.endsWith('.') ? text : `${text}.`;
       }).join(' '))
-      setExamMeta({ examId: response.data?.exam?.info?._id })
+      setExamMeta({
+        examId: response.data?.exam?.info?._id,
+        rubrics: response.data?.exam?.info?.rubrics
+      })
     } else {
       throw new Error('Failed To Get Exam Script!')
     }

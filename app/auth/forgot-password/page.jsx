@@ -6,6 +6,7 @@ import { Formik, useFormik } from 'formik';
 import styled from 'styled-components';
 
 import { INITIAL_VALUES } from './values';
+import { ResetPassword } from './axios';
 import { ICON_ASSETS } from '@/src/utils/assets';
 import { usePageTitle } from '@/src/hooks';
 import { COMMON_COMPONENTS } from '@/src/components';
@@ -20,7 +21,10 @@ const Container = styled.div`
 `
 
 const ForgotPasswordPage = () => {
-  usePageTitle({ title: 'Forgot Password' })
+  const [isEmailSent, setIsEmailSent] = useState(false)
+  usePageTitle({
+    title: isEmailSent ? ['Email Sent', 'Forgot Password'] : 'Forgot Password'
+  })
 
   const router = useRouter()
   const { currentUser } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext()
@@ -29,40 +33,16 @@ const ForgotPasswordPage = () => {
 
   useEffect(() => {
     if (!currentUser) return
-    // router.push(`/${currentUser.account_type}`)
-
-    if (currentUser?.account_type === 'admin') {
-      router.push('/admin');
-    } else if (currentUser?.account_type === 'user') {
-      router.push('/user/user-guide');
-    } else {
-      router.push('/');
-    }
+    router.push(`/${currentUser.account_type}`)
   }, [currentUser])
 
   const HandleSubmit = (values, { setSubmitting }) => {
-    COMMON_COMPONENTS.Toast.showInfoToast({
-      message: 'Coming Soon!'
+    ResetPassword({
+      payload: values,
+      setIsLoading: setSubmitting,
+      router: router,
+      setIsEmailSent: setIsEmailSent
     })
-    // setSubmitting(true);
-
-    // const callback = (currentUser) => {
-    //   console.log(`currentUser: `, currentUser)
-
-    //   setSubmitting(false);
-    //   if (!currentUser) return;
-
-    //   if (currentUser?.account_type === 'admin') {
-    //     router.push('/admin');
-    //   } else if (currentUser?.account_type === 'user') {
-    //     // router.push('/user');
-    //     router.push('/user/user-guide');
-    //   } else {
-    //     router.push('/');
-    //   }
-    // }
-
-    // SignInLocal({ payload: values, callback: callback, isAdmin: isAdmin })
   }
 
   const formik = useFormik({
@@ -71,11 +51,31 @@ const ForgotPasswordPage = () => {
     onSubmit: HandleSubmit,
   })
 
+  if (isEmailSent) {
+    return (
+      <Container>
+        <div style={{ flex: 1 }}>
+          <COMMON_COMPONENTS.Auth.FormCard
+            header={
+              <img src={ICON_ASSETS.SMS_TRACKING_ICON} alt='sms-tracking-icon' />
+            }
+            title={'Email is Sent!'}
+            description={'A message is sent to your e-mail address for confirmation of password reset, that will expire in 5 minutes.'}>
+            <COMMON_COMPONENTS.Auth.GoBack />
+          </COMMON_COMPONENTS.Auth.FormCard>
+        </div>
+        <div style={{ flex: 1.5 }}>
+          <COMMON_COMPONENTS.Auth.SideCard />
+        </div>
+      </Container>
+    )
+  }
+
   return (
     <Container>
-      <div style={{ flex: 1 }}>
+      <div style={{ flex: 1, minHeight: '100%' }}>
         <Formik enableReinitialize>
-          <form onSubmit={formik.handleSubmit} method='POST'>
+          <form onSubmit={formik.handleSubmit} method='POST' style={{ height: '100%' }}>
             <COMMON_COMPONENTS.Auth.FormCard
               title={'Forgot password?'}
               description={'No worriers, we\'ll send you reset instructions'}>

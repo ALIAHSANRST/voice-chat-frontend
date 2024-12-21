@@ -85,5 +85,15 @@ export const USER_COLORS = {
       BarColor: '#0064FF',
       RippleColor: '#0064FF',
     }
+  },
+  Modal: {
+    Backdrop: '#1A1A1A',
+    Background: '#FFFFFF',
+    Text: '#1A1A1A',
+    SecondaryText: '#6D7580',
+    Dot: {
+      Outline: '#DADEE3',
+      Fill: '#0064FF',
+    }
   }
 }

@@ -23,7 +23,7 @@ const LineAuthResponsePage = () => {
       if (userData?.account_type === 'admin') {
         router.push(`/${userData.account_type}`);
       } else if (userData?.account_type === 'user') {
-        router.push('/user/user-guide');
+        router.push('/user');
       } else {
         router.push('/');
       }

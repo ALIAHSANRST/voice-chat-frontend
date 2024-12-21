@@ -9,7 +9,7 @@ const StyledButton = styled.button`
   padding: 0.5rem 1.25rem;
   font-size: 0.875rem;
   font-weight: 600;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   color: ${props => USER_COLORS.OutlinedButton[props.variant].Text};
 
   &:hover {

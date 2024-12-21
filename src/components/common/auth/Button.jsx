@@ -3,11 +3,12 @@ import styled from "styled-components";
 
 const StyledButton = styled.button`
   background-color: ${COMMON_COLORS.AUTH.primary_blue};
-  padding: 0.9rem 1rem;
+  padding: 0.9rem 1.5rem;
   border-radius: 0.5rem;
   color: ${COMMON_COLORS.AUTH.neutral_white};
   font-size: 1rem;
   font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
   cursor: pointer;
   border: none;
   outline: none;
