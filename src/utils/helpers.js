@@ -84,7 +84,6 @@ const GenerateRandomText = ({
   return words.join(' ');
 };
 
-
 export {
   CapitalizeWords,
   DataTableDateFormat,

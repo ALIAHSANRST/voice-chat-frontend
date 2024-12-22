@@ -82,7 +82,7 @@ const ResponsePage = ({ params }) => {
   }
 
   // handle missing or invalid data
-  if (!isLoading && !initialValues?.title) {
+  if (!isLoading && !initialValues?.description) {
     return <ADMIN_COMPONENTS.SomethingWentWrong />
   }
 
@@ -102,10 +102,19 @@ const ResponsePage = ({ params }) => {
   return (
     <ADMIN_COMPONENTS.ContentWrapper outerOnly={true}>
       <ADMIN_COMPONENTS.ContentWrapper innerOnly={true}>
+        <p className='g-dark-text mb-0'>
+          <b className='text-primary'>{'Feedback Comment: '}</b>
+          {initialValues?.description?.split('\n').map((line, i) => (
+            <React.Fragment key={i}>
+              {line}
+              {i < initialValues?.description?.split('\n').length - 1 && <br />}
+            </React.Fragment>
+          ))}
+        </p>
+
+        <hr className='m-0 p-0 text-muted my-2' />
+
         <Container className='m-0 p-0 d-flex flex-column'>
-          <span className='fw-medium fs-5 text-primary p-0 m-0 w-100'>
-            {initialValues?.title}
-          </span>
           <Container className='m-0 p-0 d-flex align-items-center justify-content-between gap-2 w-100 flex-wrap'>
             <small className='text-muted' style={{ fontSize: '0.8rem' }}>
               {initialValues?.user?.fullname}
@@ -120,17 +129,6 @@ const ResponsePage = ({ params }) => {
             </small>
           </Container>
         </Container>
-
-        <hr className='m-0 p-0 text-muted my-2' />
-
-        <p className='g-dark-text mb-0'>
-          {initialValues?.description?.split('\n').map((line, i) => (
-            <React.Fragment key={i}>
-              {line}
-              {i < initialValues?.description?.split('\n').length - 1 && <br />}
-            </React.Fragment>
-          ))}
-        </p>
       </ADMIN_COMPONENTS.ContentWrapper>
 
       <ADMIN_COMPONENTS.ContentWrapper innerOnly={true} className='mt-3'>
@@ -142,13 +140,23 @@ const ResponsePage = ({ params }) => {
             </tr>
           </thead>
           <tbody>
+            <tr>
+              <td className='g-dark-text'>Rating</td>
+              <td title={`Rating: ${initialValues?.rating}`}>
+                {
+                  [...Array(initialValues?.rating || 0)].map((_, i) => (
+                    <span key={i} className='text-primary'>&#9733;</span>
+                  ))
+                }
+              </td>
+            </tr>
             {initialValues?.responses?.map((response) => (
               <tr key={response.id}>
                 <td className='g-dark-text'>{response.question}</td>
                 <td>
                   {response.selectedOptions.map((option, index) => (
                     <Badge key={option.id} bg="dark" className="me-1" >
-                      {option.text}
+                      {option.text || 'Unknown'}
                     </Badge>
                   ))}
                 </td>

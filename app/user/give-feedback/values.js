@@ -1,6 +1,6 @@
 const INITIAL_VALUES = {
-  'title': '',
-  'description': ''
+  'description': '',
+  'rating': null,
 }
 
 export { INITIAL_VALUES }

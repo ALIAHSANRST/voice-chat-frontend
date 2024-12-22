@@ -66,6 +66,23 @@ export const USER_COLORS = {
       Border: '#DADEE3',
     },
   },
+  ExamHistory: {
+    PrimaryText: '#1A1A1A',
+    SecondaryText: '#6D7580',
+    TableRecordRow: {
+      Background: '#FFFFFF',
+      Border: '#EBEEF2',
+      Text: '#394452',
+      PrimaryBadge: {
+        Background: '#0064FF1A',
+        Text: '#0064FF',
+      },
+      DangerBadge: {
+        Background: '#FB040033',
+        Text: '#FB0400',
+      },
+    },
+  },
   FreeExam: {
     Background: {
       Page: '#F4F6F9',
@@ -85,6 +102,29 @@ export const USER_COLORS = {
       BarColor: '#0064FF',
       RippleColor: '#0064FF',
     }
+  },
+  GiveFeedback: {
+    Background: {
+      Page: '#F4F6F9',
+      Container: '#FFFFFF',
+    },
+    Text: {
+      Primary: '#1A1A1A',
+      Secondary: '#6D7580',
+    },
+    QuestionContainer: {
+      Border: '#DADEE3',
+      PrimaryText: '#2C3A4B',
+      SecondaryText: '#6D7580'
+    },
+    LikertScale: {
+      Background: '#D8E8FF',
+      Text: '#394452',
+      Selected: {
+        Border: '#0064FF',
+        Text: '#0064FF',
+      }
+    },
   },
   Modal: {
     Backdrop: '#1A1A1A',
