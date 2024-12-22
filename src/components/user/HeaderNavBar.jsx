@@ -66,7 +66,7 @@ const ItemContainer = styled.div`
   }
 `
 
-const HeaderNavBar = () => {
+const HeaderNavBar = ({ activeItem = 'home' }) => {
   const router = useRouter();
   const { currentUser } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext();
 
@@ -77,7 +77,7 @@ const HeaderNavBar = () => {
       <img src={COMMON_ASSETS.WIDE_LOGO} alt="Globalie Logo" style={{ height: '2rem' }} />
 
       <WrapperContainer>
-        <ItemContainer data-active={true}>
+        <ItemContainer data-active={activeItem === 'home'}>
           <Link href={
             (() => {
               if (!currentUser) return ROUTES.HOME.path;
@@ -92,8 +92,8 @@ const HeaderNavBar = () => {
               <ItemContainer>
                 <Link href={'#'}>My Lesson</Link>
               </ItemContainer>
-              <ItemContainer>
-                <Link href={'#'}>History</Link>
+              <ItemContainer data-active={activeItem === 'history'}>
+                <Link href={ROUTES.USER_EXAM_HISTORY.path}>History</Link>
               </ItemContainer>
             </>
           )

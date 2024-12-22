@@ -34,12 +34,12 @@ const GetResponse = async ({
       throw new Error('Invalid response format')
     }
 
-    const { title, description, user_id, responses, createdAt, updatedAt } = response.data.data
+    const { description, rating, user_id, responses, createdAt, updatedAt } = response.data.data
 
     // transform and set form values
     setInitialValues({
-      title: title || 'Unknown',
       description: description || 'Unknown',
+      rating: rating || 0,
       user: {
         fullname: user_id?.fullname || 'Unknown',
         email: user_id?.email || 'Unknown'

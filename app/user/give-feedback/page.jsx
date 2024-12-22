@@ -1,32 +1,159 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Button, Form } from 'react-bootstrap';
-import { Clear, Done } from '@mui/icons-material';
-import { Formik, useFormik, FieldArray } from 'formik';
-import { BeatLoader } from 'react-spinners';
+import { Form } from 'react-bootstrap';
+import { Formik, useFormik } from 'formik';
+import { useRouter } from 'next/navigation';
+import styled from 'styled-components';
 
 import { SubmitFeedback, GetQuestions } from './axios';
 import { INITIAL_VALUES } from './values'
 import { USER_VALIDATION } from '@/src/validation';
-import { COMMON_COMPONENTS } from '@/src/components';
+import { COMMON_COMPONENTS, USER_COMPONENTS } from '@/src/components';
+import { USER_COLORS } from '@/src/utils/colors';
 import usePageTitle from '@/src/hooks/usePageTitle';
-import { faCheck, faCross, faXmark } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useRouter } from 'next/navigation';
+
+const WrapperContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  padding: 3rem;
+  background-color: ${USER_COLORS.GiveFeedback.Background.Page};
+  font-family: 'Montserrat', sans-serif;
+`
+
+const MainContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  border-radius: 1rem;
+  background-color: ${USER_COLORS.GiveFeedback.Background.Container};
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 2.25rem;
+`
+
+const HeadingContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+`
+
+const HeadingText = styled.h1`
+  font-size: 1.625rem;
+  font-weight: 600;
+  margin-bottom: 0.875rem;
+  color: ${USER_COLORS.GiveFeedback.Text.Primary};
+`
+
+const SubHeadingText = styled.h2`
+  font-size: 1rem;
+  font-weight: 400;
+  margin: 0;
+  color: ${USER_COLORS.GiveFeedback.Text.Secondary};
+`
+
+const LikertScaleContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+`
+
+const LikertScaleOption = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: ${USER_COLORS.GiveFeedback.LikertScale.Background};
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  width: 4.75rem;
+  border: 1px solid ${props => props.isSelected ? USER_COLORS.GiveFeedback.LikertScale.Selected.Border : USER_COLORS.GiveFeedback.LikertScale.Background};
+  user-select: none;
+  cursor: pointer;
+
+  p {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+    color: ${props => props.isSelected ? USER_COLORS.GiveFeedback.LikertScale.Selected.Text : USER_COLORS.GiveFeedback.LikertScale.Text};
+  }
+`
+
+const QuestionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid ${USER_COLORS.GiveFeedback.QuestionContainer.Border};
+`
+
+const QuestionHeading = styled.h3`
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  color: ${USER_COLORS.GiveFeedback.QuestionContainer.PrimaryText};
+`
+
+const QuestionSubHeading = styled.p`
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin: 0;
+  color: ${USER_COLORS.GiveFeedback.QuestionContainer.SecondaryText};
+`
+
+const OptionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .form-check-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: ${USER_COLORS.GiveFeedback.QuestionContainer.PrimaryText};
+  }
+`
+
+const QuestionError = styled.p`
+  font-size: 1rem;
+  font-weight: 400;
+  margin: 0;
+  color: #FF0000;
+`
+
+const FeedbackTextArea = styled.textarea`
+  width: 100%;
+  height: 10rem;
+  border-radius: 0.5rem;
+  border: 1px solid ${USER_COLORS.GiveFeedback.QuestionContainer.Border};
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  color: ${USER_COLORS.GiveFeedback.QuestionContainer.PrimaryText};
+
+  &:focus {
+    outline: none;
+    border-color: ${USER_COLORS.GiveFeedback.LikertScale.Selected.Border};
+  }
+
+  &::placeholder {
+    color: ${USER_COLORS.GiveFeedback.QuestionContainer.SecondaryText};
+    font-weight: 600;
+  }
+`
 
 const ProvideFeedbackPage = () => {
   const router = useRouter();
-  usePageTitle({ title: 'Submit Feedback' });
+  usePageTitle({ title: 'Give Feedback' });
 
   const [initialValues, setInitialValues] = useState({ ...INITIAL_VALUES });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [isLoading, setIsLoading] = useState(true);
   const [questions, setQuestions] = useState([]);
-
-  const [showClearDialogue, setShowClearDialogue] = useState(false);
-  const [showConfirmationDialogue, setShowConfirmationDialogue] = useState(false);
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -42,160 +169,127 @@ const ProvideFeedbackPage = () => {
     enableReinitialize: true,
     initialValues: initialValues,
     validationSchema: USER_VALIDATION.Feedback.FeedbackSchema,
-    onSubmit: () => { setShowConfirmationDialogue(true) }
+    onSubmit: () => {
+      SubmitFeedback({
+        payload: formik.values,
+        setIsSubmitting: setIsSubmitting,
+        router: router
+      });
+    }
   });
 
   return (
-    <div className='py-4 container' style={{ minHeight: '100vh' }}>
-      <div className="border border-muted rounded-3 bg-white shadow-sm p-4">
-        <div className='d-flex justify-content-between align-items-center'>
-          <h4 className='fw-medium text-muted m-0 p-0 text-center'>Submit Feedback</h4>
-          <Button variant='outline-secondary' size='sm' href='/user'>
-            Go to Home
-          </Button>
-        </div>
-        <hr className='w-100 p-0 m-0 my-3 text-muted' />
+    <WrapperContainer>
+      <Formik enableReinitialize>
+        <form onSubmit={formik.handleSubmit}>
+          <MainContainer>
+            <HeadingContainer>
+              <div>
+                <HeadingText>We'd love your feedback!</HeadingText>
+                <SubHeadingText>Please let us know about your experience to help us improve.</SubHeadingText>
+              </div>
+            </HeadingContainer>
 
-        {
-          isLoading &&
-          <COMMON_COMPONENTS.Loader />
-        }
+            {
+              isLoading &&
+              <QuestionContainer>
+                <div style={{ padding: '3rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                  <COMMON_COMPONENTS.Loader wrapped message='Loading...' />
+                </div>
+              </QuestionContainer>
+            }
 
-        {
-          !isLoading &&
-          <Formik enableReinitialize>
-            <Form onSubmit={formik.handleSubmit}>
-              <Row>
-                <Col xl={12}>
-                  <COMMON_COMPONENTS.TextField
-                    name='title'
-                    disabled={isSubmitting}
-                    formik={formik}
-                    label='Title'
-                    placeholder='Enter Title'
-                    required={true}
-                  />
-                </Col>
-                <Col xl={12}>
-                  <COMMON_COMPONENTS.TextField
-                    name='description'
-                    disabled={isSubmitting}
-                    formik={formik}
-                    label='Description'
-                    placeholder='Type Description Here...'
-                    as='textarea'
-                    required={true}
-                  />
-                </Col>
-              </Row>
-
-              <p className='fw-medium text-muted m-0 p-0 fs-6 mb-3'>
-                Please select the most appropriate option for each question.
-              </p>
-
-              {questions.map((question, index) => (
-                <Row key={index} className='w-100 p-0 m-0 border border-muted px-2 py-3 rounded-3 mb-3 gap-2'>
-                  <Col xl={12}>
-                    <p className='fw-medium text-muted m-0 p-0 fs-6'>
-                      {index + 1}. {question.question}
-                    </p>
-                  </Col>
-                  {question?.options?.map((option, optionIndex) => (
-                    <Col xl={3} lg={4} md={6} sm={12} key={optionIndex}>
-                      <Form.Check
-                        type={question?.question_type?.toLowerCase() === 'single' ? 'radio' : 'checkbox'}
-                        name={`question_${question._id}`}
-                        id={`option_${option._id}`}
-                        value={option._id}
-                        label={option.text}
-                        disabled={isSubmitting}
-                        onChange={formik.handleChange}
-                        required={
-                          question?.question_type?.toLowerCase() === 'single'
-                            ? true
-                            : optionIndex === 0 && !formik.values[`question_${question._id}`]?.length
-                        }
-                        checked={
-                          question?.question_type?.toLowerCase() === 'single'
-                            ? formik.values[`question_${question._id}`] === option._id
-                            : formik.values[`question_${question._id}`]?.includes(option._id)
-                        }
-                      />
-                    </Col>
-                  ))}
-                </Row>
-              ))}
-
-              <Container className='p-0 d-flex gap-3 mt-3 justify-content-end'>
-                <Button
-                  className='text-uppercase d-flex justify-content-center align-items-center gap-2'
-                  variant='danger'
-                  onClick={(e) => setShowClearDialogue(true)}>
-                  <FontAwesomeIcon icon={faXmark} />
-                  {'Clear'}
-                </Button>
-                <Button
-                  type='submit'
-                  className='text-uppercase d-flex justify-content-center align-items-center gap-2'
-                  style={isSubmitting ? { height: '2.35rem' } : {}}
-                  variant='success'>
+            {
+              !isLoading &&
+              <>
+                <QuestionContainer>
+                  <QuestionHeading>How Was Your Experience?</QuestionHeading>
+                  <QuestionSubHeading>Rate your satisfaction with the course on a scale of 1 to 5.</QuestionSubHeading>
+                  <LikertScaleContainer>
+                    {
+                      [1, 2, 3, 4, 5].map((option, index) => (
+                        <LikertScaleOption
+                          key={index}
+                          disabled={isSubmitting}
+                          isSelected={formik.values.rating === option}
+                          onClick={() => formik.setFieldValue('rating', option)}>
+                          <p>{option}</p>
+                        </LikertScaleOption>
+                      ))
+                    }
+                  </LikertScaleContainer>
                   {
-                    isSubmitting
-                      ?
-                      <>
-                        <BeatLoader color='#fff' size={8} />
-                      </>
-                      :
-                      <>
-                        <FontAwesomeIcon icon={faCheck} />
-                        {'Submit'}
-                      </>
+                    formik.errors.rating &&
+                    <QuestionError>{formik.errors.rating}</QuestionError>
                   }
-                </Button>
-              </Container>
-            </Form>
-          </Formik>
-        }
-      </div>
+                </QuestionContainer>
+                {
+                  questions.map((question, index) => (
+                    <QuestionContainer key={question._id}>
+                      <QuestionHeading>{index + 1}. {question.question}</QuestionHeading>
+                      <OptionContainer>
+                        {
+                          question?.options?.map((option, optionIndex) => (
+                            <Form.Check
+                              key={optionIndex}
+                              type={question?.question_type?.toLowerCase() === 'single' ? 'radio' : 'checkbox'}
+                              name={`question_${question._id}`}
+                              id={`option_${option._id}`}
+                              value={option._id}
+                              label={option.text}
+                              disabled={isSubmitting}
+                              onChange={formik.handleChange}
+                              required={
+                                question?.question_type?.toLowerCase() === 'single'
+                                  ? true
+                                  : optionIndex === 0 && !formik.values[`question_${question._id}`]?.length
+                              }
+                              checked={
+                                question?.question_type?.toLowerCase() === 'single'
+                                  ? formik.values[`question_${question._id}`] === option._id
+                                  : formik.values[`question_${question._id}`]?.includes(option._id)
+                              }
+                            />
+                          ))
+                        }
+                      </OptionContainer>
+                      {
+                        formik.errors[`question_${question._id}`] &&
+                        <QuestionError>{formik.errors[`question_${question._id}`]}</QuestionError>
+                      }
+                    </QuestionContainer>
+                  ))
+                }
 
-      {
-        showClearDialogue &&
-        <COMMON_COMPONENTS.AlertDialogue
-          title='Warning'
-          positiveMessage='Proceed'
-          negativeMessage='Cancel'
-          positiveCallback={() => {
-            setInitialValues({ ...INITIAL_VALUES });
-            formik.resetForm(formik.initialValues);
-            setShowClearDialogue(false);
-          }}
-          negativeCallback={() => setShowClearDialogue(false)}
-          show={showClearDialogue}
-          handleClose={() => setShowClearDialogue(false)}>
-          <p>Are you sure you want to clear this form?</p>
-        </COMMON_COMPONENTS.AlertDialogue>
-      }
+                <QuestionContainer>
+                  <QuestionHeading>Share Your Thoughts</QuestionHeading>
+                  <QuestionSubHeading>We'd love to hear your detailed feedback to help us improve.</QuestionSubHeading>
+                  <FeedbackTextArea
+                    name='description'
+                    value={formik.values.description}
+                    onChange={formik.handleChange}
+                    disabled={isSubmitting}
+                    placeholder='Write your feedback here...'
+                  />
+                  {
+                    formik.errors.description &&
+                    <QuestionError>{formik.errors.description}</QuestionError>
+                  }
+                </QuestionContainer>
 
-      {
-        showConfirmationDialogue &&
-        <COMMON_COMPONENTS.AlertDialogue
-          title='Confirmation'
-          positiveMessage='Proceed'
-          negativeMessage='Cancel'
-          positiveCallback={async () => {
-            setShowConfirmationDialogue(false);
-            await SubmitFeedback({ payload: formik.values, setIsSubmitting, router });
-            setInitialValues({ ...INITIAL_VALUES });
-            formik.resetForm(formik.initialValues);
-          }}
-          negativeCallback={() => setShowConfirmationDialogue(false)}
-          show={showConfirmationDialogue}
-          handleClose={() => setShowConfirmationDialogue(false)}>
-          <p>Are you sure you want to submit this feedback?</p>
-          <p>This action cannot be undone!</p>
-        </COMMON_COMPONENTS.AlertDialogue>
-      }
-    </div>
+                <div style={{ marginLeft: 'auto' }}>
+                  <USER_COMPONENTS.Button
+                    type={'submit'}
+                    text={'Submit Feedback'}
+                    disabled={isSubmitting}
+                  />
+                </div>
+              </>
+            }
+          </MainContainer>
+        </form>
+      </Formik>
+    </WrapperContainer>
   )
 };
 

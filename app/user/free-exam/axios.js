@@ -19,7 +19,7 @@ const GetExamScript = async ({
       }).join(' '))
       setExamMeta({
         examId: response.data?.exam?.info?._id,
-        rubrics: response.data?.exam?.info?.rubrics
+        rubrics: response.data?.exam?.info?.rubrics_levels
       })
     } else {
       throw new Error('Failed To Get Exam Script!')

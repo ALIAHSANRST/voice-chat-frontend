@@ -34,6 +34,7 @@ const ROUTES = {
   USER_HOME: { path: '/user', isProtected: true, name: 'User' },
   USER_FREE_EXAM: { path: '/user/free-exam', isProtected: false, name: 'Free Exam' },
   USER_GIVE_FEEDBACK: { path: '/user/give-feedback', isProtected: true, name: 'Give Feedback' },
+  USER_EXAM_HISTORY: { path: '/user/exam-history', isProtected: true, name: 'Exam History' },
 }
 
 const GetPublicRoutes = () => {

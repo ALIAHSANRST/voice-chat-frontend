@@ -198,13 +198,11 @@ const ExamPage = () => {
     })
 
     socket.on('examResult', result => {
-      setExamResult({
-        ...result,
-        rubrics: examMeta?.rubrics,
-      });
+      stopTranscribing();
+      setExamResult({ ...result, ...examMeta });
       setIsCalculatingScore(false);
     })
-  }, [socket]);
+  }, [socket, examMeta]);
 
   const startRecording = async () => {
     try {

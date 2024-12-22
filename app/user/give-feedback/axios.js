@@ -24,7 +24,7 @@ const SubmitFeedback = async ({
   setIsSubmitting(true)
 
   payload = {
-    title: payload.title,
+    rating: payload.rating,
     description: payload.description,
     responses: Object.entries(payload)
       .filter(([key]) => key.startsWith('question_'))

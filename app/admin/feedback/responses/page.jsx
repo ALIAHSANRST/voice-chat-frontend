@@ -97,9 +97,9 @@ const ResponsesPage = () => {
   const columns = useMemo(
     () => [
       { accessorKey: 'index', header: '#', size: 0 },
-      { accessorKey: 'title', header: 'Title', size: 0 },
       { accessorKey: 'user_id.fullname', header: 'Respondent', size: 0 },
       { accessorKey: 'user_id.email', header: 'Respondent Email', size: 0 },
+      { accessorKey: 'rating', header: 'Rating', size: 0 },
       { accessorKey: 'createdAt', header: 'Submitted At', size: 0 },
     ],
     [],
