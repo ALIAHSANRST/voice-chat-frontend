@@ -14,7 +14,6 @@ const FeedbackSchema = Yup.object().shape({
   description: Yup.string()
     .min(20, 'Must Be At Least 20 Characters Long!')
     .max(2000, 'Cannot Exceed 2000 Characters!')
-    .required('Required!')
     .trim(),
 
   rating: Yup.number()

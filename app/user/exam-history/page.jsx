@@ -170,7 +170,7 @@ const ExamHistoryPage = () => {
 
   const GetPaginationGroup = () => {
     let start = Math.max(filters.page - 2, 1);
-    let end = Math.min(start + 4, data.totalPages);
+    let end = Math.min(start + 4, data?.totalPages);
 
     if (end - start < 4) {
       start = Math.max(end - 4, 1);
@@ -277,7 +277,7 @@ const ExamHistoryPage = () => {
 
           <button
             onClick={() => handlePageChange(filters.page + 1)}
-            disabled={filters.page === data.totalPages || isLoading}
+            disabled={filters.page === data?.totalPages || isLoading}
           >
             Next
           </button>
