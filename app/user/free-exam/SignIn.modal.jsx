@@ -47,7 +47,7 @@ const SignInModal = () => {
   })
 
   return (
-    <USER_COMPONENTS.Modal.Main modalContainerStyle={{ maxWidth: '32rem', width: '100%' }}>
+    <USER_COMPONENTS.Modal.Main modalContainerStyle={{ maxWidth: '32rem', width: '100%', paddingTop: '1rem' }}>
       <Formik enableReinitialize>
         <form onSubmit={formik.handleSubmit} method='POST'>
           <COMMON_COMPONENTS.Auth.FormCard
