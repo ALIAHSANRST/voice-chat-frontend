@@ -256,32 +256,35 @@ const ExamHistoryPage = () => {
           </div>
         }
 
-        <TablePaginationContainer>
-          <button
-            onClick={() => handlePageChange(filters.page - 1)}
-            disabled={filters.page === 1 || isLoading}
-          >
-            Prev
-          </button>
-
-          {GetPaginationGroup().map(pageNumber => (
+        {
+          !isLoading && data?.examHistory?.length > 0 &&
+          <TablePaginationContainer>
             <button
-              key={pageNumber}
-              onClick={() => handlePageChange(pageNumber)}
-              className={filters.page === pageNumber ? 'active' : ''}
-              disabled={isLoading}
+              onClick={() => handlePageChange(filters.page - 1)}
+              disabled={filters.page === 1 || isLoading}
             >
-              {pageNumber}
+              Prev
             </button>
-          ))}
 
-          <button
-            onClick={() => handlePageChange(filters.page + 1)}
-            disabled={filters.page === data?.totalPages || isLoading}
-          >
-            Next
-          </button>
-        </TablePaginationContainer>
+            {GetPaginationGroup().map(pageNumber => (
+              <button
+                key={pageNumber}
+                onClick={() => handlePageChange(pageNumber)}
+                className={filters.page === pageNumber ? 'active' : ''}
+                disabled={isLoading}
+              >
+                {pageNumber}
+              </button>
+            ))}
+
+            <button
+              onClick={() => handlePageChange(filters.page + 1)}
+              disabled={filters.page === data?.totalPages || isLoading}
+            >
+              Next
+            </button>
+          </TablePaginationContainer>
+        }
       </ContentContainer>
     </MainContainer>
   )
