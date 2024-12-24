@@ -7,7 +7,6 @@ import { config as configCore } from "@fortawesome/fontawesome-svg-core";
 configCore.autoAddCss = false;
 
 import "./app.css";
-import HomePage from "./HomePage";
 import { COMMON_CONTEXT, USER_CONTEXT } from "@/src/context";
 
 const App = ({ children }) => {
@@ -16,7 +15,6 @@ const App = ({ children }) => {
       <body>
         <ToastContainer />
         <COMMON_CONTEXT.AuthenticationContext.AuthenticationProvider>
-          <HomePage />
           <USER_CONTEXT.SocketContext.SocketProvider>
             <USER_CONTEXT.VoiceContext.AgoraProvider>
               {children}
