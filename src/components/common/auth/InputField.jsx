@@ -29,6 +29,8 @@ const InputField = ({
   error,
   disabled,
   name,
+  inputContainerStyle,
+  inputStyle,
 }) => {
   return (
     <div style={{
@@ -36,13 +38,16 @@ const InputField = ({
       flexDirection: 'column',
       gap: '0.5rem',
     }}>
-      <label style={{
-        padding: '0 1rem',
-        fontSize: '1rem',
-        fontWeight: '600',
-        opacity: 0.8,
-        color: COMMON_COLORS.AUTH.neutral_black,
-      }}>{label}</label>
+      {
+        label &&
+        <label style={{
+          padding: '0 1rem',
+          fontSize: '1rem',
+          fontWeight: '600',
+          opacity: 0.8,
+          color: COMMON_COLORS.AUTH.neutral_black,
+        }}>{label}</label>
+      }
       <div style={{
         padding: '0.75rem 1rem',
         borderRadius: '0.5rem',
@@ -51,6 +56,7 @@ const InputField = ({
         display: 'flex',
         alignItems: 'center',
         gap: '0.25rem',
+        ...inputContainerStyle
       }}>
         {leftIcon && (
           typeof leftIcon === 'string' ? (
@@ -64,6 +70,7 @@ const InputField = ({
           value={value}
           onChange={onChange}
           disabled={disabled}
+          style={{ ...inputStyle }}
         />
         {rightIcon && (
           typeof rightIcon === 'string' ? (
