@@ -21,6 +21,10 @@ const WrapperContainer = styled.div`
   min-height: 100vh;
   padding: 3rem;
   background-color: ${USER_COLORS.FreeExam.Background.Page};
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
 `
 
 const MainContainer = styled.div`
@@ -42,6 +46,12 @@ const ResultMainContainer = styled.div`
   border-radius: 1rem;
   padding: 3rem;
   background-color: ${USER_COLORS.FreeExam.Background.Container};
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+    min-height: calc(100vh - 3rem);
+    gap: 1.5rem;
+  }
 `
 
 const HeadingContainer = styled.div`
@@ -51,6 +61,12 @@ const HeadingContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 2.25rem 2.25rem 0 2.25rem;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
 `
 
 const HeadingText = styled.h1`
@@ -58,6 +74,10 @@ const HeadingText = styled.h1`
   font-weight: 600;
   margin-bottom: 0.875rem;
   color: ${USER_COLORS.FreeExam.Text.Primary};
+
+  @media (max-width: 768px) {
+    font-size: 1.325rem;
+  }
 `
 
 const SubHeadingText = styled.h2`
@@ -65,6 +85,10 @@ const SubHeadingText = styled.h2`
   font-weight: 400;
   margin: 0;
   color: ${USER_COLORS.FreeExam.Text.Secondary};
+
+  @media (max-width: 768px) {
+    font-size: 0.925rem;
+  }
 `
 
 const IconButton = styled.button`
@@ -77,6 +101,11 @@ const IconButton = styled.button`
 const ContentContainer = styled.div`
   padding: 2.25rem 2.25rem 0 2.25rem;
   display: flex;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+    flex-direction: column;
+  }
 `
 
 const LeftContentContainer = styled.div`
@@ -86,12 +115,21 @@ const LeftContentContainer = styled.div`
   justify-content: center;
   border-right: 1px solid ${USER_COLORS.FreeExam.Border};
   padding: 2.25rem;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
 `
 
 const FaceMaskImage = styled.img`
   width: 10rem;
   height: 10rem;
   z-index: 1;
+
+  @media (max-width: 768px) {
+    width: 37.5vw;
+    height: 37.5vw;
+  }
 `
 
 const RightContentContainer = styled.div`
@@ -100,6 +138,10 @@ const RightContentContainer = styled.div`
   align-items: center;
   width: '100%';
   padding: 0 0 2.25rem 2.25rem;
+
+  @media (max-width: 768px) {
+    padding: 0;
+  }
 `
 
 const ContentTextContainer = styled.div`
@@ -109,6 +151,11 @@ const ContentTextContainer = styled.div`
   border-radius: 1rem;
   width: 100%;
   user-select: none;
+
+  @media (max-width: 768px) {
+    margin-top: 2.75rem;
+    padding: 1.5rem;
+  }
 `
 
 const ContentText = styled.div`
@@ -117,6 +164,10 @@ const ContentText = styled.div`
   color: ${USER_COLORS.FreeExam.TextContainer.PrimaryText};
   filter: none;
   transition: filter 0.3s ease-in-out;
+
+  @media (max-width: 768px) {
+    font-size: 1.125rem;
+  }
 `
 
 const FooterContainer = styled.div`
@@ -127,6 +178,11 @@ const FooterContainer = styled.div`
   justify-content: space-between;
   padding: 2.25rem;
   border-top: 1px solid ${USER_COLORS.FreeExam.Border};
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+    gap: 0.75rem;
+  }
 `
 
 const ExamPage = () => {

@@ -7,6 +7,10 @@ const StyledBackText = styled.span`
   font-size: 1.25rem;
   font-weight: 600;
   color: ${COMMON_COLORS.AUTH.primary_blue};
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 `
 
 const StyledBackIcon = styled.img`

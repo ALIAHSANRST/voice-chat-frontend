@@ -14,7 +14,10 @@ const HamburgerMenu = styled.div`
   display: none;
   cursor: pointer;
   padding: 0.5rem;
-  transition: all 0.3s ease;
+  transition: all 0.6s ease;
+  position: relative;
+  width: 2rem;
+  height: 2rem;
 
   @media (max-width: 768px) {
     display: block;
@@ -22,17 +25,41 @@ const HamburgerMenu = styled.div`
   }
 
   div {
+    position: absolute;
     width: 1.5rem;
     height: 0.2rem;
     background-color: #0066FF;
-    margin-bottom: 0.25rem;
     transition: all 0.3s ease;
-    transform-origin: left;
     border-radius: 0.25rem;
     opacity: 0.5;
-    
-    &:last-child {
-      margin-bottom: 0;
+    left: 0.25rem;
+  }
+
+  div:first-child {
+    top: 0.5rem;
+  }
+
+  div:nth-child(2) {
+    top: 0.9rem;
+  }
+
+  div:last-child {
+    top: 1.3rem;
+  }
+
+  &[data-is-hamburger-menu-open="true"] {
+    div:first-child {
+      top: 0.9rem;
+      transform: rotate(45deg);
+    }
+
+    div:nth-child(2) {
+      opacity: 0;
+    }
+
+    div:last-child {
+      top: 0.9rem;
+      transform: rotate(-45deg);
     }
   }
 `
@@ -899,6 +926,7 @@ const WhatOurClientsSaySectionTestimonialCard = styled.div`
       padding: 1.25rem;
       border-radius: 50%;
       cursor: pointer;
+      user-select: none;
 
       @media (max-width: 768px) {
         padding: 0.75rem;
@@ -1189,6 +1217,10 @@ const FooterSectionLogoColumn = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    img {
+      cursor: pointer;
+    }
   }
 `
 
@@ -1237,7 +1269,7 @@ const HomePage = () => {
   const SectionOneImagesContainerRef = useRef(null);
 
   const [isHamburgerMenuOpen, setIsHamburgerMenuOpen] = useState(false);
-  const [openFAQIndex, setOpenFAQIndex] = useState(0); // Track which FAQ is open
+  const [openFAQIndex, setOpenFAQIndex] = useState(0);
 
   const handleResize = () => {
     const backgroundGradient = document.querySelector('img[alt="background gradient"]');
@@ -1292,7 +1324,7 @@ const HomePage = () => {
               </div>
             </Link>
           </NavRegisterButton>
-          <HamburgerMenu id="hamburger-menu" onClick={() => setIsHamburgerMenuOpen(!isHamburgerMenuOpen)}>
+          <HamburgerMenu id="hamburger-menu" onClick={() => setIsHamburgerMenuOpen(!isHamburgerMenuOpen)} data-is-hamburger-menu-open={!isHamburgerMenuOpen}>
             <div />
             <div />
             <div />

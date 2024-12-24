@@ -17,6 +17,11 @@ const Container = styled.div`
   padding: 3rem;
   gap: 3rem;
   ${props => props.style}
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+    gap: 2rem;
+  }
 `
 
 const ContentWrapper = styled.div`
@@ -27,11 +32,20 @@ const ContentWrapper = styled.div`
   max-width: 24rem;
   align-self: center;
   ${props => props.style}
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    gap: 1.5rem;
+  }
 `
 
 const HeaderWrapper = styled.div`
   margin-bottom: 2rem;
   ${props => props.style}
+
+  @media (max-width: 768px) {
+    margin-bottom: 1.5rem;
+  }
 `
 
 const Title = styled.h1`
@@ -39,6 +53,11 @@ const Title = styled.h1`
   font-weight: 600;
   margin-bottom: 0.5rem;
   ${props => props.style}
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+  }
 `
 
 const Description = styled.p`
@@ -47,10 +66,18 @@ const Description = styled.p`
   margin: 0;
   color: ${COMMON_COLORS.AUTH.neutral_4};
   ${props => props.style}
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+  }
 `
 
 const Spacer = styled.div`
   &nbsp;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `
 
 const FormCard = ({

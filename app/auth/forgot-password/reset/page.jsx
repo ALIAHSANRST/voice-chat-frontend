@@ -24,6 +24,25 @@ const Container = styled.div`
   display: flex;
 `
 
+const LeftSideContainer = styled.div`
+  flex: 1;
+  form {
+    height: 100%;
+
+    @media (max-width: 768px) {
+      height: unset;
+    }
+  }
+`
+
+const RightSideContainer = styled.div`
+  flex: 1.5;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+`
+
 const ResetPasswordPage = () => {
   usePageTitle({ title: 'Reset Password' })
 
@@ -62,9 +81,9 @@ const ResetPasswordPage = () => {
 
   return (
     <Container>
-      <div style={{ flex: 1, minHeight: '100%' }}>
+      <LeftSideContainer>
         <Formik enableReinitialize>
-          <form onSubmit={formik.handleSubmit} method='POST' style={{ height: '100%' }}>
+          <form onSubmit={formik.handleSubmit} method='POST'>
             <COMMON_COMPONENTS.Auth.FormCard
               title={'Reset password'}
               description={'Enter your new password'}>
@@ -112,10 +131,10 @@ const ResetPasswordPage = () => {
             </COMMON_COMPONENTS.Auth.FormCard>
           </form>
         </Formik>
-      </div>
-      <div style={{ flex: 1.5 }}>
+      </LeftSideContainer>
+      <RightSideContainer>
         <COMMON_COMPONENTS.Auth.SideCard />
-      </div>
+      </RightSideContainer>
     </Container>
   )
 };

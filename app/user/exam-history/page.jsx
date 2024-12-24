@@ -1,11 +1,9 @@
 'use client'
 
-import { useRouter } from "next/navigation";
 import styled from "styled-components";
 import moment from "moment";
 
 import { COMMON_COMPONENTS, USER_COMPONENTS } from '@/src/components';
-import { COMMON_CONTEXT } from '@/src/context';
 import { USER_COLORS } from "@/src/utils/colors";
 import { usePageTitle } from "@/src/hooks";
 import { useEffect, useState } from "react";
@@ -23,6 +21,10 @@ const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
 `
 
 const TableHeaderContainer = styled.div`
@@ -39,12 +41,20 @@ const TableHeaderContainer = styled.div`
       font-weight: 600;
       color: ${USER_COLORS.ExamHistory.PrimaryText};
       margin: 0;
+
+      @media (max-width: 768px) {
+        font-size: 1.375rem;
+      }
     }
 
     p {
       font-size: 1rem;
       color: ${USER_COLORS.ExamHistory.SecondaryText};
       margin: 0;
+
+      @media (max-width: 768px) {
+        font-size: 0.875rem;
+      }
     }
   }
 `
@@ -55,6 +65,10 @@ const TableBodyContainer = styled.div`
     border-collapse: separate;
     font-family: 'Montserrat', sans-serif;
     border-spacing: 0 0.75rem;
+
+    @media (max-width: 768px) {
+      border-spacing: 0 0.5rem;
+    }
   }
 
   thead {
@@ -66,6 +80,10 @@ const TableBodyContainer = styled.div`
         text-align: left;
         padding: 0.75rem 2rem 0 2rem;
         text-align: center;
+
+        @media (max-width: 768px) {
+          padding: 0.5rem 1.5rem;
+        }
       }
 
       th:first-child {
@@ -89,6 +107,12 @@ const TableBodyContainer = styled.div`
         border-top: 1px solid ${USER_COLORS.ExamHistory.TableRecordRow.Border};
         border-bottom: 1px solid ${USER_COLORS.ExamHistory.TableRecordRow.Border};
         text-align: center;
+
+        @media (max-width: 768px) {
+          padding: 1rem 1.5rem;
+          font-size: 0.9rem;
+          font-weight: 500;
+        }
       }
 
       td:first-child {
@@ -96,6 +120,11 @@ const TableBodyContainer = styled.div`
         border-bottom-left-radius: 1rem;
         border-left: 1px solid ${USER_COLORS.ExamHistory.TableRecordRow.Border};
         text-align: left;
+
+        @media (max-width: 768px) {
+          border-top-left-radius: 0.5rem;
+          border-bottom-left-radius: 0.5rem;
+        }
       }
 
       td:last-child {
@@ -103,6 +132,11 @@ const TableBodyContainer = styled.div`
         border-bottom-right-radius: 1rem;
         border-right: 1px solid ${USER_COLORS.ExamHistory.TableRecordRow.Border};
         text-align: right;
+
+        @media (max-width: 768px) {
+          border-top-right-radius: 0.5rem;
+          border-bottom-right-radius: 0.5rem;
+        }
       }
     }
   }
@@ -116,6 +150,11 @@ const ScoreBadgeContainer = styled.div`
   font-size: 1rem;
   font-weight: 600;
   display: inline-block;
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+    padding: 0.25rem 1rem;
+  }
 `
 
 const TablePaginationContainer = styled.div`
@@ -132,6 +171,10 @@ const TablePaginationContainer = styled.div`
     cursor: pointer;
     color: ${USER_COLORS.ExamHistory.SecondaryText};
     font-weight: 600;
+
+    @media (max-width: 768px) {
+      padding: 0.25rem 0.75rem;
+    }
 
     &:disabled {
       opacity: 0.5;

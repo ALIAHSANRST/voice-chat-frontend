@@ -32,6 +32,13 @@ const ModalContainer = styled.div`
     display: none;
   }
   ${props => props.modalContainerStyle}
+
+  @media (max-width: 768px) {
+    border-radius: 1rem;
+    padding: 1.5rem;
+    width: calc(100% - 3rem) !important;
+    max-width: calc(100% - 3rem) !important;
+  }
 `
 
 const IconButton = styled.button`
@@ -42,6 +49,11 @@ const IconButton = styled.button`
   position: absolute;
   top: 1.5rem;
   right: 1.5rem;
+
+  @media (max-width: 768px) {
+    top: 1rem;
+    right: 1rem;
+  }
 `
 
 const HeadingContainer = styled.div`
@@ -49,6 +61,11 @@ const HeadingContainer = styled.div`
   flex-direction: column;
   gap: 1.5rem;
   margin-bottom: 1.5rem;
+
+  @media (max-width: 768px) {
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
 `
 
 const HeadingText = styled.h1`
@@ -57,6 +74,10 @@ const HeadingText = styled.h1`
   font-family: 'Montserrat';
   margin: 0;
   color: ${USER_COLORS.Modal.Text};
+
+  @media (max-width: 768px) {
+    font-size: 1.325rem;
+  }
 `
 
 const SubHeadingText = styled.h2`
@@ -65,6 +86,10 @@ const SubHeadingText = styled.h2`
   font-family: 'Montserrat';
   margin: 0;
   color: ${USER_COLORS.Modal.SecondaryText};
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
 `
 
 const Modal = ({

@@ -20,6 +20,12 @@ const NavBar = styled.nav`
   justify-content: space-between;
   align-items: center;
   gap: 3rem;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+    gap: 1rem;
+    flex-direction: column;
+  }
 `
 
 const WrapperContainer = styled.div`
@@ -41,6 +47,10 @@ const ItemContainer = styled.div`
   color: ${props => props['data-active'] ? USER_COLORS.NavBar.ActiveText : USER_COLORS.NavBar.Text};
   cursor: pointer;
   transition: all 0.3s ease;
+
+  @media (max-width: 768px) {
+    padding: 0.5rem 1rem;
+  }
 
   &:hover {
     color: ${USER_COLORS.NavBar.ActiveText};

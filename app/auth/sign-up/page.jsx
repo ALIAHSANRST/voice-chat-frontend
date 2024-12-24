@@ -23,6 +23,18 @@ const Container = styled.div`
   display: flex;
 `
 
+const LeftSideContainer = styled.div`
+  flex: 1;
+`
+
+const RightSideContainer = styled.div`
+  flex: 1.5;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+`
+
 const SignUpPage = () => {
   usePageTitle({ title: 'Sign Up' })
 
@@ -69,7 +81,7 @@ const SignUpPage = () => {
 
   return (
     <Container>
-      <div style={{ flex: 1 }}>
+      <LeftSideContainer>
         <Formik enableReinitialize>
           <form onSubmit={formik.handleSubmit} method='POST'>
             <COMMON_COMPONENTS.Auth.FormCard
@@ -135,10 +147,10 @@ const SignUpPage = () => {
             </COMMON_COMPONENTS.Auth.FormCard>
           </form>
         </Formik>
-      </div>
-      <div style={{ flex: 1.5 }}>
+      </LeftSideContainer>
+      <RightSideContainer>
         <COMMON_COMPONENTS.Auth.SideCard />
-      </div>
+      </RightSideContainer>
     </Container>
   )
 };

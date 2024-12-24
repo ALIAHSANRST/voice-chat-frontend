@@ -20,6 +20,25 @@ const Container = styled.div`
   display: flex;
 `
 
+const LeftSideContainer = styled.div`
+  flex: 1;
+  form {
+    height: 100%;
+
+    @media (max-width: 768px) {
+      height: unset;
+    }
+  }
+`
+
+const RightSideContainer = styled.div`
+  flex: 1.5;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+`
+
 const ForgotPasswordPage = () => {
   const [isEmailSent, setIsEmailSent] = useState(false)
   usePageTitle({
@@ -54,7 +73,7 @@ const ForgotPasswordPage = () => {
   if (isEmailSent) {
     return (
       <Container>
-        <div style={{ flex: 1 }}>
+        <LeftSideContainer>
           <COMMON_COMPONENTS.Auth.FormCard
             header={
               <img src={ICON_ASSETS.SMS_TRACKING_ICON} alt='sms-tracking-icon' />
@@ -63,19 +82,19 @@ const ForgotPasswordPage = () => {
             description={'A message is sent to your e-mail address for confirmation of password reset, that will expire in 5 minutes.'}>
             <COMMON_COMPONENTS.Auth.GoBack />
           </COMMON_COMPONENTS.Auth.FormCard>
-        </div>
-        <div style={{ flex: 1.5 }}>
+        </LeftSideContainer>
+        <RightSideContainer>
           <COMMON_COMPONENTS.Auth.SideCard />
-        </div>
+        </RightSideContainer>
       </Container>
     )
   }
 
   return (
     <Container>
-      <div style={{ flex: 1, minHeight: '100%' }}>
+      <LeftSideContainer style={{ minHeight: '100%' }}>
         <Formik enableReinitialize>
-          <form onSubmit={formik.handleSubmit} method='POST' style={{ height: '100%' }}>
+          <form onSubmit={formik.handleSubmit} method='POST'>
             <COMMON_COMPONENTS.Auth.FormCard
               title={'Forgot password?'}
               description={'No worriers, we\'ll send you reset instructions'}>
@@ -101,10 +120,10 @@ const ForgotPasswordPage = () => {
             </COMMON_COMPONENTS.Auth.FormCard>
           </form>
         </Formik>
-      </div>
-      <div style={{ flex: 1.5 }}>
+      </LeftSideContainer>
+      <RightSideContainer>
         <COMMON_COMPONENTS.Auth.SideCard />
-      </div>
+      </RightSideContainer>
     </Container>
   )
 };
