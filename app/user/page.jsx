@@ -94,6 +94,7 @@ const ExamImage = styled.img`
 
   @media (max-width: 768px) {
     max-width: 70vw;
+    margin: 2rem 0;
   }
 `
 
