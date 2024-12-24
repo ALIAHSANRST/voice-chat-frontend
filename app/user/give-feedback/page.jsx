@@ -12,6 +12,7 @@ import { USER_VALIDATION } from '@/src/validation';
 import { COMMON_COMPONENTS, USER_COMPONENTS } from '@/src/components';
 import { USER_COLORS } from '@/src/utils/colors';
 import usePageTitle from '@/src/hooks/usePageTitle';
+import { COMMON_CONTEXT } from '@/src/context';
 
 const WrapperContainer = styled.div`
   width: 100%;
@@ -205,8 +206,10 @@ const FeedbackTextArea = styled.textarea`
 `
 
 const ProvideFeedbackPage = () => {
+  const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation()
+
   const router = useRouter();
-  usePageTitle({ title: 'Give Feedback' });
+  usePageTitle({ title: translations.GIVE_FEEDBACK.TITLE });
 
   const [initialValues, setInitialValues] = useState({ ...INITIAL_VALUES });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -244,8 +247,8 @@ const ProvideFeedbackPage = () => {
           <MainContainer>
             <HeadingContainer>
               <div>
-                <HeadingText>We'd love your feedback!</HeadingText>
-                <SubHeadingText>Please let us know about your experience to help us improve.</SubHeadingText>
+                <HeadingText>{translations.GIVE_FEEDBACK.HEADING}</HeadingText>
+                <SubHeadingText>{translations.GIVE_FEEDBACK.DESCRIPTION}</SubHeadingText>
               </div>
             </HeadingContainer>
 
@@ -262,8 +265,8 @@ const ProvideFeedbackPage = () => {
               !isLoading &&
               <>
                 <QuestionContainer>
-                  <QuestionHeading>How Was Your Experience?</QuestionHeading>
-                  <QuestionSubHeading>Rate your satisfaction with the course on a scale of 1 to 5.</QuestionSubHeading>
+                  <QuestionHeading>{translations.GIVE_FEEDBACK.Q1_TEXT}</QuestionHeading>
+                  <QuestionSubHeading>{translations.GIVE_FEEDBACK.Q1_DESCRIPTION}</QuestionSubHeading>
                   <LikertScaleContainer>
                     {
                       [1, 2, 3, 4, 5].map((option, index) => (
@@ -321,14 +324,14 @@ const ProvideFeedbackPage = () => {
                 }
 
                 <QuestionContainer>
-                  <QuestionHeading>Share Your Thoughts</QuestionHeading>
-                  <QuestionSubHeading>We'd love to hear your detailed feedback to help us improve.</QuestionSubHeading>
+                  <QuestionHeading>{translations.GIVE_FEEDBACK.Q2_TEXT}</QuestionHeading>
+                  <QuestionSubHeading>{translations.GIVE_FEEDBACK.Q2_DESCRIPTION}</QuestionSubHeading>
                   <FeedbackTextArea
                     name='description'
                     value={formik.values.description}
                     onChange={formik.handleChange}
                     disabled={isSubmitting}
-                    placeholder='Write your feedback here...'
+                    placeholder={translations.GIVE_FEEDBACK.Q2_PLACEHOLDER}
                   />
                   {
                     formik.errors.description &&
@@ -339,7 +342,7 @@ const ProvideFeedbackPage = () => {
                 <div style={{ marginLeft: 'auto' }}>
                   <USER_COMPONENTS.Button
                     type={'submit'}
-                    text={'Submit Feedback'}
+                    text={translations.GIVE_FEEDBACK.SUBMIT_FEEDBACK}
                     disabled={isSubmitting}
                   />
                 </div>

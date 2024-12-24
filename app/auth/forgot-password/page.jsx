@@ -40,9 +40,13 @@ const RightSideContainer = styled.div`
 `
 
 const ForgotPasswordPage = () => {
+  const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation()
+
   const [isEmailSent, setIsEmailSent] = useState(false)
   usePageTitle({
-    title: isEmailSent ? ['Email Sent', 'Forgot Password'] : 'Forgot Password'
+    title: isEmailSent
+      ? [translations.FORGOT_PASSWORD.EMAIL_SENT, translations.FORGOT_PASSWORD.TITLE]
+      : translations.FORGOT_PASSWORD.TITLE
   })
 
   const router = useRouter()
@@ -78,8 +82,8 @@ const ForgotPasswordPage = () => {
             header={
               <img src={ICON_ASSETS.SMS_TRACKING_ICON} alt='sms-tracking-icon' />
             }
-            title={'Email is Sent!'}
-            description={'A message is sent to your e-mail address for confirmation of password reset, that will expire in 5 minutes.'}>
+            title={translations.FORGOT_PASSWORD.HEADING_1}
+            description={translations.FORGOT_PASSWORD.DESCRIPTION_1}>
             <COMMON_COMPONENTS.Auth.GoBack />
           </COMMON_COMPONENTS.Auth.FormCard>
         </LeftSideContainer>
@@ -96,12 +100,12 @@ const ForgotPasswordPage = () => {
         <Formik enableReinitialize>
           <form onSubmit={formik.handleSubmit} method='POST'>
             <COMMON_COMPONENTS.Auth.FormCard
-              title={'Forgot password?'}
-              description={'No worriers, we\'ll send you reset instructions'}>
+              title={translations.FORGOT_PASSWORD.HEADING_2}
+              description={translations.FORGOT_PASSWORD.DESCRIPTION_2}>
               <COMMON_COMPONENTS.Auth.InputField
                 name={'email'}
-                label={'Email'}
-                placeholder={'Enter your email'}
+                label={translations.FORGOT_PASSWORD.EMAIL}
+                placeholder={translations.FORGOT_PASSWORD.EMAIL_PLACEHOLDER}
                 type={'email'}
                 leftIcon={ICON_ASSETS.SMS_ICON}
                 value={formik.values.email}
@@ -113,7 +117,7 @@ const ForgotPasswordPage = () => {
               <COMMON_COMPONENTS.Auth.Button
                 type={'submit'}
                 disabled={formik.isSubmitting}
-                text={'Send Email'}
+                text={translations.FORGOT_PASSWORD.SEND_EMAIL}
               />
 
               <COMMON_COMPONENTS.Auth.GoBack />

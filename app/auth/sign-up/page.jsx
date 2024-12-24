@@ -36,7 +36,9 @@ const RightSideContainer = styled.div`
 `
 
 const SignUpPage = () => {
-  usePageTitle({ title: 'Sign Up' })
+  const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation()
+
+  usePageTitle({ title: translations.SIGN_IN.TITLE })
 
   const router = useRouter()
   const { SignUpLocal, currentUser } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext()
@@ -85,16 +87,16 @@ const SignUpPage = () => {
         <Formik enableReinitialize>
           <form onSubmit={formik.handleSubmit} method='POST'>
             <COMMON_COMPONENTS.Auth.FormCard
-              title={'Create Account'}
-              description={'Enter your information below or continue with social media account'}>
+              title={translations.SIGN_UP.WELCOME_TO_SIGN_UP}
+              description={translations.SIGN_UP.DESCRIPTION}>
 
               <COMMON_COMPONENTS.Auth.SocialMedia />
               <COMMON_COMPONENTS.Auth.OrSeperator />
 
               <COMMON_COMPONENTS.Auth.InputField
                 name={'fullname'}
-                label={'Full Name'}
-                placeholder={'Enter your full name'}
+                label={translations.SIGN_UP.FULL_NAME}
+                placeholder={translations.SIGN_UP.FULL_NAME_PLACEHOLDER}
                 type={'text'}
                 leftIcon={ICON_ASSETS.USER_ICON}
                 value={formik.values.fullname}
@@ -105,8 +107,8 @@ const SignUpPage = () => {
 
               <COMMON_COMPONENTS.Auth.InputField
                 name={'email'}
-                label={'Email'}
-                placeholder={'Enter your email'}
+                label={translations.SIGN_UP.EMAIL}
+                placeholder={translations.SIGN_UP.EMAIL_PLACEHOLDER}
                 type={'email'}
                 leftIcon={ICON_ASSETS.SMS_ICON}
                 value={formik.values.email}
@@ -117,8 +119,8 @@ const SignUpPage = () => {
 
               <COMMON_COMPONENTS.Auth.InputField
                 name={'password'}
-                label={'Password'}
-                placeholder={'Enter your password'}
+                label={translations.SIGN_UP.PASSWORD}
+                placeholder={translations.SIGN_UP.PASSWORD_PLACEHOLDER}
                 type={showPassword ? 'text' : 'password'}
                 leftIcon={ICON_ASSETS.LOCK_ICON}
                 value={formik.values.password}
@@ -136,13 +138,13 @@ const SignUpPage = () => {
               <COMMON_COMPONENTS.Auth.Button
                 type={'submit'}
                 disabled={formik.isSubmitting}
-                text={'Sign Up'}
+                text={translations.SIGN_UP.SIGN_UP}
               />
 
               <COMMON_COMPONENTS.Auth.AlternativeFlow
                 link={'/auth/sign-in'}
-                linkText={'Login Now'}
-                text={'Already have an account?'}
+                linkText={translations.SIGN_UP.LOGIN_NOW}
+                text={translations.SIGN_UP.ALREADY_HAVE_AN_ACCOUNT}
               />
             </COMMON_COMPONENTS.Auth.FormCard>
           </form>

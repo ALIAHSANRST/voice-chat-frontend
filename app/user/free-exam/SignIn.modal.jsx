@@ -17,6 +17,8 @@ import { COMMON_VALIDATION } from '@/src/validation';
 import { ROUTES } from '@/src/utils/routes';
 
 const SignInModal = () => {
+  const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation()
+
   const router = useRouter()
   const { SignInLocal } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext()
 
@@ -54,16 +56,16 @@ const SignInModal = () => {
             showLogo={false}
             containerStyle={{ padding: 0 }}
             contentWrapperStyle={{ maxWidth: '100%' }}
-            title={'Start the test login first'}
-            description={'Enter your email and password to sign in'}>
+            title={translations.SIGN_IN_MODAL.TITLE}
+            description={translations.SIGN_IN_MODAL.DESCRIPTION}>
 
             <COMMON_COMPONENTS.Auth.SocialMedia />
             <COMMON_COMPONENTS.Auth.OrSeperator />
 
             <COMMON_COMPONENTS.Auth.InputField
               name={'email'}
-              label={'Email'}
-              placeholder={'Enter your email'}
+              label={translations.SIGN_IN_MODAL.EMAIL}
+              placeholder={translations.SIGN_IN_MODAL.EMAIL_PLACEHOLDER}
               type={'email'}
               leftIcon={ICON_ASSETS.SMS_ICON}
               value={formik.values.email}
@@ -74,8 +76,8 @@ const SignInModal = () => {
 
             <COMMON_COMPONENTS.Auth.InputField
               name={'password'}
-              label={'Password'}
-              placeholder={'Enter your password'}
+              label={translations.SIGN_IN_MODAL.PASSWORD}
+              placeholder={translations.SIGN_IN_MODAL.PASSWORD_PLACEHOLDER}
               type={showPassword ? 'text' : 'password'}
               leftIcon={ICON_ASSETS.LOCK_ICON}
               value={formik.values.password}
@@ -97,19 +99,19 @@ const SignInModal = () => {
               textDecoration: 'none',
               marginLeft: 'auto',
             }}>
-              Forgot your password?
+              {translations.SIGN_IN_MODAL.FORGOT_PASSWORD}
             </Link>
 
             <COMMON_COMPONENTS.Auth.Button
               type={'submit'}
               disabled={formik.isSubmitting}
-              text={'Login'}
+              text={translations.SIGN_IN_MODAL.LOGIN}
             />
 
             <COMMON_COMPONENTS.Auth.AlternativeFlow
               link={'/auth/sign-up'}
-              linkText={'Create an Account'}
-              text={'Not registered yet?'}
+              linkText={translations.SIGN_IN_MODAL.CREATE_AN_ACCOUNT}
+              text={translations.SIGN_IN_MODAL.NOT_REGISTERED_YET}
             />
           </COMMON_COMPONENTS.Auth.FormCard>
         </form>

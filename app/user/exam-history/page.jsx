@@ -8,6 +8,7 @@ import { USER_COLORS } from "@/src/utils/colors";
 import { usePageTitle } from "@/src/hooks";
 import { useEffect, useState } from "react";
 import { GetExamHistory } from "./axios";
+import { COMMON_CONTEXT } from '@/src/context';
 
 const MainContainer = styled.div`
   width: 100%;
@@ -190,7 +191,9 @@ const TablePaginationContainer = styled.div`
 `
 
 const ExamHistoryPage = () => {
-  usePageTitle({ title: 'Exam History' })
+  const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation()
+
+  usePageTitle({ title: translations.EXAM_HISTORY.TITLE })
 
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
@@ -235,8 +238,8 @@ const ExamHistoryPage = () => {
       <ContentContainer>
         <TableHeaderContainer>
           <div className="left">
-            <h1>History</h1>
-            <p>View a record of your past activities and performances.</p>
+            <h1>{translations.EXAM_HISTORY.HEADING}</h1>
+            <p>{translations.EXAM_HISTORY.DESCRIPTION}</p>
           </div>
         </TableHeaderContainer>
 
@@ -246,9 +249,9 @@ const ExamHistoryPage = () => {
             <table>
               <thead>
                 <tr>
-                  <th>Date</th>
-                  <th>Time</th>
-                  <th>Score</th>
+                  <th>{translations.EXAM_HISTORY.DATE}</th>
+                  <th>{translations.EXAM_HISTORY.TIME}</th>
+                  <th>{translations.EXAM_HISTORY.SCORE}</th>
                 </tr>
               </thead>
               <tbody>
@@ -283,7 +286,7 @@ const ExamHistoryPage = () => {
             borderRadius: '1rem',
             backgroundColor: 'white'
           }}>
-            <p>No Records Found!</p>
+            <p>{translations.EXAM_HISTORY.NO_RECORDS_FOUND}</p>
           </div>
         }
 
@@ -302,11 +305,8 @@ const ExamHistoryPage = () => {
         {
           !isLoading && data?.examHistory?.length > 0 &&
           <TablePaginationContainer>
-            <button
-              onClick={() => handlePageChange(filters.page - 1)}
-              disabled={filters.page === 1 || isLoading}
-            >
-              Prev
+            <button onClick={() => handlePageChange(filters.page - 1)} disabled={filters.page === 1 || isLoading}>
+              {translations.EXAM_HISTORY.PREV}
             </button>
 
             {GetPaginationGroup().map(pageNumber => (
@@ -315,16 +315,11 @@ const ExamHistoryPage = () => {
                 onClick={() => handlePageChange(pageNumber)}
                 className={filters.page === pageNumber ? 'active' : ''}
                 disabled={isLoading}
-              >
-                {pageNumber}
-              </button>
+              >{pageNumber}</button>
             ))}
 
-            <button
-              onClick={() => handlePageChange(filters.page + 1)}
-              disabled={filters.page === data?.totalPages || isLoading}
-            >
-              Next
+            <button onClick={() => handlePageChange(filters.page + 1)} disabled={filters.page === data?.totalPages || isLoading}>
+              {translations.EXAM_HISTORY.NEXT}
             </button>
           </TablePaginationContainer>
         }

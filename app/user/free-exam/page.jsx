@@ -186,7 +186,9 @@ const FooterContainer = styled.div`
 `
 
 const ExamPage = () => {
-  usePageTitle({ title: 'Free Exam' })
+  const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation()
+
+  usePageTitle({ title: translations.FREE_EXAM.TITLE })
 
   const router = useRouter();
   const { currentUser } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext()
@@ -320,7 +322,7 @@ const ExamPage = () => {
   }
 
   if (isCalculatingScore) {
-    return <COMMON_COMPONENTS.LoaderFullScreen message={'Calculating Your Score...'} />
+    return <COMMON_COMPONENTS.LoaderFullScreen message={translations.FREE_EXAM.CALCULATING_SCORE} />
   }
 
   if (examResult) {
@@ -343,41 +345,22 @@ const ExamPage = () => {
       {
         showExamInstructions && currentUser &&
         <USER_COMPONENTS.Modal.Main
-          title={'Get Ready for Your Exam'}
-          subtitle={'Follow these steps to complete your exam successfully.'}>
-          <USER_COMPONENTS.Modal.DotList
-            dots={[
-              {
-                title: 'Audio Guidance',
-                subtitle: 'You will read a paragraph aloud into your microphone. Ensure you\'re in a quiet environment for the best results.'
-              },
-              {
-                title: 'Instructions for Reading',
-                subtitle: 'When you are ready, start reading the paragraph into the microphone. Take your time to read clearly.'
-              },
-              {
-                title: 'Starting the Exam',
-                subtitle: 'Click \'Start Reading\' button to begin when you are ready.'
-              },
-              {
-                title: 'Ending the Exam',
-                subtitle: 'Once you have completed reading all the paragraphs, click \'End Exam\' to finish.'
-              }
-            ]}
-          />
+          title={translations.FREE_EXAM.MODAL.TITLE}
+          subtitle={translations.FREE_EXAM.MODAL.SUBTITLE}>
+          <USER_COMPONENTS.Modal.DotList dots={translations.FREE_EXAM.MODAL.DOTS} />
           <USER_COMPONENTS.Modal.CheckBox
-            label={'I understand the instructions and I am ready to proceed with the exam.'}
+            label={translations.FREE_EXAM.MODAL.CHECKBOX_LABEL}
             onChange={() => setIsAgreeToTerms(!isAgreeToTerms)}
             isChecked={isAgreeToTerms}
             htmlFor={'exam-instructions'}
           />
           <USER_COMPONENTS.Button
-            text={'Continue'}
+            text={translations.FREE_EXAM.MODAL.CONTINUE_BUTTON}
             onClick={() => {
               if (isAgreeToTerms) {
                 setShowExamInstructions(false);
               } else {
-                COMMON_COMPONENTS.Toast.showInfoToast('Please agree to the terms and conditions to continue.');
+                COMMON_COMPONENTS.Toast.showInfoToast(translations.FREE_EXAM.MODAL.CHECKBOX_ERROR);
               }
             }}
             style={{
@@ -391,10 +374,8 @@ const ExamPage = () => {
       <MainContainer>
         <HeadingContainer>
           <div>
-            <HeadingText>Reading Assessment</HeadingText>
-            <SubHeadingText>
-              Read the paragraph carefully and get your score based on comprehension and speed.
-            </SubHeadingText>
+            <HeadingText>{translations.FREE_EXAM.HEADING}</HeadingText>
+            <SubHeadingText>{translations.FREE_EXAM.DESCRIPTION}</SubHeadingText>
           </div>
           <IconButton onClick={() => {
             HandleLeaveTest({ calculatingScore: false });
@@ -428,8 +409,9 @@ const ExamPage = () => {
               {
                 !examScript &&
                 <ContentText>
-                  No Exam Script Found!<br />
-                  Please Try Again Later or Contact Support.
+                  {translations.FREE_EXAM.TEXT_1}
+                  <br />
+                  {translations.FREE_EXAM.TEXT_2}
                 </ContentText>
               }
             </ContentTextContainer>
@@ -449,8 +431,8 @@ const ExamPage = () => {
                   isJoiningChannel
                     ? <COMMON_COMPONENTS.Loader color='white' />
                     : isJoined
-                      ? "End Reading"
-                      : "Start Reading"
+                      ? translations.FREE_EXAM.END_READING
+                      : translations.FREE_EXAM.START_READING
                 }
               </USER_COMPONENTS.Button>
             </>

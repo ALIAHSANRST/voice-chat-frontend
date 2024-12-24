@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { COMMON_ASSETS } from "@/src/utils/assets";
 import { COMMON_COLORS } from "@/src/utils/colors";
 import { ROUTES } from "@/src/utils/routes";
+import { COMMON_COMPONENTS } from "@/src/components";
 
 const Container = styled.div`
   display: flex;
@@ -72,14 +73,6 @@ const Description = styled.p`
   }
 `
 
-const Spacer = styled.div`
-  &nbsp;
-
-  @media (max-width: 768px) {
-    display: none;
-  }
-`
-
 const FormCard = ({
   title,
   description,
@@ -110,7 +103,7 @@ const FormCard = ({
         {children}
       </ContentWrapper>
 
-      <Spacer />
+      <COMMON_COMPONENTS.LanguageSelect />
     </Container>
   )
 }
