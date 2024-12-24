@@ -1,7 +1,9 @@
 import Link from "next/link"
 import styled from "styled-components"
+
 import { ICON_ASSETS } from "@/src/utils/assets"
 import { COMMON_COLORS } from "@/src/utils/colors"
+import { COMMON_CONTEXT } from "@/src/context"
 
 const StyledBackText = styled.span`
   font-size: 1.25rem;
@@ -30,11 +32,13 @@ const StyledBackContainer = styled.div`
 `
 
 const GoBack = () => {
+  const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation()
+
   return (
     <StyledBackContainer>
       <Link href={'/auth/sign-in'}>
         <StyledBackIcon src={ICON_ASSETS.ARROW_BACK_ICON} alt="arrow back icon" />
-        <StyledBackText>Back to login</StyledBackText>
+        <StyledBackText>{translations.GO_BACK.TEXT}</StyledBackText>
       </Link>
     </StyledBackContainer>
   )

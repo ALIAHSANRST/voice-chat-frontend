@@ -13,14 +13,16 @@ const App = ({ children }) => {
   return (
     <html lang="en">
       <body>
-        <ToastContainer />
-        <COMMON_CONTEXT.AuthenticationContext.AuthenticationProvider>
-          <USER_CONTEXT.SocketContext.SocketProvider>
-            <USER_CONTEXT.VoiceContext.AgoraProvider>
-              {children}
-            </USER_CONTEXT.VoiceContext.AgoraProvider>
-          </USER_CONTEXT.SocketContext.SocketProvider>
-        </COMMON_CONTEXT.AuthenticationContext.AuthenticationProvider>
+        <COMMON_CONTEXT.TranslationContext.TranslationProvider>
+          <ToastContainer />
+          <COMMON_CONTEXT.AuthenticationContext.AuthenticationProvider>
+            <USER_CONTEXT.SocketContext.SocketProvider>
+              <USER_CONTEXT.VoiceContext.AgoraProvider>
+                {children}
+              </USER_CONTEXT.VoiceContext.AgoraProvider>
+            </USER_CONTEXT.SocketContext.SocketProvider>
+          </COMMON_CONTEXT.AuthenticationContext.AuthenticationProvider>
+        </COMMON_CONTEXT.TranslationContext.TranslationProvider>
       </body>
     </html>
   )

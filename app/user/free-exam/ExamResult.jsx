@@ -9,6 +9,7 @@ import { USER_COLORS } from "@/src/utils/colors";
 import { ICON_ASSETS } from "@/src/utils/assets";
 import { USER_COMPONENTS } from "@/src/components";
 import { ROUTES } from "@/src/utils/routes";
+import { COMMON_CONTEXT } from "@/src/context";
 
 const ResultWrapper = styled.div`
   display: flex;
@@ -194,6 +195,8 @@ const ButtonContainer = styled.div`
 `
 
 const ExamResult = ({ data }) => {
+  const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation()
+
   const router = useRouter();
   const [result, setResult] = useState(null);
 
@@ -201,7 +204,7 @@ const ExamResult = ({ data }) => {
     const score = Math.round((data?.finalScore / data?.totalMarks) * 100)
     const description = data?.rubrics?.find(rubric =>
       score <= rubric.upper_percentage && score >= rubric.lower_percentage
-    )?.level_description || 'No Feedback Available!';
+    )?.level_description || translations.FREE_EXAM.RESULT.NO_FEEDBACK;
     const suggestion = GetSuggestion(score);
 
     setResult({
@@ -214,10 +217,10 @@ const ExamResult = ({ data }) => {
   return (
     <ResultWrapper>
       <HeadingContainer>
-        <HeadingText>Congratulations on Completing Your Exam!</HeadingText>
-        <SubHeadingText>Take a moment to review your performance and feedback.</SubHeadingText>
+        <HeadingText>{translations.FREE_EXAM.RESULT.TEXT_1}</HeadingText>
+        <SubHeadingText>{translations.FREE_EXAM.RESULT.TEXT_2}</SubHeadingText>
       </HeadingContainer>
-      <ScoreHeadingText>Here's how you performed based on your reading.</ScoreHeadingText>
+      <ScoreHeadingText>{translations.FREE_EXAM.RESULT.TEXT_3}</ScoreHeadingText>
       <ResultContainer>
         <ScoreContainer>
           <img src={ICON_ASSETS.EXAM_RESULT_ICON} alt="exam-result-icon" />
@@ -225,32 +228,32 @@ const ExamResult = ({ data }) => {
             <ScoreText>
               {result?.score || 0}%
             </ScoreText>
-            <ScoreDescription>The score is determined by your pronunciation, clarity, and fluency!</ScoreDescription>
+            <ScoreDescription>{translations.FREE_EXAM.RESULT.TEXT_4}</ScoreDescription>
           </ScoreTextContainer>
         </ScoreContainer>
         <FeedbackContainer>
           <FeedbackBox>
-            <FeedbackTitle>Detailed Feedback</FeedbackTitle>
+            <FeedbackTitle>{translations.FREE_EXAM.RESULT.TEXT_5}</FeedbackTitle>
             <FeedbackText>
-              {result?.description || 'No Feedback Available!'}
+              {result?.description || translations.FREE_EXAM.RESULT.NO_FEEDBACK}
             </FeedbackText>
           </FeedbackBox>
           <FeedbackBox>
-            <FeedbackTitle>Suggestions</FeedbackTitle>
+            <FeedbackTitle>{translations.FREE_EXAM.RESULT.TEXT_6}</FeedbackTitle>
             <FeedbackText>
-              {result?.suggestion || 'No Suggestion Available!'}
+              {result?.suggestion || translations.FREE_EXAM.RESULT.NO_SUGGESTION}
             </FeedbackText>
           </FeedbackBox>
         </FeedbackContainer>
       </ResultContainer>
       <ButtonContainer>
         <USER_COMPONENTS.OutlinedButton
-          text={'Give Feedback'}
+          text={translations.FREE_EXAM.RESULT.TEXT_7}
           style={{ fontSize: '1rem', width: '100%', maxWidth: '12.5rem' }}
           onClick={() => router.push(ROUTES.USER_GIVE_FEEDBACK.path)}
         />
         <USER_COMPONENTS.Button
-          text={'Return to Home'}
+          text={translations.FREE_EXAM.RESULT.TEXT_8}
           style={{ fontSize: '1rem', width: '100%', maxWidth: '12.5rem' }}
           onClick={() => router.push(ROUTES.USER_HOME.path)}
         />

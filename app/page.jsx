@@ -9,6 +9,7 @@ import { COMMON_COMPONENTS, USER_COMPONENTS } from "@/src/components";
 import { COMMON_ASSETS, HOMEPAGE_ASSETS, ICON_ASSETS } from "@/src/utils/assets";
 import { ROUTES } from "@/src/utils/routes";
 import { usePageTitle } from "@/src/hooks";
+import { COMMON_CONTEXT } from "@/src/context";
 
 const HamburgerMenu = styled.div`
   display: none;
@@ -1261,9 +1262,11 @@ const FooterSectionCopyrightContainer = styled.div`
 `
 
 const HomePage = () => {
+  const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation()
+
   const router = useRouter();
 
-  usePageTitle({ title: ['Home'] });
+  usePageTitle({ title: [translations.HOME_PAGE.TITLE] });
 
   const SectionOneRef = useRef(null);
   const SectionOneImagesContainerRef = useRef(null);
@@ -1306,19 +1309,19 @@ const HomePage = () => {
           <NavItemContainer>
             {
               [
-                { title: 'Home', link: '/' },
-                { title: 'Why Choose', link: '/' },
-                { title: 'How It Work', link: '/' },
-                { title: 'Testimonial', link: '/' },
-                { title: 'FAQs', link: '/' },
+                { title: translations.HOME_PAGE.NAV[0], link: '/' },
+                { title: translations.HOME_PAGE.NAV[1], link: '/' },
+                { title: translations.HOME_PAGE.NAV[2], link: '/' },
+                { title: translations.HOME_PAGE.NAV[3], link: '/' },
+                { title: translations.HOME_PAGE.NAV[4], link: '/' },
               ].map((item, index) => (
                 <Link key={`${index}_${item.title}`} href={item.link}>{item.title}</Link>
               ))
             }
           </NavItemContainer>
           <NavRegisterButton>
-            <Link href={ROUTES.SIGN_IN.path}>
-              <span>Register Now</span>
+            <Link href={ROUTES.SIGN_UP.path}>
+              <span>{translations.HOME_PAGE.REGISTER_NOW}</span>
               <div>
                 <img src={HOMEPAGE_ASSETS.REGISTER_ARROW_ICON} alt="register arrow icon" />
               </div>
@@ -1342,11 +1345,11 @@ const HomePage = () => {
             }}>
               {
                 [
-                  { title: 'Home', link: '/' },
-                  { title: 'Why Choose', link: '/' },
-                  { title: 'How It Work', link: '/' },
-                  { title: 'Testimonial', link: '/' },
-                  { title: 'FAQs', link: '/' },
+                  { title: translations.HOME_PAGE.NAV[0], link: '/' },
+                  { title: translations.HOME_PAGE.NAV[1], link: '/' },
+                  { title: translations.HOME_PAGE.NAV[2], link: '/' },
+                  { title: translations.HOME_PAGE.NAV[3], link: '/' },
+                  { title: translations.HOME_PAGE.NAV[4], link: '/' },
                 ].map((item, index) => (
                   <Link key={`${index}_${item.title}`} href={item.link}>{item.title}</Link>
                 ))
@@ -1356,8 +1359,8 @@ const HomePage = () => {
               alignSelf: 'flex-start',
               display: 'flex',
             }}>
-              <Link href={ROUTES.SIGN_IN.path}>
-                <span>Register Now</span>
+              <Link href={ROUTES.SIGN_UP.path}>
+                <span>{translations.HOME_PAGE.REGISTER_NOW}</span>
                 <div>
                   <img src={HOMEPAGE_ASSETS.REGISTER_ARROW_ICON} alt="register arrow icon" />
                 </div>
@@ -1368,16 +1371,17 @@ const HomePage = () => {
 
         <HeroSectionWrapper>
           <HeroSectionTaglineContainer>
-            <span>+1</span>
-            <span>Learn and Connect with Top Experts Globally</span>
+            <span>{translations.HOME_PAGE.TAGLINE[0]}</span>
+            <span>{translations.HOME_PAGE.TAGLINE[1]}</span>
           </HeroSectionTaglineContainer>
           <HeroSectionTitle>
-            Master Your Skills with Globalie
+            {translations.HOME_PAGE.HERO_SECTION[0]}
           </HeroSectionTitle>
           <HeroSectionDescription>
-            AI-Powered Exams and Expert-Led Lessons for Students and Professionals.
+            {translations.HOME_PAGE.HERO_SECTION[1]}
           </HeroSectionDescription>
-          <USER_COMPONENTS.Button text={'Take the Exam Now'} onClick={() => router.push(ROUTES.USER_FREE_EXAM.path)} />
+          <USER_COMPONENTS.Button text={translations.HOME_PAGE.HERO_SECTION[2]}
+            onClick={() => router.push(ROUTES.USER_FREE_EXAM.path)} />
         </HeroSectionWrapper>
       </div>
 
@@ -1400,8 +1404,8 @@ const HomePage = () => {
 
       <WhyChooseSectionWrapper>
         <WhyChooseSectionTitleContainer>
-          <h2>Why Choose Masters in Me?</h2>
-          <p>Unlock your true potential and discover a world of opportunities that align with your skills, interests, and aspirations</p>
+          <h2>{translations.HOME_PAGE.WHY_CHOOSE_SECTION[0]}</h2>
+          <p>{translations.HOME_PAGE.WHY_CHOOSE_SECTION[1]}</p>
         </WhyChooseSectionTitleContainer>
 
         <WhyChooseSectionSegmentWrapper>
@@ -1411,10 +1415,10 @@ const HomePage = () => {
                 <img src={HOMEPAGE_ASSETS.EXPERIENCED_TEACHER_ICON} alt="experienced teacher icon" />
               </span>
               <div>
-                <p>Experienced Teachers</p>
-                <p>Showcase your project to stand out among all</p>
+                <p>{translations.HOME_PAGE.WHY_CHOOSE_SECTION[2]}</p>
+                <p>{translations.HOME_PAGE.WHY_CHOOSE_SECTION[3]}</p>
               </div>
-              <USER_COMPONENTS.Button text={'Request a tutor'} style={{
+              <USER_COMPONENTS.Button text={translations.HOME_PAGE.WHY_CHOOSE_SECTION[4]} style={{
                 padding: '0.5rem 1rem',
                 fontSize: '0.875rem',
                 fontWeight: 500,
@@ -1426,8 +1430,8 @@ const HomePage = () => {
                 <img src={HOMEPAGE_ASSETS.AUDIENCE_COUNT_ICON} alt="audience count icon" />
               </span>
               <div>
-                <p>100K+</p>
-                <p>Worldwide Active Users</p>
+                <p>{translations.HOME_PAGE.WHY_CHOOSE_SECTION[5]}</p>
+                <p>{translations.HOME_PAGE.WHY_CHOOSE_SECTION[6]}</p>
               </div>
             </WhyChooseSectionLeftBottomCard>
             <img src={HOMEPAGE_ASSETS.BOTTOM_HAND_DRAWN_ARROW} alt="bottom hand drawn arrow" id='bottom-hand-drawn-arrow' />
@@ -1447,7 +1451,7 @@ const HomePage = () => {
                 <img src={HOMEPAGE_ASSETS.CUSTOMIZED_EXAMS_ICON} alt="customized exams icon" />
               </span>
               <div>
-                <p>Customized Exams</p>
+                <p>{translations.HOME_PAGE.WHY_CHOOSE_SECTION[7]}</p>
               </div>
             </WhyChooseSectionRightTopCard>
             <WhyChooseSectionRightBottomCard>
@@ -1455,10 +1459,10 @@ const HomePage = () => {
                 <img src={HOMEPAGE_ASSETS.FLEXIBLE_SCHEDULE_ICON} alt="flexible schedule icon" />
               </span>
               <div>
-                <p>Flexible<br />Schedule</p>
-                <p>Study anytime, anywhere, with your preferred teacher</p>
+                <p>{translations.HOME_PAGE.WHY_CHOOSE_SECTION[8]}</p>
+                <p>{translations.HOME_PAGE.WHY_CHOOSE_SECTION[9]}</p>
               </div>
-              <USER_COMPONENTS.Button text={'Request a tutor'} style={{
+              <USER_COMPONENTS.Button text={translations.HOME_PAGE.WHY_CHOOSE_SECTION[10]} style={{
                 padding: '0.5rem 1rem',
                 fontSize: '0.875rem',
                 fontWeight: 500,
@@ -1472,28 +1476,30 @@ const HomePage = () => {
       <WhiteBackground>
         <HowItWorksSectionWrapper>
           <HowItWorksSectionLeftContainer>
-            <HowItWorksSectionTitle>How It Works</HowItWorksSectionTitle>
+            <HowItWorksSectionTitle>
+              {translations.HOME_PAGE.HOW_IT_WORKS_SECTION.TITLE}
+            </HowItWorksSectionTitle>
 
             <HowItWorksSectionStepsContainer>
               {
                 [
                   {
-                    stepNumber: '01',
+                    stepNumber: translations.HOME_PAGE.HOW_IT_WORKS_SECTION.STEPS[0].stepNumber,
                     stepIcon: HOMEPAGE_ASSETS.STEP_ONE_ICON,
-                    stepTitle: 'Register and Verify',
-                    stepDescription: 'Sign up easily and secure your account to start your journey.',
+                    stepTitle: translations.HOME_PAGE.HOW_IT_WORKS_SECTION.STEPS[0].stepTitle,
+                    stepDescription: translations.HOME_PAGE.HOW_IT_WORKS_SECTION.STEPS[0].stepDescription,
                   },
                   {
-                    stepNumber: '02',
+                    stepNumber: translations.HOME_PAGE.HOW_IT_WORKS_SECTION.STEPS[1].stepNumber,
                     stepIcon: HOMEPAGE_ASSETS.STEP_TWO_ICON,
-                    stepTitle: 'Take the Exam',
-                    stepDescription: 'Complete the online exam and receive detailed, personalized feedback.',
+                    stepTitle: translations.HOME_PAGE.HOW_IT_WORKS_SECTION.STEPS[1].stepTitle,
+                    stepDescription: translations.HOME_PAGE.HOW_IT_WORKS_SECTION.STEPS[1].stepDescription,
                   },
                   {
-                    stepNumber: '03',
+                    stepNumber: translations.HOME_PAGE.HOW_IT_WORKS_SECTION.STEPS[2].stepNumber,
                     stepIcon: HOMEPAGE_ASSETS.STEP_THREE_ICON,
-                    stepTitle: 'Schedule Lessons',
-                    stepDescription: 'Book sessions with experienced teachers at your convenience.',
+                    stepTitle: translations.HOME_PAGE.HOW_IT_WORKS_SECTION.STEPS[2].stepTitle,
+                    stepDescription: translations.HOME_PAGE.HOW_IT_WORKS_SECTION.STEPS[2].stepDescription,
                   },
                 ].map((item, index) => (
                   <HowItWorksSectionStepContainer key={`${index}_${item.stepNumber}_hiw`}
@@ -1524,8 +1530,8 @@ const HomePage = () => {
                   <img src={HOMEPAGE_ASSETS.HOW_IT_WORKS_PHOTO_FIVE} alt='how it works photo five' style={{ marginLeft: '-0.75rem' }} />
                 </div>
                 <div>
-                  <p>10K+</p>
-                  <p>Teacher</p>
+                  <p>{translations.HOME_PAGE.HOW_IT_WORKS_SECTION.TEXT_1}</p>
+                  <p>{translations.HOME_PAGE.HOW_IT_WORKS_SECTION.TEXT_2}</p>
                 </div>
               </HowItWorksSectionRightStatsContainer>
             </div>
@@ -1535,7 +1541,7 @@ const HomePage = () => {
       </WhiteBackground>
 
       <WhatOurClientsSaySectionContainer>
-        <h1>What Our Clients Say</h1>
+        <h1>{translations.HOME_PAGE.TESTIMONIAL_SECTION.TITLE}</h1>
         <WhatOurClientsSaySectionTestimonialContainer>
           <WhatOurClientsSaySectionTestimonialCard>
             <div>
@@ -1567,37 +1573,11 @@ const HomePage = () => {
 
       <WhiteBackground>
         <FAQSectionContainer>
-          <h1>Frequently Asked Questions</h1>
+          <h1>{translations.HOME_PAGE.FAQ_SECTION.TITLE}</h1>
           <FAQSectionContentContainer>
             {
               (() => {
-                const questions = [
-                  {
-                    questionNumber: '01',
-                    questionTitle: 'How do I create an account on the job board?',
-                    questionDescription: 'Use the search bar on the homepage to enter keywords related to your skills, job title, or preferred location. You can also use the advanced search filters to narrow down results by industry, job type (full-time, part-time, freelance), and experience level.',
-                  },
-                  {
-                    questionNumber: '02',
-                    questionTitle: 'How do I apply for a job through the platform?',
-                    questionDescription: 'Once you have found a job that interests you, click on the job listing to view more details. If the job is still open, you can apply directly through the platform by clicking the "Apply" button. You may need to create an account or log in if you haven\'t already. Follow the instructions provided to submit your application.',
-                  },
-                  {
-                    questionNumber: '03',
-                    questionTitle: 'How can I track the status of my job applications?',
-                    questionDescription: 'After you submit an application, you can check the status of your application by logging into your account. Look for the "Application Status" section in your dashboard or profile settings. Here, you will see the current status of your application, such as "Pending," "Shortlisted," or "Rejected." If you have any questions or need further information, you can contact the employer directly through the platform.',
-                  },
-                  {
-                    questionNumber: '04',
-                    questionTitle: 'How do I create an account on the job board?',
-                    questionDescription: 'Use the search bar on the homepage to enter keywords related to your skills, job title, or preferred location. You can also use the advanced search filters to narrow down results by industry, job type (full-time, part-time, freelance), and experience level.',
-                  },
-                  {
-                    questionNumber: '05',
-                    questionTitle: 'Is there a cost to use the job board, and what features are free?',
-                    questionDescription: 'The job board is free to use, and you can browse and apply for jobs without any cost. However, some features, such as saving jobs or receiving notifications, may require a subscription or premium account. Always refer to the platform\'s pricing page for detailed information on available features and their associated costs.',
-                  }
-                ]
+                const questions = translations.HOME_PAGE.FAQ_SECTION.QUESTIONS;
 
                 const firstHalfQuestions = questions.slice(0, Math.floor(questions.length / 2));
                 const secondHalfQuestions = questions.slice(Math.floor(questions.length / 2));
@@ -1655,18 +1635,18 @@ const HomePage = () => {
               <img src={HOMEPAGE_ASSETS.JOIN_US_GRADIENT_BACKGROUND} alt='join us gradient background' />
             </div>
             <div>
-              <p>Join ambitious professionals and unlock your dream career today</p>
-              <p>Unlock your true potential and discover a world of opportunities that align with your skills, interests, and aspirations</p>
+              <p>{translations.HOME_PAGE.JOIN_US_SECTION.TITLE}</p>
+              <p>{translations.HOME_PAGE.JOIN_US_SECTION.DESCRIPTION}</p>
             </div>
             <div>
               <COMMON_COMPONENTS.Auth.InputField
                 name={'email'}
-                placeholder={'Enter your email'}
+                placeholder={translations.HOME_PAGE.JOIN_US_SECTION.EMAIL_PLACEHOLDER}
                 type={'email'}
                 leftIcon={ICON_ASSETS.SMS_ICON}
                 inputWrapperId={'join-us-input-field'}
               />
-              <USER_COMPONENTS.Button text={'Join Us'} id={'join-us-button'} />
+              <USER_COMPONENTS.Button text={translations.HOME_PAGE.JOIN_US_SECTION.JOIN_US} id={'join-us-button'} />
             </div>
           </NewsletterSectionContainer>
 
@@ -1681,22 +1661,26 @@ const HomePage = () => {
               </div>
             </FooterSectionLogoColumn>
             <FooterSectionLinkColumn>
-              <span>Quick Links</span>
-              <span>Home</span>
-              <span>Jobs</span>
-              <span>Employer</span>
-              <span>Careers</span>
-              <span>Contact Us</span>
+              <span>{translations.HOME_PAGE.FOOTER_SECTION.QUICK_LINKS_TITLE}</span>
+              {
+                translations.HOME_PAGE.FOOTER_SECTION.QUICK_LINKS.map((item, index) => (
+                  <span key={`${index}_${item}`}>{item}</span>
+                ))
+              }
             </FooterSectionLinkColumn>
             <FooterSectionLinkColumn>
-              <span>Others</span>
-              <span>Terms and Conditions</span>
-              <span>Privacy Policy</span>
+              <span>{translations.HOME_PAGE.FOOTER_SECTION.OTHERS_TITLE}</span>
+              {
+                translations.HOME_PAGE.FOOTER_SECTION.OTHERS.map((item, index) => (
+                  <span key={`${index}_${item}`}>{item}</span>
+                ))
+              }
+              <COMMON_COMPONENTS.LanguageSelect />
             </FooterSectionLinkColumn>
           </FooterSectionContainer>
 
           <FooterSectionCopyrightContainer>
-            &copy; 2025 All rights reserved
+            &copy; {new Date().getFullYear()} {translations.HOME_PAGE.FOOTER_SECTION.COPYRIGHT}
           </FooterSectionCopyrightContainer>
         </FooterWrapperContainer>
       </div>

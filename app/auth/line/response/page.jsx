@@ -5,8 +5,12 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import { COMMON_COMPONENTS } from "@/src/components";
 import { COMMON_CONTEXT } from "@/src/context";
+import { usePageTitle } from "@/src/hooks";
 
 const LineAuthResponsePage = () => {
+  const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation()
+  usePageTitle({ title: translations.LINE_AUTH_RESPONSE.TITLE })
+
   const router = useRouter();
   const searchParams = useSearchParams();
   const { setCurrentUser, setToken } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext();
@@ -39,7 +43,7 @@ const LineAuthResponsePage = () => {
     }
   }, [router, searchParams]);
 
-  return <COMMON_COMPONENTS.LoaderFullScreen message="Logging in with LINE..." />
+  return <COMMON_COMPONENTS.LoaderFullScreen message={translations.LINE_AUTH_RESPONSE.MESSAGE} />
 }
 
 export default LineAuthResponsePage;

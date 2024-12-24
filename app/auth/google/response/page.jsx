@@ -7,6 +7,9 @@ import { COMMON_COMPONENTS } from "@/src/components";
 import { COMMON_CONTEXT } from "@/src/context";
 
 const GoogleAuthResponsePage = () => {
+  const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation()
+  usePageTitle({ title: translations.GOOGLE_AUTH_RESPONSE.TITLE })
+
   const router = useRouter();
   const searchParams = useSearchParams();
   const { setCurrentUser, setToken } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext();
@@ -39,7 +42,7 @@ const GoogleAuthResponsePage = () => {
     }
   }, [router, searchParams]);
 
-  return <COMMON_COMPONENTS.LoaderFullScreen message="Logging in with Google..." />
+  return <COMMON_COMPONENTS.LoaderFullScreen message={translations.GOOGLE_AUTH_RESPONSE.MESSAGE} />
 }
 
 export default GoogleAuthResponsePage;

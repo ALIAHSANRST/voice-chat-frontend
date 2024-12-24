@@ -147,10 +147,12 @@ const FlexContainer = styled.div`
 `
 
 const UserHomePage = () => {
+  const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation()
+
   const { currentUser } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext();
   const router = useRouter();
 
-  usePageTitle({ title: currentUser?.fullname || 'User Home' })
+  usePageTitle({ title: currentUser?.fullname || translations.USER_HOME.TITLE })
 
   return (
     <MainContainer>
@@ -160,10 +162,10 @@ const UserHomePage = () => {
         <WelcomeContainer>
           <div>
             <PrimaryText>
-              👋 Hi, {currentUser.fullname}
+              {translations.USER_HOME.WELCOME.replace('{fullname}', currentUser.fullname)}
             </PrimaryText>
             <SecondaryText>
-              Welcome to Globalie Education!
+              {translations.USER_HOME.WELCOME_MESSAGE}
             </SecondaryText>
           </div>
           {/* <USER_COMPONENTS.CircularProgressWithLabel /> */}
@@ -172,14 +174,14 @@ const UserHomePage = () => {
         <FlexContainer>
           <ExamContainer>
             <PrimaryText>
-              Take a Free Exam Today!
+              {translations.USER_HOME.TEXT_1}
             </PrimaryText>
             <SecondaryText style={{ textAlign: 'center' }}>
-              Test your knowledge and get instant results — no cost, no commitment!
+              {translations.USER_HOME.TEXT_2}
             </SecondaryText>
             <ExamImage src={USER_ASSETS.HOME.TAKE_FREE_EXAM_ARTIFACT} alt="Take Free Exam" />
             <ExamButton
-              text={'Take a free exam'}
+              text={translations.USER_HOME.TAKE_FREE_EXAM}
               onClick={() => router.push(ROUTES.USER_FREE_EXAM.path)}
             />
           </ExamContainer>
@@ -187,32 +189,26 @@ const UserHomePage = () => {
           <SidebarContainer>
             <Container>
               <SectionTitle>
-                My tutors
+                {translations.USER_HOME.MY_TUTORS}
               </SectionTitle>
               <SectionText>
-                Looks like you haven't contacted anyone yet. Let's get started!
+                {translations.USER_HOME.TEXT_3}
               </SectionText>
               <USER_COMPONENTS.OutlinedButton
                 variant='primary'
-                text='Join as student'
+                text={translations.USER_HOME.JOIN_AS_STUDENT}
                 style={{ width: 'fit-content' }}
               />
             </Container>
             <Container>
               <SectionTitle>
-                Getting Started Guide
+                {translations.USER_HOME.GETTING_STARTED_GUIDE}
               </SectionTitle>
               <SectionText>
-                Follow these simple steps to begin
+                {translations.USER_HOME.FOLLOW_THESE_STEPS}
               </SectionText>
               <USER_COMPONENTS.Stepper
-                steps={[
-                  'Create or Join an organization',
-                  'Read the instructions carefully',
-                  'Click \'Start Exam\' to begin',
-                  'View your score and provide feedback',
-                  'Answer \'Where did you find Globalie?\''
-                ]}
+                steps={translations.USER_HOME.STEPS}
                 activeStep={-1}
                 orientation="vertical"
               />

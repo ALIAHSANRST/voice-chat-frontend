@@ -44,7 +44,9 @@ const RightSideContainer = styled.div`
 `
 
 const ResetPasswordPage = () => {
-  usePageTitle({ title: 'Reset Password' })
+  const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation()
+
+  usePageTitle({ title: translations.RESET_PASSWORD.TITLE })
 
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -85,12 +87,12 @@ const ResetPasswordPage = () => {
         <Formik enableReinitialize>
           <form onSubmit={formik.handleSubmit} method='POST'>
             <COMMON_COMPONENTS.Auth.FormCard
-              title={'Reset password'}
-              description={'Enter your new password'}>
+              title={translations.RESET_PASSWORD.HEADING}
+              description={translations.RESET_PASSWORD.DESCRIPTION}>
               <COMMON_COMPONENTS.Auth.InputField
                 name={'password'}
-                label={'Password'}
-                placeholder={'Enter your password'}
+                label={translations.RESET_PASSWORD.PASSWORD}
+                placeholder={translations.RESET_PASSWORD.PASSWORD_PLACEHOLDER}
                 type={showPassword ? 'text' : 'password'}
                 leftIcon={ICON_ASSETS.LOCK_ICON}
                 value={formik.values.password}
@@ -107,8 +109,8 @@ const ResetPasswordPage = () => {
 
               <COMMON_COMPONENTS.Auth.InputField
                 name={'confirmPassword'}
-                label={'Confirm Password'}
-                placeholder={'Re-enter your password'}
+                label={translations.RESET_PASSWORD.CONFIRM_PASSWORD}
+                placeholder={translations.RESET_PASSWORD.CONFIRM_PASSWORD_PLACEHOLDER}
                 type={showConfirmPassword ? 'text' : 'password'}
                 leftIcon={ICON_ASSETS.LOCK_ICON}
                 value={formik.values.confirmPassword}
@@ -126,7 +128,7 @@ const ResetPasswordPage = () => {
               <COMMON_COMPONENTS.Auth.Button
                 type={'submit'}
                 disabled={formik.isSubmitting}
-                text={'Reset Password'}
+                text={translations.RESET_PASSWORD.RESET_PASSWORD}
               />
             </COMMON_COMPONENTS.Auth.FormCard>
           </form>

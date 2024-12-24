@@ -33,6 +33,7 @@ export const COMMON_COMPONENTS = {
   TextField: require('./common/TextField').default,
   Toast: require('./common/Toast'),
   AlertDialogue: require('./common/AlertDialogue').default,
+  LanguageSelect: require('./common/LanguageSelect').default,
 };
 
 export const USER_COMPONENTS = {

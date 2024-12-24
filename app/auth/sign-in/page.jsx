@@ -52,7 +52,9 @@ const RightSideContainer = styled.div`
 `
 
 const SignInPage = () => {
-  usePageTitle({ title: 'Sign In' })
+  const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation()
+
+  usePageTitle({ title: translations.SIGN_IN.TITLE })
 
   const router = useRouter()
   const { SignInLocal, currentUser } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext()
@@ -98,15 +100,15 @@ const SignInPage = () => {
         <Formik enableReinitialize>
           <form onSubmit={formik.handleSubmit} method='POST'>
             <COMMON_COMPONENTS.Auth.FormCard
-              title={'Welcome Back'}
-              description={'Enter your email and password to sign in'}>
+              title={translations.SIGN_IN.WELCOME_BACK}
+              description={translations.SIGN_IN.DESCRIPTION}>
               <COMMON_COMPONENTS.Auth.SocialMedia />
               <COMMON_COMPONENTS.Auth.OrSeperator />
 
               <COMMON_COMPONENTS.Auth.InputField
                 name={'email'}
-                label={'Email'}
-                placeholder={'Enter your email'}
+                label={translations.SIGN_IN.EMAIL}
+                placeholder={translations.SIGN_IN.EMAIL_PLACEHOLDER}
                 type={'email'}
                 leftIcon={ICON_ASSETS.SMS_ICON}
                 value={formik.values.email}
@@ -117,8 +119,8 @@ const SignInPage = () => {
 
               <COMMON_COMPONENTS.Auth.InputField
                 name={'password'}
-                label={'Password'}
-                placeholder={'Enter your password'}
+                label={translations.SIGN_IN.PASSWORD}
+                placeholder={translations.SIGN_IN.PASSWORD_PLACEHOLDER}
                 type={showPassword ? 'text' : 'password'}
                 leftIcon={ICON_ASSETS.LOCK_ICON}
                 value={formik.values.password}
@@ -135,20 +137,20 @@ const SignInPage = () => {
 
               <ForgotPasswordWrapper>
                 <Link href={'/auth/forgot-password'}>
-                  Forgot your password?
+                  {translations.SIGN_IN.FORGOT_PASSWORD}
                 </Link>
               </ForgotPasswordWrapper>
 
               <COMMON_COMPONENTS.Auth.Button
                 type={'submit'}
                 disabled={formik.isSubmitting}
-                text={'Login'}
+                text={translations.SIGN_IN.LOGIN}
               />
 
               <COMMON_COMPONENTS.Auth.AlternativeFlow
                 link={'/auth/sign-up'}
-                linkText={'Create an Account'}
-                text={'Not registered yet?'}
+                linkText={translations.SIGN_IN.CREATE_AN_ACCOUNT}
+                text={translations.SIGN_IN.NOT_REGISTERED_YET}
               />
             </COMMON_COMPONENTS.Auth.FormCard>
           </form>
