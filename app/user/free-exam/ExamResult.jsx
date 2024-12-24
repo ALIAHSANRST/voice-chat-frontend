@@ -16,6 +16,10 @@ const ResultWrapper = styled.div`
   align-items: center;
   gap: 3rem;
   width: 100%;
+
+  @media (max-width: 768px) {
+    gap: 1.25rem;
+  }
 `
 
 const HeadingContainer = styled.div`
@@ -32,6 +36,10 @@ const HeadingText = styled.h1`
   font-family: "Montserrat", sans-serif;
   color: ${USER_COLORS.FreeExam.Text.Primary};
   margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 1.325rem;
+  }
 `
 
 const SubHeadingText = styled.h2`
@@ -40,6 +48,22 @@ const SubHeadingText = styled.h2`
   font-family: "Montserrat", sans-serif;
   color: ${USER_COLORS.FreeExam.Text.Secondary};
   margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 0.925rem;
+  }
+`
+
+const ScoreHeadingText = styled.h2`
+  font-size: 1.625rem;
+  font-weight: 600;
+  font-family: "Montserrat", sans-serif;
+  color: ${USER_COLORS.FreeExam.Text.Primary};
+  margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 1.125rem;
+  }
 `
 
 const ResultContainer = styled.div`
@@ -48,6 +72,11 @@ const ResultContainer = styled.div`
   max-width: 67.25rem;
   gap: 1.5rem;
   flex-direction: column;
+
+  @media (max-width: 768px) {
+    gap: 0.75rem;
+    max-width: 100%;
+  }
 `
 
 const ScoreContainer = styled.div`
@@ -58,10 +87,21 @@ const ScoreContainer = styled.div`
   padding: 1.5rem;
   border: 1px solid ${USER_COLORS.FreeExam.TextContainer.Border};
   border-radius: 1rem;
+
+  @media (max-width: 768px) {
+    padding: 2rem 1rem 1rem 1rem; 
+    gap: 1.25rem;
+  }
 `
 
 const ScoreTextContainer = styled.div`
   text-align: center;
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 `
 
 const ScoreText = styled.p`
@@ -70,6 +110,10 @@ const ScoreText = styled.p`
   font-weight: 600;
   color: ${USER_COLORS.FreeExam.Text.Primary};
   margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
 `
 
 const ScoreDescription = styled.p`
@@ -78,12 +122,21 @@ const ScoreDescription = styled.p`
   font-weight: 400;
   color: ${USER_COLORS.FreeExam.Text.Secondary};
   margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 `
 
 const FeedbackContainer = styled.div`
   display: flex;
   gap: 1.5rem;
   justify-content: stretch;
+
+  @media (max-width: 768px) {
+    gap: 0.75rem;
+    flex-direction: column;
+  }
 `
 
 const FeedbackBox = styled.div`
@@ -94,6 +147,10 @@ const FeedbackBox = styled.div`
   border: 1px solid ${USER_COLORS.FreeExam.TextContainer.Border};
   border-radius: 1rem;
   flex: 1;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 `
 
 const FeedbackTitle = styled.p`
@@ -102,6 +159,10 @@ const FeedbackTitle = styled.p`
   font-weight: 600;
   color: ${USER_COLORS.FreeExam.Text.Primary};
   margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 1.125rem;
+  }
 `
 
 const FeedbackText = styled.p`
@@ -110,6 +171,10 @@ const FeedbackText = styled.p`
   font-weight: 400;
   color: ${USER_COLORS.FreeExam.Text.Secondary};
   margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 `
 
 const ButtonContainer = styled.div`
@@ -117,6 +182,15 @@ const ButtonContainer = styled.div`
   gap: 1.5rem;
   justify-content: center;
   width: 100%;
+
+  @media (max-width: 768px) {
+    gap: 0.75rem;
+    flex-direction: column;
+    
+    button {
+      max-width: 100% !important;
+    }
+  }
 `
 
 const ExamResult = ({ data }) => {
@@ -143,7 +217,7 @@ const ExamResult = ({ data }) => {
         <HeadingText>Congratulations on Completing Your Exam!</HeadingText>
         <SubHeadingText>Take a moment to review your performance and feedback.</SubHeadingText>
       </HeadingContainer>
-      <HeadingText>Here's how you performed based on your reading.</HeadingText>
+      <ScoreHeadingText>Here's how you performed based on your reading.</ScoreHeadingText>
       <ResultContainer>
         <ScoreContainer>
           <img src={ICON_ASSETS.EXAM_RESULT_ICON} alt="exam-result-icon" />

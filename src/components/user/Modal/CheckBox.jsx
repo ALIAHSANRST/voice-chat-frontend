@@ -5,9 +5,13 @@ import { USER_COLORS } from "@/src/utils/colors";
 
 const CheckBoxContainer = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.5rem;
   margin-top: 1rem;
+
+  @media (max-width: 768px) {
+    margin-top: 0.75rem;
+  }
 `
 
 const CheckBoxInput = styled.input`

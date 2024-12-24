@@ -20,6 +20,10 @@ const WrapperContainer = styled.div`
   padding: 3rem;
   background-color: ${USER_COLORS.GiveFeedback.Background.Page};
   font-family: 'Montserrat', sans-serif;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
 `
 
 const MainContainer = styled.div`
@@ -31,6 +35,10 @@ const MainContainer = styled.div`
   flex-direction: column;
   gap: 1.25rem;
   padding: 2.25rem;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
 `
 
 const HeadingContainer = styled.div`
@@ -39,6 +47,7 @@ const HeadingContainer = styled.div`
   gap: 1rem;
   align-items: center;
   justify-content: space-between;
+
 `
 
 const HeadingText = styled.h1`
@@ -46,6 +55,11 @@ const HeadingText = styled.h1`
   font-weight: 600;
   margin-bottom: 0.875rem;
   color: ${USER_COLORS.GiveFeedback.Text.Primary};
+
+  @media (max-width: 768px) {
+    font-size: 1.325rem;
+    margin-bottom: 0.625rem;
+  }
 `
 
 const SubHeadingText = styled.h2`
@@ -53,6 +67,10 @@ const SubHeadingText = styled.h2`
   font-weight: 400;
   margin: 0;
   color: ${USER_COLORS.GiveFeedback.Text.Secondary};
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+  }
 `
 
 const LikertScaleContainer = styled.div`
@@ -60,6 +78,10 @@ const LikertScaleContainer = styled.div`
   flex-direction: row;
   gap: 1rem;
   align-items: center;
+
+  @media (max-width: 768px) {
+    gap: 0.625rem;
+  }
 `
 
 const LikertScaleOption = styled.div`
@@ -74,11 +96,19 @@ const LikertScaleOption = styled.div`
   user-select: none;
   cursor: pointer;
 
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+
   p {
     font-size: 1.5rem;
     font-weight: 600;
     margin: 0;
     color: ${props => props.isSelected ? USER_COLORS.GiveFeedback.LikertScale.Selected.Text : USER_COLORS.GiveFeedback.LikertScale.Text};
+
+    @media (max-width: 768px) {
+      font-size: 1.25rem;
+    }
   }
 `
 
@@ -89,6 +119,11 @@ const QuestionContainer = styled.div`
   padding: 1.5rem;
   border-radius: 1rem;
   border: 1px solid ${USER_COLORS.GiveFeedback.QuestionContainer.Border};
+
+  @media (max-width: 768px) {
+    padding: 1.25rem;
+    gap: 0.75rem;
+  }
 `
 
 const QuestionHeading = styled.h3`
@@ -96,6 +131,10 @@ const QuestionHeading = styled.h3`
   font-weight: 600;
   margin: 0;
   color: ${USER_COLORS.GiveFeedback.QuestionContainer.PrimaryText};
+
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+  }
 `
 
 const QuestionSubHeading = styled.p`
@@ -103,6 +142,10 @@ const QuestionSubHeading = styled.p`
   font-weight: 400;
   margin: 0;
   color: ${USER_COLORS.GiveFeedback.QuestionContainer.SecondaryText};
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
 `
 
 const OptionContainer = styled.div`
@@ -110,10 +153,18 @@ const OptionContainer = styled.div`
   flex-direction: column;
   gap: 1rem;
 
+  @media (max-width: 768px) {
+    gap: 0.75rem;
+  }
+
   .form-check-label {
     font-size: 1rem;
     font-weight: 600;
     color: ${USER_COLORS.GiveFeedback.QuestionContainer.PrimaryText};
+
+    @media (max-width: 768px) {
+      font-size: 0.9rem;
+    }
   }
 `
 
@@ -122,6 +173,10 @@ const QuestionError = styled.p`
   font-weight: 400;
   margin: 0;
   color: #FF0000;
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+  }
 `
 
 const FeedbackTextArea = styled.textarea`
@@ -133,6 +188,10 @@ const FeedbackTextArea = styled.textarea`
   font-size: 1rem;
   font-weight: 400;
   color: ${USER_COLORS.GiveFeedback.QuestionContainer.PrimaryText};
+
+  @media (max-width: 768px) {
+    height: 8rem;
+  }
 
   &:focus {
     outline: none;

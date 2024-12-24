@@ -16,6 +16,57 @@ const StyledInputField = styled.input`
   }
 `;
 
+const InputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  ${props => props.style}
+
+  @media (max-width: 768px) {
+    gap: 0.25rem;
+  }
+`;
+
+const Label = styled.label`
+  padding: 0 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  opacity: 0.8;
+  color: ${COMMON_COLORS.AUTH.neutral_black};
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+  }
+`;
+
+const InputContainer = styled.div`
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid ${COMMON_COLORS.AUTH.neutral_7};
+  background-color: ${COMMON_COLORS.AUTH.neutral_white};
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  ${props => props.style}
+
+  @media (max-width: 768px) {
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+  }
+`;
+
+const IconImage = styled.img`
+  cursor: pointer;
+`;
+
+const ErrorMessage = styled.p`
+  padding: 0 1rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+  margin: 0;
+  color: ${COMMON_COLORS.AUTH.error};
+`;
+
 const InputField = ({
   label,
   type,
@@ -37,35 +88,12 @@ const InputField = ({
   inputWrapperId,
 }) => {
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '0.5rem',
-      ...inputWrapperStyle
-    }} id={inputWrapperId}>
-      {
-        label &&
-        <label style={{
-          padding: '0 1rem',
-          fontSize: '1rem',
-          fontWeight: '600',
-          opacity: 0.8,
-          color: COMMON_COLORS.AUTH.neutral_black,
-        }}>{label}</label>
-      }
-      <div id={inputContainerId} style={{
-        padding: '0.75rem 1rem',
-        borderRadius: '0.5rem',
-        border: `1px solid ${COMMON_COLORS.AUTH.neutral_7}`,
-        backgroundColor: COMMON_COLORS.AUTH.neutral_white,
-        display: 'flex',
-        alignItems: 'center',
-        gap: '0.25rem',
-        ...inputContainerStyle
-      }}>
+    <InputWrapper style={inputWrapperStyle} id={inputWrapperId}>
+      {label && <Label>{label}</Label>}
+      <InputContainer id={inputContainerId} style={inputContainerStyle}>
         {leftIcon && (
           typeof leftIcon === 'string' ? (
-            <img src={leftIcon} alt="left-icon" onClick={leftIconOnClick} style={{ cursor: 'pointer' }} />
+            <IconImage src={leftIcon} alt="left-icon" onClick={leftIconOnClick} />
           ) : leftIcon
         )}
         <StyledInputField
@@ -75,23 +103,17 @@ const InputField = ({
           value={value}
           onChange={onChange}
           disabled={disabled}
-          style={{ ...inputStyle }}
+          style={inputStyle}
           id={inputId}
         />
         {rightIcon && (
           typeof rightIcon === 'string' ? (
-            <img src={rightIcon} alt="right-icon" onClick={rightIconOnClick} style={{ cursor: 'pointer' }} />
+            <IconImage src={rightIcon} alt="right-icon" onClick={rightIconOnClick} />
           ) : rightIcon
         )}
-      </div>
-      {error && <p style={{
-        padding: '0 1rem',
-        fontSize: '0.875rem',
-        fontWeight: '400',
-        margin: 0,
-        color: COMMON_COLORS.AUTH.error,
-      }}>{error}</p>}
-    </div>
+      </InputContainer>
+      {error && <ErrorMessage>{error}</ErrorMessage>}
+    </InputWrapper>
   );
 };
 

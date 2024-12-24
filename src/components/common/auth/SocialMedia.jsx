@@ -14,8 +14,13 @@ const SocialMediaButton = styled.span`
   align-items: center;
   cursor: pointer;
   width: 100%;
+
   &:hover {
     background-color: ${COMMON_COLORS.AUTH.neutral_7}77;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.7rem;
   }
 `
 
@@ -25,6 +30,10 @@ const SocialMediaContainer = styled.div`
   align-items: center;
   gap: 1rem;
   width: 100%;
+
+  @media (max-width: 768px) {
+    gap: 0.75rem;
+  }
 `
 
 const SocialMedia = () => {

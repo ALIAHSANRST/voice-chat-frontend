@@ -8,6 +8,11 @@ const DotsWrapper = styled.div`
   flex-direction: column;
   gap: 1.5rem;
   margin-bottom: 1.5rem;
+
+  @media (max-width: 768px) {
+    gap: 1.125rem;
+    width: 100%;
+  }
 `
 
 const DotContainer = styled.div`
@@ -39,6 +44,11 @@ const DotText = styled.h3`
   margin: 0;
   color: ${USER_COLORS.Modal.Text};
   margin-bottom: 0.325rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+    width: 100%;
+  }
 `
 
 const DotSubText = styled.h3`
@@ -47,6 +57,11 @@ const DotSubText = styled.h3`
   font-family: 'Montserrat';
   margin: 0;
   color: ${USER_COLORS.Modal.SecondaryText};
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+    width: 100%;
+  }
 `
 
 const DotList = ({ dots }) => {

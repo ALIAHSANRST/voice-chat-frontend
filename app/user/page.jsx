@@ -22,6 +22,11 @@ const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+
+  @media (max-width: 768px) {
+    padding: 1rem 1.5rem;
+    gap: 1rem;
+  }
 `
 
 const Container = styled.div`
@@ -32,6 +37,10 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
 `
 
 const PrimaryText = styled.p`
@@ -39,7 +48,11 @@ const PrimaryText = styled.p`
   margin: 0;
   font-size: 2rem;
   font-weight: 600;
-  color: ${USER_COLORS.Home.Container.PrimaryText}
+  color: ${USER_COLORS.Home.Container.PrimaryText};
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
 `
 
 const SecondaryText = styled.p`
@@ -47,7 +60,90 @@ const SecondaryText = styled.p`
   margin: 0;
   font-size: 1.125rem;
   font-weight: 300;
-  color: ${USER_COLORS.Home.Container.SecondaryText}
+  color: ${USER_COLORS.Home.Container.SecondaryText};
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+  }
+`
+
+const WelcomeContainer = styled(Container)`
+  gap: 0;
+  flex-direction: row;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+`
+
+const ExamContainer = styled(Container)`
+  flex: 1.5;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 0rem;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
+`
+
+const ExamImage = styled.img`
+  width: 100%;
+  max-width: 22.5rem;
+  height: 100%;
+
+  @media (max-width: 768px) {
+    max-width: 70vw;
+    margin: 2rem 0;
+  }
+`
+
+const ExamButton = styled(USER_COMPONENTS.Button)`
+  width: 100%;
+  max-width: 22.5rem;
+
+  @media (max-width: 768px) {
+    max-width: unset;
+  }
+`
+
+const SidebarContainer = styled.div`
+  flex: 1;
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+  max-width: 35rem;
+
+  @media (max-width: 768px) {
+    max-width: unset;
+  }
+`
+
+const SectionTitle = styled(PrimaryText)`
+  font-size: 1.625rem;
+  line-height: 1.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.25rem;
+    line-height: 1.25rem;
+  }
+`
+
+const SectionText = styled(SecondaryText)`
+  font-size: 1rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+  }
+`
+
+const FlexContainer = styled.div`
+  display: flex;
+  gap: 1rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `
 
 const UserHomePage = () => {
@@ -61,7 +157,7 @@ const UserHomePage = () => {
       <USER_COMPONENTS.HeaderNavBar />
 
       <ContentContainer>
-        <Container style={{ gap: 0, flexDirection: 'row' }}>
+        <WelcomeContainer>
           <div>
             <PrimaryText>
               👋 Hi, {currentUser.fullname}
@@ -71,32 +167,31 @@ const UserHomePage = () => {
             </SecondaryText>
           </div>
           {/* <USER_COMPONENTS.CircularProgressWithLabel /> */}
-        </Container>
+        </WelcomeContainer>
 
-        <div style={{ display: 'flex', gap: '1rem' }}>
-          <Container style={{ flex: 1.5, alignItems: 'center', justifyContent: 'center', padding: '4rem 0rem' }}>
+        <FlexContainer>
+          <ExamContainer>
             <PrimaryText>
               Take a Free Exam Today!
             </PrimaryText>
-            <SecondaryText>
+            <SecondaryText style={{ textAlign: 'center' }}>
               Test your knowledge and get instant results — no cost, no commitment!
             </SecondaryText>
-            <img src={USER_ASSETS.HOME.TAKE_FREE_EXAM_ARTIFACT} alt="Take Free Exam"
-              style={{ width: '100%', maxWidth: '22.5rem', height: '100%' }} />
-            <USER_COMPONENTS.Button
+            <ExamImage src={USER_ASSETS.HOME.TAKE_FREE_EXAM_ARTIFACT} alt="Take Free Exam" />
+            <ExamButton
               text={'Take a free exam'}
-              style={{ width: '100%', maxWidth: '22.5rem' }}
               onClick={() => router.push(ROUTES.USER_FREE_EXAM.path)}
             />
-          </Container>
-          <div style={{ flex: 1, display: 'flex', gap: '1rem', flexDirection: 'column', maxWidth: '35rem' }}>
+          </ExamContainer>
+
+          <SidebarContainer>
             <Container>
-              <PrimaryText style={{ fontSize: '1.625rem', lineHeight: '1.5rem' }}>
+              <SectionTitle>
                 My tutors
-              </PrimaryText>
-              <SecondaryText style={{ fontSize: '1rem' }}>
+              </SectionTitle>
+              <SectionText>
                 Looks like you haven't contacted anyone yet. Let's get started!
-              </SecondaryText>
+              </SectionText>
               <USER_COMPONENTS.OutlinedButton
                 variant='primary'
                 text='Join as student'
@@ -104,12 +199,12 @@ const UserHomePage = () => {
               />
             </Container>
             <Container>
-              <PrimaryText style={{ fontSize: '1.625rem', lineHeight: '1.5rem' }}>
+              <SectionTitle>
                 Getting Started Guide
-              </PrimaryText>
-              <SecondaryText style={{ fontSize: '1rem' }}>
+              </SectionTitle>
+              <SectionText>
                 Follow these simple steps to begin
-              </SecondaryText>
+              </SectionText>
               <USER_COMPONENTS.Stepper
                 steps={[
                   'Create or Join an organization',
@@ -122,8 +217,8 @@ const UserHomePage = () => {
                 orientation="vertical"
               />
             </Container>
-          </div>
-        </div>
+          </SidebarContainer>
+        </FlexContainer>
       </ContentContainer>
     </MainContainer>
   )

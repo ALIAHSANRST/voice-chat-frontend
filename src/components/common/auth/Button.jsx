@@ -13,12 +13,17 @@ const StyledButton = styled.button`
   border: none;
   outline: none;
   transition: all 0.3s ease;
+
   &:hover {
     background-color: ${COMMON_COLORS.AUTH.primary_blue_hover};
   }
 
   &:disabled {
     cursor: not-allowed;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.7rem 1.2rem;
   }
 `;
 

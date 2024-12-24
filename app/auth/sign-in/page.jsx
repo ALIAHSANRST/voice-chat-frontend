@@ -24,6 +24,33 @@ const Container = styled.div`
   display: flex;
 `
 
+const LeftSideContainer = styled.div`
+  flex: 1;
+`
+
+const ForgotPasswordWrapper = styled.div`
+  text-align: right;
+
+  a {
+    font-size: 1rem;
+    font-weight: 600;
+    color: ${COMMON_COLORS.AUTH.neutral_3};
+    text-decoration: none;
+
+    @media (max-width: 768px) {
+      font-size: 0.875rem;
+    }
+  }
+`
+
+const RightSideContainer = styled.div`
+  flex: 1.5;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+`
+
 const SignInPage = () => {
   usePageTitle({ title: 'Sign In' })
 
@@ -67,7 +94,7 @@ const SignInPage = () => {
 
   return (
     <Container>
-      <div style={{ flex: 1 }}>
+      <LeftSideContainer>
         <Formik enableReinitialize>
           <form onSubmit={formik.handleSubmit} method='POST'>
             <COMMON_COMPONENTS.Auth.FormCard
@@ -106,15 +133,11 @@ const SignInPage = () => {
                 }
               />
 
-              <Link href={'/auth/forgot-password'} style={{
-                fontSize: '1rem',
-                fontWeight: '600',
-                color: COMMON_COLORS.AUTH.neutral_3,
-                textDecoration: 'none',
-                marginLeft: 'auto',
-              }}>
-                Forgot your password?
-              </Link>
+              <ForgotPasswordWrapper>
+                <Link href={'/auth/forgot-password'}>
+                  Forgot your password?
+                </Link>
+              </ForgotPasswordWrapper>
 
               <COMMON_COMPONENTS.Auth.Button
                 type={'submit'}
@@ -130,10 +153,10 @@ const SignInPage = () => {
             </COMMON_COMPONENTS.Auth.FormCard>
           </form>
         </Formik>
-      </div>
-      <div style={{ flex: 1.5 }}>
+      </LeftSideContainer>
+      <RightSideContainer>
         <COMMON_COMPONENTS.Auth.SideCard />
-      </div>
+      </RightSideContainer>
     </Container>
   )
 };
