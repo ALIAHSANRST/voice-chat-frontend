@@ -30,14 +30,19 @@ const InputField = ({
   disabled,
   name,
   inputContainerStyle,
+  inputContainerId,
   inputStyle,
+  inputId,
+  inputWrapperStyle,
+  inputWrapperId,
 }) => {
   return (
     <div style={{
       display: 'flex',
       flexDirection: 'column',
       gap: '0.5rem',
-    }}>
+      ...inputWrapperStyle
+    }} id={inputWrapperId}>
       {
         label &&
         <label style={{
@@ -48,7 +53,7 @@ const InputField = ({
           color: COMMON_COLORS.AUTH.neutral_black,
         }}>{label}</label>
       }
-      <div style={{
+      <div id={inputContainerId} style={{
         padding: '0.75rem 1rem',
         borderRadius: '0.5rem',
         border: `1px solid ${COMMON_COLORS.AUTH.neutral_7}`,
@@ -71,6 +76,7 @@ const InputField = ({
           onChange={onChange}
           disabled={disabled}
           style={{ ...inputStyle }}
+          id={inputId}
         />
         {rightIcon && (
           typeof rightIcon === 'string' ? (
