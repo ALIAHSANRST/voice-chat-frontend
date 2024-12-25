@@ -234,6 +234,12 @@ const ExamPage = () => {
     GetExamScript({ setIsLoadingExamScript, setExamScript, setExamMeta });
   }, []);
 
+  useEffect(() => {
+    if (!currentUser) return;
+    setShowExamInstructions(true);
+    GetExamScript({ setIsLoadingExamScript, setExamScript, setExamMeta });
+  }, [currentUser]);
+
   const stopTranscribing = () => {
     if (mediaRecorder && mediaRecorder.state !== 'inactive') {
       mediaRecorder.stop();
