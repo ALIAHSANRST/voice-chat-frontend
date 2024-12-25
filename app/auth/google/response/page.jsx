@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import { COMMON_COMPONENTS } from "@/src/components";
 import { COMMON_CONTEXT } from "@/src/context";
+import { usePageTitle } from "@/src/hooks"
 
 const GoogleAuthResponsePage = () => {
   const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation()
