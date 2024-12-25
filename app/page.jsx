@@ -1245,6 +1245,7 @@ const FooterSectionLinkColumn = styled.div`
 
   @media (max-width: 768px) {
     gap: 0.425rem;
+    align-items: center;
   }
 `
 

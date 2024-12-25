@@ -56,16 +56,16 @@ const SignInModal = () => {
             showLogo={false}
             containerStyle={{ padding: 0 }}
             contentWrapperStyle={{ maxWidth: '100%' }}
-            title={translations.SIGN_IN_MODAL.TITLE}
-            description={translations.SIGN_IN_MODAL.DESCRIPTION}>
+            title={translations.FREE_EXAM.SIGN_IN_MODAL.TITLE}
+            description={translations.FREE_EXAM.SIGN_IN_MODAL.DESCRIPTION}>
 
             <COMMON_COMPONENTS.Auth.SocialMedia />
             <COMMON_COMPONENTS.Auth.OrSeperator />
 
             <COMMON_COMPONENTS.Auth.InputField
               name={'email'}
-              label={translations.SIGN_IN_MODAL.EMAIL}
-              placeholder={translations.SIGN_IN_MODAL.EMAIL_PLACEHOLDER}
+              label={translations.FREE_EXAM.SIGN_IN_MODAL.EMAIL}
+              placeholder={translations.FREE_EXAM.SIGN_IN_MODAL.EMAIL_PLACEHOLDER}
               type={'email'}
               leftIcon={ICON_ASSETS.SMS_ICON}
               value={formik.values.email}
@@ -76,8 +76,8 @@ const SignInModal = () => {
 
             <COMMON_COMPONENTS.Auth.InputField
               name={'password'}
-              label={translations.SIGN_IN_MODAL.PASSWORD}
-              placeholder={translations.SIGN_IN_MODAL.PASSWORD_PLACEHOLDER}
+              label={translations.FREE_EXAM.SIGN_IN_MODAL.PASSWORD}
+              placeholder={translations.FREE_EXAM.SIGN_IN_MODAL.PASSWORD_PLACEHOLDER}
               type={showPassword ? 'text' : 'password'}
               leftIcon={ICON_ASSETS.LOCK_ICON}
               value={formik.values.password}
@@ -99,19 +99,19 @@ const SignInModal = () => {
               textDecoration: 'none',
               marginLeft: 'auto',
             }}>
-              {translations.SIGN_IN_MODAL.FORGOT_PASSWORD}
+              {translations.FREE_EXAM.SIGN_IN_MODAL.FORGOT_PASSWORD}
             </Link>
 
             <COMMON_COMPONENTS.Auth.Button
               type={'submit'}
               disabled={formik.isSubmitting}
-              text={translations.SIGN_IN_MODAL.LOGIN}
+              text={translations.FREE_EXAM.SIGN_IN_MODAL.LOGIN}
             />
 
             <COMMON_COMPONENTS.Auth.AlternativeFlow
               link={'/auth/sign-up'}
-              linkText={translations.SIGN_IN_MODAL.CREATE_AN_ACCOUNT}
-              text={translations.SIGN_IN_MODAL.NOT_REGISTERED_YET}
+              linkText={translations.FREE_EXAM.SIGN_IN_MODAL.CREATE_AN_ACCOUNT}
+              text={translations.FREE_EXAM.SIGN_IN_MODAL.NOT_REGISTERED_YET}
             />
           </COMMON_COMPONENTS.Auth.FormCard>
         </form>
