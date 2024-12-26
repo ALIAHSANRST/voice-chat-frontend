@@ -1264,6 +1264,7 @@ const FooterSectionCopyrightContainer = styled.div`
 
 const HomePage = () => {
   const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation()
+  const { currentUser } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext();
 
   const router = useRouter();
 
@@ -1321,8 +1322,18 @@ const HomePage = () => {
             }
           </NavItemContainer>
           <NavRegisterButton>
-            <Link href={ROUTES.SIGN_UP.path}>
-              <span>{translations.HOME_PAGE.REGISTER_NOW}</span>
+            <Link href={(() => {
+              if (currentUser?.account_type === 'admin') return ROUTES.ADMIN_HOME.path;
+              else if (currentUser?.account_type === 'user') return ROUTES.USER_HOME.path;
+              else return ROUTES.SIGN_UP.path;
+            })()}>
+              <span>
+                {
+                  currentUser
+                    ? translations.HOME_PAGE.DASHBOARD
+                    : translations.HOME_PAGE.REGISTER_NOW
+                }
+              </span>
               <div>
                 <img src={HOMEPAGE_ASSETS.REGISTER_ARROW_ICON} alt="register arrow icon" />
               </div>

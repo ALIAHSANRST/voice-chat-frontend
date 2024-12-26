@@ -60,13 +60,7 @@ const SignUpPage = () => {
       setSubmitting(false);
       if (!currentUser) return;
 
-      if (currentUser?.account_type === 'admin') {
-        router.push(ROUTES.ADMIN_HOME.path);
-      } else if (currentUser?.account_type === 'user') {
-        router.push(ROUTES.USER_HOME.path);
-      } else {
-        router.push(ROUTES.HOME.path);
-      }
+      router.push(ROUTES.SIGN_IN.path)
     }
 
     SignUpLocal({

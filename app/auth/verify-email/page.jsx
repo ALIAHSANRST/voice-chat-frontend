@@ -55,7 +55,6 @@ const VerifyEmailPage = () => {
   useEffect(() => {
     const token = searchParams.get('token')
     if (token) HandleEmailVerification()
-    router.push(ROUTES.SIGN_IN.path)
   }, [searchParams])
 
   const HandleEmailVerification = async () => {

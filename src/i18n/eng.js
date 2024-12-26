@@ -167,6 +167,7 @@ const ENG = {
     TITLE: 'Home',
     NAV: ['Home', 'Why Choose', 'How It Work', 'Testimonial', 'FAQs'],
     REGISTER_NOW: 'Register Now',
+    DASHBOARD: 'Dashboard',
     TAGLINE: ['+1', 'Learn and Connect with Top Experts Globally'],
     HERO_SECTION: [
       'Master Your Skills with Globalie',

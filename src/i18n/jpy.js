@@ -167,6 +167,7 @@ const JPY = {
     TITLE: 'ホーム',
     NAV: ['ホーム', '選ばれる理由', '利用方法', '体験談', 'よくある質問'],
     REGISTER_NOW: '今すぐ登録',
+    DASHBOARD: 'ダッシュボード',
     TAGLINE: ['+1', 'グローバルな専門家と学び、つながる'],
     HERO_SECTION: [
       'Globalieでスキルを習得',
