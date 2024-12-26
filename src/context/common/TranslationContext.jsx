@@ -22,7 +22,6 @@ export const TranslationProvider = ({ children }) => {
   const [translations, setTranslations] = useState(TRANSLATIONS[language]);
 
   useEffect(() => {
-    console.log(TRANSLATIONS[language])
     setTranslations(TRANSLATIONS[language]);
   }, [language]);
 

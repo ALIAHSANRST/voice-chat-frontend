@@ -254,6 +254,14 @@ const ENG = {
       OTHERS: ['Terms and Conditions', 'Privacy Policy'],
       COPYRIGHT: 'All rights reserved',
     }
+  },
+  VERIFY_EMAIL: {
+    TITLE: 'Verify Email',
+    HEADING_1: 'Verifying Email...',
+    DESCRIPTION: 'Please wait while we verify your email address.',
+    HEADING_2: 'Email Verified!',
+    DESCRIPTION_2: 'Your email has been verified successfully. You can now sign in to your account.',
+    TEXT_1: 'Continue to Sign In',
   }
 };
 
