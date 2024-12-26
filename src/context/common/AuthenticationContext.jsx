@@ -6,6 +6,7 @@ import { COMMON_COMPONENTS } from '@/src/components';
 import { useLocalStorage } from '@/src/hooks';
 import BaseAPI from '@/src/utils/api';
 import { GetPublicRoutes, ROUTES } from '@/src/utils/routes';
+import { COMMON_CONTEXT } from '@/src/context';
 
 const AuthenticationContext = createContext();
 
@@ -16,6 +17,7 @@ export const useAuthenticationContext = () => {
 export const AuthenticationProvider = ({ children }) => {
   const [currentUser, setCurrentUser, clearCurrentUser] = useLocalStorage('user', null);
   const [token, setToken, clearToken] = useLocalStorage('token', null);
+  const { currentLanguage } = COMMON_CONTEXT.TranslationContext.useTranslation();
 
   const [isCheckingUserStatus, setIsCheckingUserStatus] = useState(true);
 
@@ -66,11 +68,13 @@ export const AuthenticationProvider = ({ children }) => {
 
   const SignUpLocal = async ({ payload, callback }) => {
     try {
-      const response = await BaseAPI.post('/auth/signup', payload)
-      setCurrentUser(response.data.user);
-      setToken(response.data.token);
+      const response = await BaseAPI.post('/auth/signup', payload, {
+        headers: {
+          'language': currentLanguage
+        }
+      });
 
-      COMMON_COMPONENTS.Toast.showSuccessToast('Successfully Signed Up!');
+      COMMON_COMPONENTS.Toast.showSuccessToast('Successfully Signed Up! Please Verify Your Email!');
       callback(response.data.user)
     } catch (error) {
       console.log(`Error in SignUpLocal: ${error}`)
@@ -85,7 +89,11 @@ export const AuthenticationProvider = ({ children }) => {
 
   const SignInLocal = async ({ payload, callback }) => {
     try {
-      const response = await BaseAPI.post('/auth/login', payload);
+      const response = await BaseAPI.post('/auth/login', payload, {
+        headers: {
+          'language': currentLanguage
+        }
+      });
 
       setCurrentUser(response.data.user);
       setToken(response.data.token);
