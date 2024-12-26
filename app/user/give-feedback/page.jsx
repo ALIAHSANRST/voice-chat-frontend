@@ -13,6 +13,7 @@ import { COMMON_COMPONENTS, USER_COMPONENTS } from '@/src/components';
 import { USER_COLORS } from '@/src/utils/colors';
 import usePageTitle from '@/src/hooks/usePageTitle';
 import { COMMON_CONTEXT } from '@/src/context';
+import { ROUTES } from '@/src/utils/routes';
 
 const WrapperContainer = styled.div`
   width: 100%;
@@ -206,6 +207,14 @@ const FeedbackTextArea = styled.textarea`
 `
 
 const ProvideFeedbackPage = () => {
+  // to prevent user from accessing this page directly
+  useEffect(() => {
+    router.push(ROUTES.USER_HOME.path)
+  }, [])
+
+  return <></>;
+
+  // THE BELOW CODE IMPLEMENTATION IS NOW IN FeedbackModal.jsx 
   const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation()
 
   const router = useRouter();

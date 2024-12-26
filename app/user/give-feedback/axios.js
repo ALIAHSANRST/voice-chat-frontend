@@ -40,7 +40,7 @@ const SubmitFeedback = async ({
     if (response.data.success) COMMON_COMPONENTS.Toast.showSuccessToast(response.data.message)
     else COMMON_COMPONENTS.Toast.showErrorToast('Something Went Wrong!')
 
-    router.push(ROUTES.USER_HOME.path)
+    if (router) router.push(ROUTES.USER_HOME.path)
   } catch (error) {
     console.error('SubmitFeedback:', error)
     COMMON_COMPONENTS.Toast.showErrorToast(error?.response?.data?.message || 'Failed To Submit Feedback!')

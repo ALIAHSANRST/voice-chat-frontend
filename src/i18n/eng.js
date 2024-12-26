@@ -159,7 +159,7 @@ const ENG = {
       TEXT_4: 'The score is determined by your pronunciation, clarity, and fluency!',
       TEXT_5: 'Detailed Feedback',
       TEXT_6: 'Suggestions',
-      TEXT_7: 'Give Feedback',
+      TEXT_7: 'Exam History',
       TEXT_8: 'Return to Home',
     }
   },
