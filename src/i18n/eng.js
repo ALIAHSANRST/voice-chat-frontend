@@ -161,7 +161,9 @@ const ENG = {
       TEXT_6: 'Suggestions',
       TEXT_7: 'Exam History',
       TEXT_8: 'Return to Home',
-    }
+    },
+    MICROPHONE_PERMISSION_ERROR: 'Microphone Permission Error! Please Try Again Later or Contact Support.',
+    TRY_AGAIN: 'Try Again',
   },
   HOME_PAGE: {
     TITLE: 'Home',
