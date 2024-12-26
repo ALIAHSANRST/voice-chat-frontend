@@ -64,6 +64,7 @@ const ENG = {
   USER_HOME: {
     TITLE: 'User Home',
     WELCOME: '👋 Hi, {fullname}',
+    DELETING_ACCOUNT: 'Deleting Account...',
     WELCOME_MESSAGE: 'Welcome to Globalie Education!',
     TEXT_1: 'Take a Free Exam Today!',
     TEXT_2: 'Test your knowledge and get instant results — no cost, no commitment!',

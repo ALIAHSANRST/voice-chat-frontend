@@ -53,6 +53,17 @@ export const AuthenticationProvider = ({ children }) => {
     setIsCheckingUserStatus(false);
   }, [])
 
+  const DeleteAccount = async () => {
+    try {
+      await BaseAPI.delete('/auth/delete_account');
+      Logout();
+      COMMON_COMPONENTS.Toast.showSuccessToast('Account Deleted Successfully!');
+    } catch (error) {
+      console.log(`Error in DeleteAccount: ${error}`);
+      COMMON_COMPONENTS.Toast.showErrorToast('Failed to Delete Account. Please Try Again Later!');
+    }
+  }
+
   const SignUpLocal = async ({ payload, callback }) => {
     try {
       const response = await BaseAPI.post('/auth/signup', payload)
@@ -108,7 +119,8 @@ export const AuthenticationProvider = ({ children }) => {
       clearToken,
       SignUpLocal,
       SignInLocal,
-      Logout
+      Logout,
+      DeleteAccount
     }}>
       {isCheckingUserStatus && <COMMON_COMPONENTS.LoaderFullScreen />}
       {!isCheckingUserStatus && children}

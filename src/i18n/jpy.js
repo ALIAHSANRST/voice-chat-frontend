@@ -65,6 +65,7 @@ const JPY = {
     TITLE: 'ユーザーホーム',
     WELCOME: '👋 こんにちは、{fullname}さん',
     WELCOME_MESSAGE: 'Globalie Educationへようこそ！',
+    DELETING_ACCOUNT: 'アカウントを削除中...',
     TEXT_1: '今すぐ無料で試験を受けましょう！',
     TEXT_2: '知識をテストして即座に結果を確認 — 費用も義務もありません！',
     TAKE_FREE_EXAM: '無料試験を受ける',
