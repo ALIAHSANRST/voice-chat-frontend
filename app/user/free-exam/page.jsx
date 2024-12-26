@@ -331,6 +331,25 @@ const ExamPage = () => {
     return <COMMON_COMPONENTS.LoaderFullScreen message={translations.FREE_EXAM.CALCULATING_SCORE} />
   }
 
+  if (error) {
+    return (
+      <WrapperContainer>
+        <ResultMainContainer>
+          <p className='text-danger' style={{ fontSize: '1.25rem', margin: 0 }}>
+            {translations.FREE_EXAM.MICROPHONE_PERMISSION_ERROR}
+          </p>
+
+          <USER_COMPONENTS.Button
+            text={translations.FREE_EXAM.TRY_AGAIN}
+            onClick={() => {
+              window.location.reload();
+            }}
+          />
+        </ResultMainContainer>
+      </WrapperContainer>
+    )
+  }
+
   if (examResult) {
     return (
       <WrapperContainer>

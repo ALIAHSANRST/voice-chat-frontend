@@ -161,7 +161,9 @@ const JPY = {
       TEXT_6: '提案',
       TEXT_7: '試験履歴',
       TEXT_8: 'ホームに戻る',
-    }
+    },
+    MICROPHONE_PERMISSION_ERROR: 'マイクの許可エラー！後でもう一度お試しください。',
+    TRY_AGAIN: 'もう一度試す',
   },
   HOME_PAGE: {
     TITLE: 'ホーム',
