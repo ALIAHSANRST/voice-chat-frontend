@@ -1541,7 +1541,7 @@ const HomePage = () => {
         </HowItWorksSectionWrapper>
       </WhiteBackground>
 
-      <WhatOurClientsSaySectionContainer>
+      {/* <WhatOurClientsSaySectionContainer>
         <h1>{translations.HOME_PAGE.TESTIMONIAL_SECTION.TITLE}</h1>
         <WhatOurClientsSaySectionTestimonialContainer>
           <WhatOurClientsSaySectionTestimonialCard>
@@ -1570,9 +1570,9 @@ const HomePage = () => {
             flex: 1,
           }} />
         </WhatOurClientsSaySectionTestimonialContainer>
-      </WhatOurClientsSaySectionContainer>
+      </WhatOurClientsSaySectionContainer> */}
 
-      <WhiteBackground>
+      {/* <WhiteBackground>
         <FAQSectionContainer>
           <h1>{translations.HOME_PAGE.FAQ_SECTION.TITLE}</h1>
           <FAQSectionContentContainer>
@@ -1626,7 +1626,7 @@ const HomePage = () => {
             }
           </FAQSectionContentContainer>
         </FAQSectionContainer>
-      </WhiteBackground>
+      </WhiteBackground> */}
 
       <div style={{ position: 'relative' }}>
         <FooterBackgroundGradient src={HOMEPAGE_ASSETS.FOOTER_GRADIENT_BACKGROUND} alt='footer gradient background' />
