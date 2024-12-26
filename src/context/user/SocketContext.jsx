@@ -41,8 +41,7 @@ export const SocketProvider = ({ children }) => {
         socket.disconnect();
       }
     };
-  }, []);
-
+  }, [token]);
 
   return (
     <SocketContext.Provider value={socket}>

@@ -123,12 +123,8 @@ const HeaderNavBar = ({ activeItem = 'home' }) => {
         }
       </WrapperContainer>
 
-      <WrapperContainer style={{ gap: '1rem' }}>
-        {
-          currentUser && currentUser?.account_type === 'user' && (
-            <USER_COMPONENTS.OutlinedButton text={'Request a tutor'} variant={'primary'} />
-          )
-        }
+      <WrapperContainer style={{ gap: '1.5rem' }}>
+        <COMMON_COMPONENTS.LanguageSelect />
         {
           currentUser && (
             <USER_COMPONENTS.OutlinedButton text={'Logout'} variant={'danger'} onClick={() => setShowLogoutDialogue(true)} />

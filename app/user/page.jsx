@@ -1,9 +1,10 @@
 'use client'
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
 
-import { USER_COMPONENTS } from '@/src/components';
+import { COMMON_COMPONENTS, USER_COMPONENTS } from '@/src/components';
 import { COMMON_CONTEXT } from '@/src/context';
 import { USER_COLORS } from "@/src/utils/colors";
 import { USER_ASSETS } from "@/src/utils/assets";
@@ -70,6 +71,8 @@ const SecondaryText = styled.p`
 const WelcomeContainer = styled(Container)`
   gap: 0;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -149,10 +152,19 @@ const FlexContainer = styled.div`
 const UserHomePage = () => {
   const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation()
 
-  const { currentUser } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext();
+  const { currentUser, DeleteAccount } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext();
   const router = useRouter();
 
   usePageTitle({ title: currentUser?.fullname || translations.USER_HOME.TITLE })
+
+  const [showDeleteAccountDialogue, setShowDeleteAccountDialogue] = useState(false);
+  const [showIsDeletingAccount, setShowIsDeletingAccount] = useState(false);
+
+  if (showIsDeletingAccount) {
+    return (
+      <COMMON_COMPONENTS.LoaderFullScreen message={translations.USER_HOME.DELETING_ACCOUNT} />
+    )
+  }
 
   return (
     <MainContainer>
@@ -168,6 +180,11 @@ const UserHomePage = () => {
               {translations.USER_HOME.WELCOME_MESSAGE}
             </SecondaryText>
           </div>
+
+          <USER_COMPONENTS.OutlinedButton text={'Delete Account'} variant={'danger'} onClick={() => {
+            setShowDeleteAccountDialogue(true);
+          }} />
+
           {/* <USER_COMPONENTS.CircularProgressWithLabel /> */}
         </WelcomeContainer>
 
@@ -216,6 +233,24 @@ const UserHomePage = () => {
           </SidebarContainer>
         </FlexContainer>
       </ContentContainer>
+
+      {
+        showDeleteAccountDialogue &&
+        <COMMON_COMPONENTS.AlertDialogue
+          title='Warning'
+          positiveMessage='Yes'
+          negativeMessage='No'
+          positiveCallback={async () => {
+            setShowIsDeletingAccount(true);
+            await DeleteAccount();
+            setShowDeleteAccountDialogue(false);
+          }}
+          negativeCallback={() => setShowDeleteAccountDialogue(false)}
+          show={showDeleteAccountDialogue}
+          handleClose={() => setShowDeleteAccountDialogue(false)}>
+          <p>Are you sure you want to delete your account?</p>
+        </COMMON_COMPONENTS.AlertDialogue>
+      }
     </MainContainer>
   )
 }

@@ -65,6 +65,7 @@ const JPY = {
     TITLE: 'ユーザーホーム',
     WELCOME: '👋 こんにちは、{fullname}さん',
     WELCOME_MESSAGE: 'Globalie Educationへようこそ！',
+    DELETING_ACCOUNT: 'アカウントを削除中...',
     TEXT_1: '今すぐ無料で試験を受けましょう！',
     TEXT_2: '知識をテストして即座に結果を確認 — 費用も義務もありません！',
     TAKE_FREE_EXAM: '無料試験を受ける',
@@ -158,7 +159,7 @@ const JPY = {
       TEXT_4: 'スコアは発音、明瞭さ、流暢さに基づいて判定されます！',
       TEXT_5: '詳細なフィードバック',
       TEXT_6: '提案',
-      TEXT_7: 'フィードバックを送信',
+      TEXT_7: '試験履歴',
       TEXT_8: 'ホームに戻る',
     }
   },
@@ -166,6 +167,7 @@ const JPY = {
     TITLE: 'ホーム',
     NAV: ['ホーム', '選ばれる理由', '利用方法', '体験談', 'よくある質問'],
     REGISTER_NOW: '今すぐ登録',
+    DASHBOARD: 'ダッシュボード',
     TAGLINE: ['+1', 'グローバルな専門家と学び、つながる'],
     HERO_SECTION: [
       'Globalieでスキルを習得',
@@ -253,6 +255,14 @@ const JPY = {
       OTHERS: ['利用規約', 'プライバシーポリシー'],
       COPYRIGHT: '全著作権所有',
     }
+  },
+  VERIFY_EMAIL: {
+    TITLE: 'メールアドレスの確認',
+    HEADING_1: 'メールアドレスの確認中...',
+    DESCRIPTION: 'メールアドレスの確認中です。しばらくしてから再度お試しください。',
+    HEADING_2: 'メールアドレスの確認完了！',
+    DESCRIPTION_2: 'メールアドレスの確認が完了しました。サインインしてください。',
+    TEXT_1: 'サインインに進む',
   }
 };
 

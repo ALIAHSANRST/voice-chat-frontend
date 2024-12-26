@@ -64,6 +64,7 @@ const ENG = {
   USER_HOME: {
     TITLE: 'User Home',
     WELCOME: '👋 Hi, {fullname}',
+    DELETING_ACCOUNT: 'Deleting Account...',
     WELCOME_MESSAGE: 'Welcome to Globalie Education!',
     TEXT_1: 'Take a Free Exam Today!',
     TEXT_2: 'Test your knowledge and get instant results — no cost, no commitment!',
@@ -158,7 +159,7 @@ const ENG = {
       TEXT_4: 'The score is determined by your pronunciation, clarity, and fluency!',
       TEXT_5: 'Detailed Feedback',
       TEXT_6: 'Suggestions',
-      TEXT_7: 'Give Feedback',
+      TEXT_7: 'Exam History',
       TEXT_8: 'Return to Home',
     }
   },
@@ -166,6 +167,7 @@ const ENG = {
     TITLE: 'Home',
     NAV: ['Home', 'Why Choose', 'How It Work', 'Testimonial', 'FAQs'],
     REGISTER_NOW: 'Register Now',
+    DASHBOARD: 'Dashboard',
     TAGLINE: ['+1', 'Learn and Connect with Top Experts Globally'],
     HERO_SECTION: [
       'Master Your Skills with Globalie',
@@ -253,6 +255,14 @@ const ENG = {
       OTHERS: ['Terms and Conditions', 'Privacy Policy'],
       COPYRIGHT: 'All rights reserved',
     }
+  },
+  VERIFY_EMAIL: {
+    TITLE: 'Verify Email',
+    HEADING_1: 'Verifying Email...',
+    DESCRIPTION: 'Please wait while we verify your email address.',
+    HEADING_2: 'Email Verified!',
+    DESCRIPTION_2: 'Your email has been verified successfully. You can now sign in to your account.',
+    TEXT_1: 'Continue to Sign In',
   }
 };
 

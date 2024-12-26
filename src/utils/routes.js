@@ -2,6 +2,7 @@ const ROUTES = {
   // COMMON ROUTES
   HOME: { path: '/', isProtected: false, name: 'Home' },
   SIGN_UP: { path: '/auth/sign-up', isProtected: false, name: 'Sign Up' },
+  VERIFY_EMAIL: { path: '/auth/verify-email', isProtected: false, name: 'Verify Email' },
   SIGN_IN: { path: '/auth/sign-in', isProtected: false, name: 'Sign In' },
   LOGOUT: { path: '/auth/logout', isProtected: false, name: 'Logout' },
   FORGOT_PASSWORD: { path: '/auth/forgot-password', isProtected: false, name: 'Forgot Password' },

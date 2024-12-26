@@ -11,6 +11,8 @@ import { USER_COMPONENTS } from "@/src/components";
 import { ROUTES } from "@/src/utils/routes";
 import { COMMON_CONTEXT } from "@/src/context";
 
+import FeedbackModal from "./Feedback.modal"
+
 const ResultWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -200,6 +202,8 @@ const ExamResult = ({ data }) => {
   const router = useRouter();
   const [result, setResult] = useState(null);
 
+  const [showFeedbackModal, setShowFeedbackModal] = useState(true);
+
   useEffect(() => {
     const score = Math.round((data?.finalScore / data?.totalMarks) * 100)
     const description = data?.rubrics?.find(rubric =>
@@ -216,6 +220,16 @@ const ExamResult = ({ data }) => {
 
   return (
     <ResultWrapper>
+
+      {
+        showFeedbackModal && (
+          <USER_COMPONENTS.Modal.Main modalContainerStyle={{ maxWidth: '37.5rem', width: '100%' }}
+            title={translations.GIVE_FEEDBACK.HEADING} subtitle={translations.GIVE_FEEDBACK.DESCRIPTION}>
+            <FeedbackModal setShowFeedbackModal={setShowFeedbackModal} />
+          </USER_COMPONENTS.Modal.Main>
+        )
+      }
+
       <HeadingContainer>
         <HeadingText>{translations.FREE_EXAM.RESULT.TEXT_1}</HeadingText>
         <SubHeadingText>{translations.FREE_EXAM.RESULT.TEXT_2}</SubHeadingText>
@@ -250,7 +264,7 @@ const ExamResult = ({ data }) => {
         <USER_COMPONENTS.OutlinedButton
           text={translations.FREE_EXAM.RESULT.TEXT_7}
           style={{ fontSize: '1rem', width: '100%', maxWidth: '12.5rem' }}
-          onClick={() => router.push(ROUTES.USER_GIVE_FEEDBACK.path)}
+          onClick={() => router.push(ROUTES.USER_EXAM_HISTORY.path)}
         />
         <USER_COMPONENTS.Button
           text={translations.FREE_EXAM.RESULT.TEXT_8}
