@@ -61,6 +61,7 @@ const SignInPage = () => {
 
   const [initialValues, setInitialValues] = useState({ ...INITIAL_VALUES });
   const [showPassword, setShowPassword] = useState(false);
+  const [userMode, setUserMode] = useState('user')
 
   useEffect(() => {
     if (!currentUser) return
@@ -85,7 +86,13 @@ const SignInPage = () => {
       }
     }
 
-    SignInLocal({ payload: values, callback: callback })
+    SignInLocal({
+      payload: {
+        ...values,
+        account_type: userMode
+      },
+      callback: callback
+    })
   }
 
   const formik = useFormik({
@@ -102,7 +109,13 @@ const SignInPage = () => {
             <COMMON_COMPONENTS.Auth.FormCard
               title={translations.SIGN_IN.WELCOME_BACK}
               description={translations.SIGN_IN.DESCRIPTION}>
-              <COMMON_COMPONENTS.Auth.SocialMedia />
+
+              <COMMON_COMPONENTS.Auth.UserModeToggle
+                mode={userMode}
+                setMode={setUserMode}
+              />
+
+              <COMMON_COMPONENTS.Auth.SocialMedia userMode={userMode} />
               <COMMON_COMPONENTS.Auth.OrSeperator />
 
               <COMMON_COMPONENTS.Auth.InputField

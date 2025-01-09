@@ -76,47 +76,52 @@ const ItemContainer = styled.div`
   }
 `
 
-const HeaderNavBar = ({ activeItem = 'home' }) => {
+const HeaderNavBar = ({ activeItem = 'home', reference }) => {
+  const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation()
+
   const router = useRouter();
   const { currentUser } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext();
 
   const [showLogoutDialogue, setShowLogoutDialogue] = useState(false);
 
   return (
-    <NavBar>
+    <NavBar ref={reference}>
       <img src={COMMON_ASSETS.WIDE_LOGO} alt="Globalie Logo" style={{ height: '2rem' }} />
 
       <WrapperContainer>
         <ItemContainer data-active={activeItem === 'home'}>
           <Link href={
             (() => {
-              if (!currentUser) return ROUTES.HOME.path;
               if (currentUser?.account_type === 'user') return ROUTES.USER_HOME.path;
-              if (currentUser?.account_type === 'admin') return ROUTES.ADMIN_HOME.path;
+              if (currentUser?.account_type === 'teacher') return ROUTES.TEACHER_HOME.path;
             })()
-          }>Home</Link>
+          }>{translations.USER_HOME.TITLE}</Link>
         </ItemContainer>
+
         {
-          currentUser && (
+          currentUser?.account_type === 'user' && (
             <>
-              <ItemContainer>
-                <Link href={'#'}>My Lesson</Link>
+              <ItemContainer data-active={activeItem === 'messages'}>
+                <Link href={ROUTES.USER_MESSAGES.path}>{translations.MESSAGES.TITLE}</Link>
+              </ItemContainer>
+              <ItemContainer data-active={activeItem === 'my_lesson'}>
+                <Link href={ROUTES.USER_MY_LESSON.path}>{translations.MY_LESSON.TITLE}</Link>
               </ItemContainer>
               <ItemContainer data-active={activeItem === 'history'}>
-                <Link href={ROUTES.USER_EXAM_HISTORY.path}>History</Link>
+                <Link href={ROUTES.USER_EXAM_HISTORY.path}>{translations.HISTORY.TITLE}</Link>
               </ItemContainer>
             </>
           )
         }
 
         {
-          !currentUser && (
+          currentUser?.account_type === 'teacher' && (
             <>
-              <ItemContainer>
-                <Link href={'#'}>About Us</Link>
+              <ItemContainer data-active={activeItem === 'messages'}>
+                <Link href={ROUTES.TEACHER_MESSAGES.path}>{translations.MESSAGES.TITLE}</Link>
               </ItemContainer>
-              <ItemContainer>
-                <Link href={'#'}>Privacy Policy</Link>
+              <ItemContainer data-active={activeItem === 'calendar'}>
+                <Link href={ROUTES.TEACHER_CALENDAR.path}>{translations.CALENDAR.TITLE}</Link>
               </ItemContainer>
             </>
           )
@@ -125,19 +130,7 @@ const HeaderNavBar = ({ activeItem = 'home' }) => {
 
       <WrapperContainer style={{ gap: '1.5rem' }}>
         <COMMON_COMPONENTS.LanguageSelect />
-        {
-          currentUser && (
-            <USER_COMPONENTS.OutlinedButton text={'Logout'} variant={'danger'} onClick={() => setShowLogoutDialogue(true)} />
-          )
-        }
-
-        {
-          !currentUser && (
-            <USER_COMPONENTS.OutlinedButton text={'Login'} variant={'secondary'} onClick={() => {
-              router.push(ROUTES.SIGN_IN.path);
-            }} />
-          )
-        }
+        <USER_COMPONENTS.OutlinedButton text={'Logout'} variant={'danger'} onClick={() => setShowLogoutDialogue(true)} />
       </WrapperContainer>
 
       {

@@ -45,6 +45,7 @@ const SignUpPage = () => {
 
   const [initialValues, setInitialValues] = useState({ ...INITIAL_VALUES });
   const [showPassword, setShowPassword] = useState(false);
+  const [userMode, setUserMode] = useState('user');
 
   useEffect(() => {
     if (!currentUser) return
@@ -64,7 +65,11 @@ const SignUpPage = () => {
     }
 
     SignUpLocal({
-      payload: { ...values, confirmPassword: values.password },
+      payload: {
+        ...values,
+        confirmPassword: values.password,
+        account_type: userMode,
+      },
       callback: callback
     })
   }
@@ -84,7 +89,12 @@ const SignUpPage = () => {
               title={translations.SIGN_UP.WELCOME_TO_SIGN_UP}
               description={translations.SIGN_UP.DESCRIPTION}>
 
-              <COMMON_COMPONENTS.Auth.SocialMedia />
+              <COMMON_COMPONENTS.Auth.UserModeToggle
+                mode={userMode}
+                setMode={setUserMode}
+              />
+
+              <COMMON_COMPONENTS.Auth.SocialMedia userMode={userMode} />
               <COMMON_COMPONENTS.Auth.OrSeperator />
 
               <COMMON_COMPONENTS.Auth.InputField

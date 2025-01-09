@@ -1,8 +1,18 @@
 import styled from "styled-components";
+
 import { COMMON_COLORS } from "@/src/utils/colors";
+import { COMMON_CONTEXT } from "@/src/context";
+
+const Container = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  background-color: ${COMMON_COLORS.AUTH.user_mode_toggle.inactive.background};
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+`
 
 const StyledToggleButton = styled.button`
-  background-color: ${COMMON_COLORS.AUTH.neutral_white};
+  background-color: ${props => props.isSelected ? 'transparent' : COMMON_COLORS.AUTH.user_mode_toggle.active.background};
   border: none;
   outline: none;
   cursor: pointer;
@@ -11,41 +21,32 @@ const StyledToggleButton = styled.button`
   font-weight: 600;
   flex: 1;
   border-radius: 0.375rem;
-  box-shadow: 0px 3px 8px 0px #0000001F;
-  color: ${COMMON_COLORS.AUTH.neutral_black}CC;
+  color: ${props => props.isSelected ? COMMON_COLORS.AUTH.user_mode_toggle.inactive.text : COMMON_COLORS.AUTH.user_mode_toggle.active.text};
 `;
 
 const UserModeToggle = ({
   mode,
   setMode,
 }) => {
+  const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation()
+
   return (
-    <div style={{
-      backgroundColor: COMMON_COLORS.AUTH.neutral_8,
-      borderRadius: '0.5rem',
-      padding: '0.2rem',
-      display: 'flex',
-      gap: '0.2rem',
-    }}>
+    <Container>
       <StyledToggleButton
         type={'button'}
-        onClick={() => setMode(false)}
-        style={{
-          backgroundColor: mode ? COMMON_COLORS.AUTH.neutral_8 : COMMON_COLORS.AUTH.neutral_10,
-          boxShadow: mode ? 'none' : '0px 3px 8px 0px #0000001F',
-        }}>
-        User
+        onClick={() => setMode('user')}
+        isSelected={mode === 'teacher'}
+      >
+        {translations.USER_MODE_TOGGLE.STUDENT}
       </StyledToggleButton>
       <StyledToggleButton
         type={'button'}
-        onClick={() => setMode(true)}
-        style={{
-          backgroundColor: mode ? COMMON_COLORS.AUTH.neutral_10 : COMMON_COLORS.AUTH.neutral_8,
-          boxShadow: mode ? '0px 3px 8px 0px #0000001F' : 'none',
-        }}>
-        Admin
+        onClick={() => setMode('teacher')}
+        isSelected={mode === 'user'}
+      >
+        {translations.USER_MODE_TOGGLE.TUTOR}
       </StyledToggleButton>
-    </div>
+    </Container>
   )
 }
 

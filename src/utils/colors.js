@@ -11,6 +11,16 @@ export const COMMON_COLORS = {
     error: '#FF0000',
     primary_blue: '#0064FF',
     primary_blue_hover: '#0052D9',
+    user_mode_toggle: {
+      active: {
+        background: '#0064FF',
+        text: '#FFFFFF',
+      },
+      inactive: {
+        background: '#0064FF14',
+        text: '#0070DD',
+      }
+    }
   }
 }
 
@@ -60,6 +70,7 @@ export const USER_COLORS = {
       Background: '#FFFFFF',
       PrimaryText: '#1A1A1A',
       SecondaryText: '#6D7580',
+      Border: '#DADEE3',
     },
     Stepper: {
       Text: '#394452',
@@ -135,5 +146,61 @@ export const USER_COLORS = {
       Outline: '#DADEE3',
       Fill: '#0064FF',
     }
-  }
+  },
+  CardLists: {
+    Text: {
+      Heading: '#1A1A1A',
+      Link: '#0064FF',
+      Primary: '#2C3A4B',
+      Secondary: '#545D69',
+    },
+    Border: '#DADEE3',
+    Background: '#FFFFFF',
+  },
+  MESSAGES: {
+    ParticipantList: {
+      Background: '#FFFFFF',
+      Border: '#DADEE3',
+      Item: {
+        PrimaryText: {
+          Selected: '#FFFFFF',
+          Unselected: '#394452',
+        },
+        SecondaryText: {
+          Selected: '#FFFFFF',
+          Unselected: '#A1A1A1',
+        },
+        Background: {
+          Selected: '#545D69',
+          Unselected: '#FFFFFF',
+        }
+      }
+    },
+    MessageContainer: {
+      Background: '#FFFFFF',
+      Border: '#DADEE3',
+      Primary: '#0064FF',
+      Header: {
+        PrimaryText: '#1A1A1A',
+        SecondaryText: '#6D7580',
+      },
+      Sender: {
+        Background: '#6D7580',
+        Text: '#FFFFFF',
+        Border: '#6D7580',
+      },
+      Receiver: {
+        Background: '#FFFFFF',
+        Text: '#0064FF',
+        Border: '#0064FF',
+      }
+    }
+  },
+  SearchField: {
+    Border: '#DADEE3',
+    Background: '#FFFFFF',
+    Text: '#1A1A1A',
+    Placeholder: '#6D7580',
+    BorderActive: '#0064FF',
+  },
 }

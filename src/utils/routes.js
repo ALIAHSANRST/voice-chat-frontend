@@ -33,9 +33,20 @@ const ROUTES = {
 
   // USER ROUTES
   USER_HOME: { path: '/user', isProtected: true, name: 'User' },
+  USER_MESSAGES: { path: '/user/messages', isProtected: true, name: 'Messages' },
+  USER_MY_LESSON: { path: '/user/my-lesson', isProtected: true, name: 'My Lesson' },
+  USER_EXAM_HISTORY: { path: '/user/exam-history', isProtected: true, name: 'Exam History' },
+  USER_PROFILE: { path: '/user/profile', isProtected: true, name: 'Profile' },
   USER_FREE_EXAM: { path: '/user/free-exam', isProtected: false, name: 'Free Exam' },
   USER_GIVE_FEEDBACK: { path: '/user/give-feedback', isProtected: true, name: 'Give Feedback' },
-  USER_EXAM_HISTORY: { path: '/user/exam-history', isProtected: true, name: 'Exam History' },
+
+  // TEACHER ROUTES
+  TEACHER_HOME: { path: '/teacher', isProtected: true, name: 'Teacher' },
+  TEACHER_MESSAGES: { path: '/teacher/messages', isProtected: true, name: 'Messages' },
+  TEACHER_CALENDAR: { path: '/teacher/calendar', isProtected: true, name: 'Calendar' },
+  TEACHER_PROFILE: { path: '/teacher/profile', isProtected: true, name: 'Profile' },
+  TEACHER_UPCOMING_CLASSES: { path: '/teacher/upcoming-classes', isProtected: true, name: 'Upcoming Classes' },
+  TEACHER_STUDENTS: { path: '/teacher/students', isProtected: true, name: 'Students' },
 }
 
 const GetPublicRoutes = () => {

@@ -5,6 +5,9 @@ export const ADMIN_ASSETS = {}
 export const USER_ASSETS = {
   HOME: {
     TAKE_FREE_EXAM_ARTIFACT: '/images/user/home/take-free-exam-artifact.svg',
+  },
+  PLACEHOLDER: {
+    PROFILE_PHOTO: '/images/user/placeholder/profile-photo.jpg',
   }
 }
 
@@ -18,16 +21,26 @@ export const COMMON_ASSETS = {
 
 export const ICON_ASSETS = {
   SMS_ICON: '/images/icons/sms-icon.svg',
+  SMS_OUTLINED_ICON: '/images/icons/sms-outlined-icon.svg',
   LOCK_ICON: '/images/icons/lock-icon.svg',
+  LOCK_OUTLINED_ICON: '/images/icons/lock-outlined-icon.svg',
   GOOGLE_ICON: '/images/icons/google-icon.svg',
-  LINKED_IN_ICON: '/images/icons/linked-in-icon.svg',
+  LINKEDIN_ICON: '/images/icons/linkedin-icon.svg',
   LINE_ICON: '/images/icons/line-icon.svg',
   USER_ICON: '/images/icons/user-icon.svg',
+  USER_OUTLINED_ICON: '/images/icons/user-outlined-icon.svg',
   ARROW_BACK_ICON: '/images/icons/arrow-back-icon.svg',
   CLOSE_BUTTON_ICON: '/images/icons/close-button-icon.svg',
   FACE_MASK_ICON: '/images/icons/face-mask-icon.svg',
   SMS_TRACKING_ICON: '/images/icons/sms-tracking-icon.svg',
   EXAM_RESULT_ICON: '/images/icons/exam-result-icon.svg',
+  VERIFIED_BADGE_ICON: '/images/icons/verified-badge-icon.svg',
+  VIEW_LINK_ICON: '/images/icons/view-link-icon.svg',
+  MESSAGE_LINK_ICON: '/images/icons/message-link-icon.svg',
+  SEARCH_ICON: '/images/icons/search-icon.svg',
+  INFO_ICON: '/images/icons/info-icon.svg',
+  SEND_MESSAGE_ICON: '/images/icons/send-message-icon.svg',
+  PROFILE_IMAGE_PLACEHOLDER_ICON: '/images/icons/profile-image-placeholder-icon.svg',
 }
 
 export const HOMEPAGE_ASSETS = {

@@ -59,7 +59,7 @@ const SignInModal = () => {
             title={translations.FREE_EXAM.SIGN_IN_MODAL.TITLE}
             description={translations.FREE_EXAM.SIGN_IN_MODAL.DESCRIPTION}>
 
-            <COMMON_COMPONENTS.Auth.SocialMedia />
+            <COMMON_COMPONENTS.Auth.SocialMedia userMode={'user'} />
             <COMMON_COMPONENTS.Auth.OrSeperator />
 
             <COMMON_COMPONENTS.Auth.InputField
