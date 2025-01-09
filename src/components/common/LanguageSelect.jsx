@@ -10,19 +10,16 @@ const SelectWrapper = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  padding: 8px 0;
+  padding: 0.5rem 0;
   width: fit-content;
   transition: all 0.2s ease;
-  opacity: 0.8;
-
-  &:hover {
-    opacity: 1;
-  }
+  opacity: 1;
+  font-family: 'Montserrat';
 
   &:before {
     content: '🌐';
-    margin-right: 6px;
-    font-size: 16px;
+    margin-right: 0.375rem;
+    font-size: 1rem;
   }
 `
 
@@ -30,8 +27,8 @@ const SelectButton = styled.button`
   border: none;
   outline: none;
   background: transparent;
-  padding: 4px 24px 4px 4px;
-  font-size: 14px;
+  padding: 0.25rem 1.5rem 0.25rem 0.25rem;
+  font-size: 0.875rem;
   color: ${COMMON_COLORS.AUTH.neutral_black};
   cursor: pointer;
   font-weight: 500;
@@ -42,12 +39,12 @@ const SelectButton = styled.button`
   &:after {
     content: '';
     position: absolute;
-    right: 4px;
+    right: 0.25rem;
     top: 50%;
-    width: 8px;
-    height: 8px;
-    border-right: 2px solid ${COMMON_COLORS.AUTH.neutral_black};
-    border-bottom: 2px solid ${COMMON_COLORS.AUTH.neutral_black};
+    width: 0.5rem;
+    height: 0.5rem;
+    border-right: 0.125rem solid ${COMMON_COLORS.AUTH.neutral_black};
+    border-bottom: 0.125rem solid ${COMMON_COLORS.AUTH.neutral_black};
     transform: translateY(-70%) rotate(${props => props.isOpen ? '225deg' : '45deg'});
     transition: transform 0.2s ease;
     opacity: 0.6;
@@ -55,7 +52,7 @@ const SelectButton = styled.button`
 
   &:hover {
     background: rgba(0, 0, 0, 0.02);
-    border-radius: 4px;
+    border-radius: 0.25rem;
   }
 `
 
@@ -65,19 +62,19 @@ const DropdownList = styled.ul`
   left: 0;
   right: 0;
   background: white;
-  border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  padding: 4px 0;
-  margin: 4px 0;
+  border-radius: 0.25rem;
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.15);
+  padding: 0.25rem 0;
+  margin: 0.25rem 0;
   list-style: none;
   z-index: 1000;
   display: ${props => props.isOpen ? 'block' : 'none'};
 `
 
 const DropdownItem = styled.li`
-  padding: 8px 16px;
+  padding: 0.5rem 1rem;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: ${COMMON_COLORS.AUTH.neutral_black};
 
   &:hover {

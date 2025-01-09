@@ -37,7 +37,7 @@ export const COMMON_COMPONENTS = {
 };
 
 export const USER_COMPONENTS = {
-  HeaderNavBar: require('./user/HeaderNavBar').default,
+  HeaderNavBar: require('./user/NavBar/HeaderNavBar').default,
   OutlinedButton: require('./user/OutlinedButton').default,
   Stepper: require('./user/Stepper').default,
   Button: require('./common/auth/Button').default,
