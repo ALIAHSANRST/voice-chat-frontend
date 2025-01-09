@@ -1,6 +1,7 @@
 'use strict';
 
 import { useEffect, useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { Formik, useFormik } from "formik";
 import styled from "styled-components";
 
@@ -126,6 +127,8 @@ const HiddenInput = styled.input`
 `
 
 const PersonalInformation = () => {
+  const router = useRouter();
+
   const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation();
   const { currentUser } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext();
 
@@ -152,6 +155,7 @@ const PersonalInformation = () => {
       SaveChanges({
         payload: { ...formik.values },
         setIsSubmitting: setIsSubmitting,
+        router: router,
       });
     },
     onReset: () => {

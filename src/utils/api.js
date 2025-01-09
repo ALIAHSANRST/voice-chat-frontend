@@ -27,9 +27,10 @@ BaseAPI.interceptors.response.use(
   },
   (error) => {
     if (error.response && error.response.status === 401) {
-      if (!window.location.pathname.includes("sign-in")) {
-        window.location.href = ROUTES.LOGOUT.path;
-      }
+      const excludedPaths = ["sign-in", "user/profile", "teacher/profile"];
+      const currentPath = window.location.pathname.toLocaleLowerCase();
+      const isExcluded = excludedPaths.some((path) => currentPath.includes(path));
+      if (!isExcluded) window.location.href = ROUTES.LOGOUT.path;
     } else if (error.code === 'ECONNABORTED' || error.code === 'ERR_NETWORK') {
       COMMON_COMPONENTS.Toast.showErrorToast('Sever Timed Out! Please Try Again Later!')
       if (!window.location.pathname.includes("sign-in")) {
@@ -39,5 +40,22 @@ BaseAPI.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+export const ImageLoader = async (link) => {
+  try {
+    if (!link) return null;
+    if (link?.toLocaleLowerCase().startsWith("http")) return link;
+
+    const ENDPOINT = `/file/${link.split('/').pop()}`;
+    const response = await BaseAPI.get(ENDPOINT, { responseType: 'arraybuffer' });
+    const base64 = Buffer.from(response.data, 'binary').toString('base64');
+    const contentType = response.headers['content-type'];
+
+    return `data:${contentType};base64,${base64}`;
+  } catch (error) {
+    console.log(`Error in ImageLoader: ${error}`);
+    return null;
+  }
+}
 
 export default BaseAPI;

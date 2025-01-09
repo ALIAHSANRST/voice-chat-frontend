@@ -1,6 +1,7 @@
 'use strict';
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Formik, useFormik } from "formik";
@@ -12,7 +13,6 @@ import { ICON_ASSETS } from "@/src/utils/assets";
 import { USER_VALIDATION } from "@/src/validation";
 import { INITIAL_VALUES } from "./values";
 import { SaveChanges } from "./axios";
-import InfoAlert from "../InfoAlert";
 
 const COLORS = {
   background: '#FFFFFF',
@@ -82,6 +82,8 @@ const FlexContainer = styled.div`
 `
 
 const ChangePassword = () => {
+  const router = useRouter();
+
   const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation();
   const { currentUser } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext();
 
@@ -99,6 +101,7 @@ const ChangePassword = () => {
       SaveChanges({
         payload: formik.values,
         setIsSubmitting: setIsSubmitting,
+        router: router
       });
     },
     onReset: () => {
