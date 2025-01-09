@@ -26,6 +26,10 @@ const JPY = {
     ALREADY_HAVE_AN_ACCOUNT: 'すでにアカウントをお持ちの方',
     LOGIN_NOW: '今すぐログイン',
   },
+  USER_MODE_TOGGLE: {
+    STUDENT: '学生',
+    TUTOR: '講師',
+  },
   LOGOUT: {
     TITLE: 'ログアウト',
   },
@@ -265,7 +269,87 @@ const JPY = {
     HEADING_2: 'メールアドレスの確認完了！',
     DESCRIPTION_2: 'メールアドレスの確認が完了しました。サインインしてください。',
     TEXT_1: 'サインインに進む',
-  }
+  },
+  MESSAGES: {
+    TITLE: 'メッセージ',
+    NO_PARTICIPANTS: '参加者が見つかりません！',
+    TYPE_MESSAGE: 'メッセージを入力...',
+    SEND_MESSAGE: 'メッセージを送信',
+  },
+  MY_LESSON: {
+    TITLE: 'レッスン',
+  },
+  HISTORY: {
+    TITLE: '履歴',
+  },
+  CALENDAR: {
+    TITLE: 'カレンダー',
+    WEEKLY_SCHEDULE: '週間スケジュール',
+  },
+  TEACHER_HOME: {
+    VERIFIED_TEACHER: '認証済み講師',
+    WELCOME_BACK: 'おかえりなさい',
+    HAVE_A_NICE_DAY: '良い一日を！',
+    OVERVIEW: '概要',
+    COMPLETE_YOUR_PROFILE: 'プロフィールを完成させる',
+    LESSONS: 'レッスン',
+    STUDENTS: '生徒',
+    RATING: '評価',
+  },
+  CARD_LISTS: {
+    UPCOMING_CLASSES: {
+      TITLE: '予定されたクラス',
+      VIEW_ALL: 'すべて表示',
+    },
+    STUDENTS: {
+      TITLE: '生徒',
+      VIEW_ALL: 'すべて表示',
+    }
+  },
+  PROFILE: {
+    TITLE: 'プロフィール',
+    SIDEBAR: {
+      PERSONAL_INFORMATION: '個人情報',
+      CHANGE_PASSWORD: 'パスワード変更',
+    },
+    PERSONAL_INFORMATION: {
+      TITLE: '個人情報',
+      SUB_HEADING: 'プロフィールを更新してください',
+      UPLOAD_IMAGE: {
+        INFO: 'JPGまたはPNG 最大サイズ1MB',
+        TEXT: '画像をアップロード'
+      },
+      FULL_NAME: {
+        LABEL: '氏名',
+        PLACEHOLDER: '氏名を入力',
+      },
+      EMAIL: {
+        LABEL: 'メールアドレス',
+        PLACEHOLDER: 'メールアドレスを入力',
+      },
+      SAVE_CHANGES: '変更を保存',
+      RESET: 'リセット',
+      ERRORS: {
+        FILE_TYPE: 'JPGおよびPNGファイルのみが許可されています！',
+        FILE_SIZE: 'ファイルサイズは1MB未満である必要があります！',
+      },
+    },
+    CHANGE_PASSWORD: {
+      TITLE: 'パスワード変更',
+      SUB_HEADING: 'アカウントを安全に保つためにパスワードを更新してください',
+      CURRENT_PASSWORD: {
+        LABEL: '現在のパスワード',
+        PLACEHOLDER: '現在のパスワードを入力',
+      },
+      NEW_PASSWORD: {
+        LABEL: '新しいパスワード',
+        PLACEHOLDER: '新しいパスワードを入力',
+      },
+      SAVE_CHANGES: '変更を保存',
+      RESET: 'リセット',
+      INFO_ALERT: 'ソーシャルメディアアカウントで登録したため、パスワードを変更できません！',
+    },
+  },
 };
 
 export default JPY;

@@ -95,6 +95,12 @@ export const AuthenticationProvider = ({ children }) => {
         }
       });
 
+      if (response.data.user.account_type !== payload.account_type) {
+        COMMON_COMPONENTS.Toast.showErrorToast('Invalid Email or Password!');
+        callback(null);
+        return;
+      }
+
       setCurrentUser(response.data.user);
       setToken(response.data.token);
 

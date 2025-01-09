@@ -26,6 +26,10 @@ const ENG = {
     ALREADY_HAVE_AN_ACCOUNT: 'Already have an account?',
     LOGIN_NOW: 'Login Now',
   },
+  USER_MODE_TOGGLE: {
+    STUDENT: 'Student',
+    TUTOR: 'Tutor',
+  },
   LOGOUT: {
     TITLE: 'Logout',
   },
@@ -62,7 +66,7 @@ const ENG = {
     RESET_PASSWORD: 'Reset Password',
   },
   USER_HOME: {
-    TITLE: 'User Home',
+    TITLE: 'Home',
     WELCOME: '👋 Hi, {fullname}',
     DELETING_ACCOUNT: 'Deleting Account...',
     WELCOME_MESSAGE: 'Welcome to Globalie Education!',
@@ -265,7 +269,87 @@ const ENG = {
     HEADING_2: 'Email Verified!',
     DESCRIPTION_2: 'Your email has been verified successfully. You can now sign in to your account.',
     TEXT_1: 'Continue to Sign In',
-  }
+  },
+  MESSAGES: {
+    TITLE: 'Messages',
+    NO_PARTICIPANTS: 'No Participants Found!',
+    TYPE_MESSAGE: 'Type a message...',
+    SEND_MESSAGE: 'Send Message',
+  },
+  MY_LESSON: {
+    TITLE: 'My Lesson',
+  },
+  HISTORY: {
+    TITLE: 'History',
+  },
+  CALENDAR: {
+    TITLE: 'Calendar',
+    WEEKLY_SCHEDULE: 'Weekly Schedule',
+  },
+  TEACHER_HOME: {
+    VERIFIED_TEACHER: 'Verified Teacher',
+    WELCOME_BACK: 'Welcome Back',
+    HAVE_A_NICE_DAY: 'Have a nice day!',
+    OVERVIEW: 'Overview',
+    COMPLETE_YOUR_PROFILE: 'Complete your profile',
+    LESSONS: 'Lessons',
+    STUDENTS: 'Students',
+    RATING: 'Rating',
+  },
+  CARD_LISTS: {
+    UPCOMING_CLASSES: {
+      TITLE: 'Upcoming Classes',
+      VIEW_ALL: 'View All',
+    },
+    STUDENTS: {
+      TITLE: 'Students',
+      VIEW_ALL: 'View All',
+    },
+  },
+  PROFILE: {
+    TITLE: 'Profile',
+    SIDEBAR: {
+      PERSONAL_INFORMATION: 'Personal Information',
+      CHANGE_PASSWORD: 'Change Password',
+    },
+    PERSONAL_INFORMATION: {
+      TITLE: 'Personal Information',
+      SUB_HEADING: 'Update your personal information',
+      UPLOAD_IMAGE: {
+        INFO: 'JPG or PNG Max Size of 1MB',
+        TEXT: 'Upload Image'
+      },
+      FULL_NAME: {
+        LABEL: 'Full Name',
+        PLACEHOLDER: 'Enter your full name',
+      },
+      EMAIL: {
+        LABEL: 'Email',
+        PLACEHOLDER: 'Enter your email',
+      },
+      SAVE_CHANGES: 'Save Changes',
+      RESET: 'Reset',
+      ERRORS: {
+        FILE_TYPE: 'Only JPG and PNG Files are Allowed!',
+        FILE_SIZE: 'File Size Should be Less Than 1MB!',
+      },
+    },
+    CHANGE_PASSWORD: {
+      TITLE: 'Change Password',
+      SUB_HEADING: 'Keep your account safe by updating your password',
+      CURRENT_PASSWORD: {
+        LABEL: 'Current Password',
+        PLACEHOLDER: 'Enter your current password',
+      },
+      NEW_PASSWORD: {
+        LABEL: 'New Password',
+        PLACEHOLDER: 'Enter your new password',
+      },
+      SAVE_CHANGES: 'Save Changes',
+      RESET: 'Reset',
+      INFO_ALERT: 'You cannot change your password as you have registered using a social media account!',
+    },
+  },
 };
 
 export default ENG;

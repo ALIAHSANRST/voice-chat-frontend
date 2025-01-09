@@ -84,9 +84,29 @@ const GenerateRandomText = ({
   return words.join(' ');
 };
 
+/**
+ * Formats the start and end time for a card list item
+ * @param {string} startTime - The start time of the class
+ * @param {string} endTime - The end time of the class
+ * @returns {string} Formatted time string
+ */
+const FormatCardListTime = (startTime, endTime) => {
+  const start = moment(startTime);
+  const end = moment(endTime);
+  const now = moment();
+
+  const _startTime = start.minute() === 0 ? start.format('hA') : start.format('h:mmA');
+  const _endTime = end.minute() === 0 ? end.format('hA') : end.format('h:mmA');
+
+  if (start.isSame(now, 'day')) return `${_startTime} - ${_endTime} Today`;
+  if (start.isSame(now.add(1, 'day'), 'day')) return `${_startTime} - ${_endTime} Tomorrow`;
+  return `${_startTime} - ${_endTime} ${start.format('DD-MM-YYYY')}`;
+}
+
 export {
   CapitalizeWords,
   DataTableDateFormat,
   HexToRGBA,
-  GenerateRandomText
+  GenerateRandomText,
+  FormatCardListTime
 };

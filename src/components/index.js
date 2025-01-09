@@ -37,12 +37,6 @@ export const COMMON_COMPONENTS = {
 };
 
 export const USER_COMPONENTS = {
-  CallButton: require('./user/CallButton').default,
-  MuteButton: require('./user/MuteButton').default,
-  VideoControls: require('./user/VideoControls').default,
-  VoiceChat: require('./user/VoiceChat').default,
-  VoiceToText: require('./user/VoiceToText').default,
-
   HeaderNavBar: require('./user/HeaderNavBar').default,
   OutlinedButton: require('./user/OutlinedButton').default,
   Stepper: require('./user/Stepper').default,
@@ -53,9 +47,23 @@ export const USER_COMPONENTS = {
     CheckBox: require('./user/Modal/CheckBox').default,
     DotList: require('./user/Modal/DotList').default,
   },
-
+  Calendar: require('./user/Calendar/Calendar').default,
+  CardLists: {
+    Students: require('./user/CardLists/Students').default,
+    UpcomingClasses: require('./user/CardLists/UpcomingClasses').default,
+  },
   AudioVisualizer: {
     Bar: require('./user/AudioVisualizer/BarAudioVisualizer').default,
     Circular: require('./user/AudioVisualizer/CircularAudioVisualizer').default,
+  },
+  InputFields: {
+    SearchField: require('./user/InputFields/SearchField').default,
+    TextInputField: require('./user/InputFields/TextInputField').default,
+  },
+  Profile: {
+    SideBar: require('./user/Profile/Sidebar').default,
+    InfoAlert: require('./user/Profile/InfoAlert').default,
+    PersonalInformation: require('./user/Profile/PersonalInformation/PersonalInformation').default,
+    ChangePassword: require('./user/Profile/ChangePassword/ChangePassword').default,
   }
 };

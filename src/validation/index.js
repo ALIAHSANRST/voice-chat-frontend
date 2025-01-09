@@ -12,4 +12,5 @@ export const COMMON_VALIDATION = {
 
 export const USER_VALIDATION = {
   Feedback: require('./user/feedback.validate'),
+  Profile: require('./user/profile.validate'),
 }

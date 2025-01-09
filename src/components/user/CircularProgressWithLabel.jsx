@@ -1,38 +1,47 @@
-import * as React from 'react';
-import CircularProgress, {
-  CircularProgressProps,
-} from '@mui/material/CircularProgress';
+'use client'
+
+import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-function CircularProgressWithLabel(
-  props
-) {
+import { USER_COLORS } from '@/src/utils/colors';
+
+const CircularProgressWithLabel = ({
+  circularProgressProps,
+  label,
+  value,
+}) => {
   return (
-    <Box sx={{ position: 'relative', display: 'inline-flex' }}>
-      <CircularProgress variant="determinate" {...props} />
-      <Box
-        sx={{
-          top: 0,
-          left: 0,
-          bottom: 0,
-          right: 0,
-          position: 'absolute',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <Typography
-          variant="caption"
-          component="div"
-          sx={{ color: 'text.secondary' }}
-        >{`${Math.round(props.value)}%`}</Typography>
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      gap: '0.5rem',
+    }}>
+      <Box sx={{ position: 'relative', display: 'inline-flex' }}>
+        <CircularProgress variant="determinate" size={60} thickness={3} value={value} {...circularProgressProps} />
+        <Box
+          sx={{
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            position: 'absolute',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Typography
+            variant="caption"
+            component="div"
+            sx={{ color: USER_COLORS.Home.Container.PrimaryText, fontSize: '0.925rem', fontWeight: '400', fontFamily: 'Montserrat' }}
+          >{`${Math.round(value)}%`}</Typography>
+        </Box>
       </Box>
-    </Box>
+      <span style={{ fontSize: '0.8125rem', fontWeight: '400', fontFamily: 'Montserrat', color: USER_COLORS.Home.Container.SecondaryText }}>{label}</span>
+    </div>
   );
 }
 
-export default function CircularWithValueLabel() {
-  return <CircularProgressWithLabel value={90} />;
-}
+export default CircularProgressWithLabel;

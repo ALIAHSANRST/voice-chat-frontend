@@ -36,13 +36,15 @@ const SocialMediaContainer = styled.div`
   }
 `
 
-const SocialMedia = () => {
+const SocialMedia = ({ userMode }) => {
+  console.log(userMode);
   return (
     <SocialMediaContainer>
-      {/* { href: '#', icon: ICON_ASSETS.LINKED_IN_ICON, alt: 'LinkedIn' } */}
       {[
         { href: `${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/google_oauth`, icon: ICON_ASSETS.GOOGLE_ICON, alt: 'Google' },
-        { href: `${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/line_oauth`, icon: ICON_ASSETS.LINE_ICON, alt: 'Line' },
+        userMode === 'user'
+          ? { href: `${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/line_oauth`, icon: ICON_ASSETS.LINE_ICON, alt: 'Line' }
+          : { href: `${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/linkedin_oauth`, icon: ICON_ASSETS.LINKEDIN_ICON, alt: 'LinkedIn' },
       ].map((social, index) => (
         <Link key={index} href={social.href} style={{ width: '100%' }}>
           <SocialMediaButton>
