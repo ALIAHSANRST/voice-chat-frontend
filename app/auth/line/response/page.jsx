@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { COMMON_COMPONENTS } from "@/src/components";
 import { COMMON_CONTEXT } from "@/src/context";
 import { usePageTitle } from "@/src/hooks";
+import { ImageLoader } from "@/src/utils/api";
 
 const LineAuthResponsePage = () => {
   const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation()
@@ -16,25 +17,32 @@ const LineAuthResponsePage = () => {
   const { setCurrentUser, setToken } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext();
 
   useEffect(() => {
-    const success = searchParams.get('success');
-    const userData = JSON.parse(searchParams.get('userData'));
-    const token = searchParams.get('token');
+    const _ = async () => {
+      const success = searchParams.get('success');
+      const userData = JSON.parse(searchParams.get('userData'));
+      const token = searchParams.get('token');
 
-    if (success && userData && token) {
-      setCurrentUser(userData);
-      setToken(token);
+      if (success && userData && token) {
+        setToken(token);
+        setCurrentUser({
+          ...userData,
+          profile_picture: await ImageLoader(userData.profile_picture)
+        });
 
-      router.push(`/${userData?.account_type || ''}`);
+        router.push(`/${userData?.account_type || ''}`);
+      }
+
+      if (success === 'false') {
+        const error = searchParams.get('error');
+        const message = searchParams.get('message');
+        console.error(error);
+
+        COMMON_COMPONENTS.Toast.showErrorToast(message);
+        setTimeout(() => router.push('/auth/sign-in'), 3000);
+      }
     }
 
-    if (success === 'false') {
-      const error = searchParams.get('error');
-      const message = searchParams.get('message');
-      console.error(error);
-
-      COMMON_COMPONENTS.Toast.showErrorToast(message);
-      setTimeout(() => router.push('/auth/sign-in'), 3000);
-    }
+    _();
   }, [router, searchParams]);
 
   return <COMMON_COMPONENTS.LoaderFullScreen message={translations.LINE_AUTH_RESPONSE.MESSAGE} />
