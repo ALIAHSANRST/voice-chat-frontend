@@ -1,6 +1,6 @@
 'use client'
 
-import BaseAPI from "@/src/utils/api"
+import BaseAPI, { HandleError } from "@/src/utils/api"
 import { CapitalizeWords, DataTableDateFormat } from "@/src/utils/helpers"
 import { COMMON_COMPONENTS } from "@/src/components"
 import { ROUTES } from "@/src/utils/routes"
@@ -69,7 +69,7 @@ const GetExam = async ({
     })
   } catch (error) {
     console.error('Exam > ManagePage > GetExam:', error)
-    COMMON_COMPONENTS.Toast.showErrorToast(error?.response?.data?.message || 'Failed To Fetch Exam!')
+    HandleError(error, 'Failed To Fetch Exam!')
   } finally {
     setIsLoading(false)
   }
@@ -119,7 +119,7 @@ const UpdateExam = async ({ payload, setIsLoading, router }) => {
     router.push(ROUTES.ADMIN_EXAM_MANAGE.path)
   } catch (error) {
     console.error('Exam > ManagePage > UpdateExam:', error)
-    COMMON_COMPONENTS.Toast.showErrorToast(error?.response?.data?.message || 'Failed To Update Exam!')
+    HandleError(error, 'Failed To Update Exam!')
   } finally {
     setIsLoading(false)
   }
@@ -151,7 +151,7 @@ const DeleteExam = async ({ id, setIsDeleting, router }) => {
     router.push(ROUTES.ADMIN_EXAM_MANAGE.path)
   } catch (error) {
     console.error('Exam > ManagePage > Delete:', error)
-    COMMON_COMPONENTS.Toast.showErrorToast(error?.response?.data?.message || 'Failed To Delete Exam!')
+    HandleError(error, 'Failed To Delete Exam!')
     setIsDeleting(false)
   }
 }
@@ -201,7 +201,7 @@ const AddExam = async ({ payload, setIsLoading, router }) => {
     router.push(ROUTES.ADMIN_EXAM_MANAGE.path) // fixed path
   } catch (error) {
     console.error('Exam > ManagePage > Add:', error)
-    COMMON_COMPONENTS.Toast.showErrorToast(error?.response?.data?.message || 'Failed To Add Exam!')
+    HandleError(error, 'Failed To Add Exam!')
     setIsLoading(false)
   }
 }

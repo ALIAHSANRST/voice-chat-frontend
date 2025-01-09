@@ -1,8 +1,7 @@
 'use client'
 
-import BaseAPI from "@/src/utils/api"
+import BaseAPI, { HandleError } from "@/src/utils/api"
 import { COMMON_COMPONENTS } from "@/src/components"
-import { ROUTES } from "@/src/utils/routes"
 
 /**
  * Updates an existing exam sentence
@@ -37,7 +36,7 @@ const ResetPassword = async ({ payload, setIsLoading, router, setIsEmailSent }) 
     }
   } catch (error) {
     console.error('Forgot Password > Reset Password:', error)
-    COMMON_COMPONENTS.Toast.showErrorToast(error?.response?.data?.message || 'Failed To Reset Password!')
+    HandleError(error, 'Failed To Reset Password!');
   } finally {
     setIsLoading(false)
   }

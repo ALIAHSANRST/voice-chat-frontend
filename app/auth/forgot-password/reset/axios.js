@@ -1,6 +1,6 @@
 'use client'
 
-import BaseAPI from "@/src/utils/api"
+import BaseAPI, { HandleError } from "@/src/utils/api"
 import { COMMON_COMPONENTS } from "@/src/components"
 import { ROUTES } from "@/src/utils/routes"
 
@@ -40,7 +40,7 @@ const UpdatePassword = async ({ payload, setIsLoading, router }) => {
     }
   } catch (error) {
     console.error('Forgot Password > Update Password:', error)
-    COMMON_COMPONENTS.Toast.showErrorToast(error?.response?.data?.message || 'Failed To Update Password!')
+    HandleError(error, 'Failed To Update Password!');
   } finally {
     setIsLoading(false)
   }

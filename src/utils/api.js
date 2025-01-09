@@ -58,4 +58,12 @@ export const ImageLoader = async (link) => {
   }
 }
 
+export const HandleError = (error, message) => {
+  COMMON_COMPONENTS.Toast.showErrorToast(
+    error?.response?.data?.errors?.[0]?.message
+    || error?.response?.data?.message
+    || message
+  )
+}
+
 export default BaseAPI;

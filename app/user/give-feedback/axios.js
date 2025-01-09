@@ -1,4 +1,4 @@
-import BaseAPI from '@/src/utils/api';
+import BaseAPI, { HandleError } from '@/src/utils/api';
 import { COMMON_COMPONENTS } from '@/src/components';
 import { ROUTES } from '@/src/utils/routes';
 
@@ -10,7 +10,7 @@ const GetQuestions = async ({ setIsLoading, setQuestions }) => {
     setQuestions(response.data.questions)
   } catch (error) {
     console.error('GetQuestions:', error)
-    COMMON_COMPONENTS.Toast.showErrorToast(error?.response?.data?.message || 'Failed To Fetch Questions!')
+    HandleError(error, 'Failed To Fetch Questions!');
   } finally {
     setIsLoading(false)
   }
@@ -43,7 +43,7 @@ const SubmitFeedback = async ({
     if (router) router.push(ROUTES.USER_HOME.path)
   } catch (error) {
     console.error('SubmitFeedback:', error)
-    COMMON_COMPONENTS.Toast.showErrorToast(error?.response?.data?.message || 'Failed To Submit Feedback!')
+    HandleError(error, 'Failed To Submit Feedback!');
   } finally {
     setIsSubmitting(false)
   }

@@ -1,7 +1,6 @@
 'use client'
 
-import BaseAPI from '@/src/utils/api';
-import { COMMON_COMPONENTS } from '@/src/components';
+import BaseAPI, { HandleError } from '@/src/utils/api';
 import { CapitalizeWords } from '@/src/utils/helpers';
 
 /**
@@ -35,9 +34,7 @@ const GetRandomExam = async ({ setIsLoading, setData, id, setError }) => {
     setData(response.data);
   } catch (error) {
     console.error('Exam > [id] > Random > GetRandomExam:', error);
-    COMMON_COMPONENTS.Toast.showErrorToast(
-      error?.response?.data?.message || 'Failed To Generate Random Exam!'
-    );
+    HandleError(error, 'Failed To Generate Random Exam!')
     setError(error?.response?.data?.error || 'Failed To Generate Random Exam!');
   } finally {
     setIsLoading(false);

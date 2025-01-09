@@ -1,5 +1,5 @@
 import { COMMON_COMPONENTS } from '@/src/components';
-import BaseAPI from '@/src/utils/api';
+import BaseAPI, { HandleError } from '@/src/utils/api';
 
 const SendEmail = async ({
   payload,
@@ -15,7 +15,7 @@ const SendEmail = async ({
     else COMMON_COMPONENTS.Toast.showErrorToast('Something Went Wrong!')
   } catch (error) {
     console.error('SendEmail:', error)
-    COMMON_COMPONENTS.Toast.showErrorToast(error?.response?.data?.message || 'Failed To Send Email!');
+    HandleError(error, 'Failed To Send Email!');
   } finally {
     setIsLoading(false)
   }

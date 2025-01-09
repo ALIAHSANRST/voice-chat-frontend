@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/navigation';
 import { Formik, useFormik } from 'formik';
-import styled from 'styled-components';
 
 import { INITIAL_VALUES } from './SignIn.values';
 import { ICON_ASSETS } from '@/src/utils/assets';

@@ -16,7 +16,11 @@ const SaveChanges = async ({ payload, setIsSubmitting, router }) => {
     else COMMON_COMPONENTS.Toast.showErrorToast('Something Went Wrong!')
   } catch (error) {
     console.error('SaveChanges:', error)
-    COMMON_COMPONENTS.Toast.showErrorToast(error?.response?.data?.message || 'Failed To Save Changes!')
+    COMMON_COMPONENTS.Toast.showErrorToast(
+      error?.response?.data?.errors?.[0]?.message
+      || error?.response?.data?.message
+      || 'Failed To Save Changes!'
+    )
   } finally {
     setIsSubmitting(false)
   }

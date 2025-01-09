@@ -1,6 +1,6 @@
 'use client'
 
-import BaseAPI from '@/src/utils/api';
+import BaseAPI, { HandleError } from '@/src/utils/api';
 import { COMMON_COMPONENTS } from '@/src/components';
 import { CapitalizeWords, DataTableDateFormat } from '@/src/utils/helpers';
 
@@ -60,9 +60,7 @@ const FetchAllRecords = async ({ limit, page, query, setIsLoading, setData }) =>
     // reset data on error
     setData({ records: [], totalRecords: 0 });
     console.error('Exam > SentencesPage > FetchAll:', error);
-    COMMON_COMPONENTS.Toast.showErrorToast(
-      error?.response?.data?.message || 'Failed To Fetch Sentences!'
-    );
+    HandleError(error, 'Failed To Fetch Sentences!');
   } finally {
     setIsLoading(false);
   }
@@ -94,9 +92,7 @@ const DeleteRecord = async ({ id, setIsLoading }) => {
     );
   } catch (error) {
     console.error('Exam > SentencesPage > Delete:', error);
-    COMMON_COMPONENTS.Toast.showErrorToast(
-      error?.response?.data?.message || 'Failed To Delete Sentence!'
-    );
+    HandleError(error, 'Failed To Delete Sentence!');
   } finally {
     setIsLoading(false);
   }
