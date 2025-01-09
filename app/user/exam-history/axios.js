@@ -1,5 +1,4 @@
-import { COMMON_COMPONENTS } from '@/src/components';
-import BaseAPI from '@/src/utils/api';
+import BaseAPI, { HandleError } from '@/src/utils/api';
 
 const GetExamHistory = async ({ limit, page, query, setIsLoading, setData }) => {
   setIsLoading(true)
@@ -17,7 +16,7 @@ const GetExamHistory = async ({ limit, page, query, setIsLoading, setData }) => 
     setData(response?.data?.data)
   } catch (error) {
     console.error('GetExamHistory:', error)
-    COMMON_COMPONENTS.Toast.showErrorToast(error?.response?.data?.message || 'Failed To Get Exam History!')
+    HandleError(error, 'Failed To Get Exam History!');
   } finally {
     setIsLoading(false)
   }

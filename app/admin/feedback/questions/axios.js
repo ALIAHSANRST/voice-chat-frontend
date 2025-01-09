@@ -1,6 +1,6 @@
 'use client'
 
-import BaseAPI from '@/src/utils/api';
+import BaseAPI, { HandleError } from '@/src/utils/api';
 import { COMMON_COMPONENTS } from '@/src/components';
 import { DataTableDateFormat } from '@/src/utils/helpers';
 
@@ -56,9 +56,7 @@ const FetchAllRecords = async ({ limit, page, query, setIsLoading, setData }) =>
     // reset data on error
     setData({ records: [], totalRecords: 0 });
     console.error('Feedback > QuestionsPage > FetchAll:', error);
-    COMMON_COMPONENTS.Toast.showErrorToast(
-      error?.response?.data?.message || 'Failed To Fetch Questions!'
-    );
+    HandleError(error, 'Failed To Fetch Questions!');
   } finally {
     setIsLoading(false);
   }
@@ -88,9 +86,7 @@ const DeleteRecord = async ({ id, setIsLoading }) => {
     );
   } catch (error) {
     console.error('Feedback > QuestionsPage > Delete:', error);
-    COMMON_COMPONENTS.Toast.showErrorToast(
-      error?.response?.data?.message || 'Failed To Delete Question!'
-    );
+    HandleError(error, 'Failed To Delete Question!');
   } finally {
     setIsLoading(false);
   }

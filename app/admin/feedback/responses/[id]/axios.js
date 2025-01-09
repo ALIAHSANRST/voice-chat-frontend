@@ -1,6 +1,6 @@
 'use client'
 
-import BaseAPI from "@/src/utils/api"
+import BaseAPI, { HandleError } from "@/src/utils/api"
 import { DataTableDateFormat } from "@/src/utils/helpers"
 import { COMMON_COMPONENTS } from "@/src/components"
 import { ROUTES } from "@/src/utils/routes"
@@ -61,7 +61,7 @@ const GetResponse = async ({
     })
   } catch (error) {
     console.error('Feedback > ResponsePage > GetResponse:', error)
-    COMMON_COMPONENTS.Toast.showErrorToast(error?.response?.data?.message || 'Failed To Fetch Response!')
+    HandleError(error, 'Failed To Fetch Response!');
   } finally {
     setIsLoading(false)
   }
@@ -93,7 +93,7 @@ const DeleteResponse = async ({ id, setIsDeleting, router }) => {
     router.push(ROUTES.ADMIN_FEEDBACK_RESPONSES.path)
   } catch (error) {
     console.error('Feedback > ResponsePage > Delete:', error)
-    COMMON_COMPONENTS.Toast.showErrorToast(error?.response?.data?.message || 'Failed To Delete Response!')
+    HandleError(error, 'Failed To Delete Response!');
     setIsDeleting(false)
   }
 }

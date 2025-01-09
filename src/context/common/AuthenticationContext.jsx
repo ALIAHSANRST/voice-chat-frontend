@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 
 import { COMMON_COMPONENTS } from '@/src/components';
 import { useLocalStorage } from '@/src/hooks';
-import BaseAPI from '@/src/utils/api';
+import BaseAPI, { ImageLoader } from '@/src/utils/api';
 import { GetPublicRoutes, ROUTES } from '@/src/utils/routes';
 import { COMMON_CONTEXT } from '@/src/context';
 
@@ -101,8 +101,11 @@ export const AuthenticationProvider = ({ children }) => {
         return;
       }
 
-      setCurrentUser(response.data.user);
       setToken(response.data.token);
+      setCurrentUser({
+        ...response.data.user,
+        profile_picture: await ImageLoader(response.data.user.profile_picture)
+      });
 
       COMMON_COMPONENTS.Toast.showSuccessToast('Successfully Signed In!');
       callback(response.data.user)
@@ -120,7 +123,7 @@ export const AuthenticationProvider = ({ children }) => {
   const Logout = () => {
     clearCurrentUser();
     clearToken();
-    window.location.href = ROUTES.HOME.path;
+    window.location.href = ROUTES.SIGN_IN.path;
   };
 
   return (

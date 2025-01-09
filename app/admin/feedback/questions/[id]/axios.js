@@ -1,6 +1,6 @@
 'use client'
 
-import BaseAPI from "@/src/utils/api"
+import BaseAPI, { HandleError } from "@/src/utils/api"
 import { CapitalizeWords } from "@/src/utils/helpers"
 import { COMMON_COMPONENTS } from "@/src/components"
 import { ROUTES } from "@/src/utils/routes"
@@ -57,7 +57,7 @@ const GetQuestion = async ({
     })
   } catch (error) {
     console.error('Feedback > QuestionPage > GetQuestion:', error)
-    COMMON_COMPONENTS.Toast.showErrorToast(error?.response?.data?.message || 'Failed To Fetch Question!')
+    HandleError(error, 'Failed To Fetch Question!');
   } finally {
     setIsLoading(false)
   }
@@ -101,7 +101,7 @@ const UpdateQuestion = async ({ payload, setIsLoading, router }) => {
     router.push(ROUTES.ADMIN_FEEDBACK_QUESTIONS.path)
   } catch (error) {
     console.error('Feedback > QuestionPage > Update:', error)
-    COMMON_COMPONENTS.Toast.showErrorToast(error?.response?.data?.message || 'Failed To Update Question!')
+    HandleError(error, 'Failed To Update Question!');
     setIsLoading(false)
   }
 }
@@ -132,7 +132,7 @@ const DeleteQuestion = async ({ id, setIsDeleting, router }) => {
     router.push(ROUTES.ADMIN_FEEDBACK_QUESTIONS.path)
   } catch (error) {
     console.error('Feedback > QuestionPage > Delete:', error)
-    COMMON_COMPONENTS.Toast.showErrorToast(error?.response?.data?.message || 'Failed To Delete Question!')
+    HandleError(error, 'Failed To Delete Question!');
     setIsDeleting(false)
   }
 }
@@ -175,7 +175,7 @@ const AddQuestion = async ({ payload, setIsLoading, router }) => {
     router.push(ROUTES.ADMIN_FEEDBACK_QUESTIONS.path)
   } catch (error) {
     console.error('Feedback > QuestionPage > Add:', error)
-    COMMON_COMPONENTS.Toast.showErrorToast(error?.response?.data?.message || 'Failed To Add Question!')
+    HandleError(error, 'Failed To Add Question!');
     setIsLoading(false)
   }
 }

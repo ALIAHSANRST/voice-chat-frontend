@@ -1,8 +1,7 @@
 'use client'
 
-import BaseAPI from "@/src/utils/api"
+import BaseAPI, { HandleError } from "@/src/utils/api"
 import { COMMON_COMPONENTS } from "@/src/components"
-import { ROUTES } from "@/src/utils/routes"
 
 /**
  * Verifies user email with token
@@ -36,7 +35,7 @@ const VerifyEmail = async ({ payload, setIsLoading, router }) => {
     }
   } catch (error) {
     console.error('Verify Email > Verify Email:', error)
-    COMMON_COMPONENTS.Toast.showErrorToast(error?.response?.data?.message || 'Failed To Verify Email!')
+    HandleError(error, 'Failed To Verify Email!');
   } finally {
     setIsLoading(false)
   }

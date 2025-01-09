@@ -1,5 +1,4 @@
-import { COMMON_COMPONENTS } from '@/src/components';
-import BaseAPI from '@/src/utils/api';
+import BaseAPI, { HandleError } from '@/src/utils/api';
 
 const GetExamScript = async ({
   setIsLoadingExamScript,
@@ -26,7 +25,7 @@ const GetExamScript = async ({
     }
   } catch (error) {
     console.error('FreeExam > GetExamScript:', error)
-    // COMMON_COMPONENTS.Toast.showErrorToast(error?.response?.data?.message || 'Failed To Get Exam Script!')
+    HandleError(error, 'Failed To Get Exam Script!');
   } finally {
     setIsLoadingExamScript(false)
   }

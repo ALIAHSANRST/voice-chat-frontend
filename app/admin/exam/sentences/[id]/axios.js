@@ -1,6 +1,6 @@
 'use client'
 
-import BaseAPI from "@/src/utils/api"
+import BaseAPI, { HandleError } from "@/src/utils/api"
 import { CapitalizeWords, DataTableDateFormat } from "@/src/utils/helpers"
 import { COMMON_COMPONENTS } from "@/src/components"
 import { ROUTES } from "@/src/utils/routes"
@@ -54,7 +54,7 @@ const GetSentence = async ({
     })
   } catch (error) {
     console.error('Exam > SentencePage > GetSentence:', error)
-    COMMON_COMPONENTS.Toast.showErrorToast(error?.response?.data?.message || 'Failed To Fetch Sentence!')
+    HandleError(error, 'Failed To Fetch Sentence!');
   } finally {
     setIsLoading(false)
   }
@@ -94,7 +94,7 @@ const UpdateSentence = async ({ payload, setIsLoading, router }) => {
     router.push(ROUTES.ADMIN_EXAM_SENTENCES.path)
   } catch (error) {
     console.error('Exam > SentencePage > Update:', error)
-    COMMON_COMPONENTS.Toast.showErrorToast(error?.response?.data?.message || 'Failed To Update Sentence!')
+    HandleError(error, 'Failed To Update Sentence!');
     setIsLoading(false)
   }
 }
@@ -125,7 +125,7 @@ const DeleteSentence = async ({ id, setIsDeleting, router }) => {
     router.push(ROUTES.ADMIN_EXAM_SENTENCES.path)
   } catch (error) {
     console.error('Exam > SentencePage > Delete:', error)
-    COMMON_COMPONENTS.Toast.showErrorToast(error?.response?.data?.message || 'Failed To Delete Sentence!')
+    HandleError(error, 'Failed To Delete Sentence!');
     setIsDeleting(false)
   }
 }
@@ -164,7 +164,7 @@ const AddSentence = async ({ payload, setIsLoading, router }) => {
     router.push(ROUTES.ADMIN_EXAM_SENTENCES.path)
   } catch (error) {
     console.error('Exam > SentencePage > Add:', error)
-    COMMON_COMPONENTS.Toast.showErrorToast(error?.response?.data?.message || 'Failed To Add Sentence!')
+    HandleError(error, 'Failed To Add Sentence!');
     setIsLoading(false)
   }
 }
