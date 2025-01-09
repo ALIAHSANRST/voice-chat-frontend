@@ -120,7 +120,7 @@ export const AuthenticationProvider = ({ children }) => {
   const Logout = () => {
     clearCurrentUser();
     clearToken();
-    window.location.href = ROUTES.HOME.path;
+    window.location.href = ROUTES.SIGN_IN.path;
   };
 
   return (

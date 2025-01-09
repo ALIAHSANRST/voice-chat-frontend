@@ -40,18 +40,29 @@ const SocialMedia = ({ userMode }) => {
   console.log(userMode);
   return (
     <SocialMediaContainer>
-      {[
-        { href: `${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/google_oauth`, icon: ICON_ASSETS.GOOGLE_ICON, alt: 'Google' },
-        userMode === 'user'
-          ? { href: `${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/line_oauth`, icon: ICON_ASSETS.LINE_ICON, alt: 'Line' }
-          : { href: `${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/linkedin_oauth`, icon: ICON_ASSETS.LINKEDIN_ICON, alt: 'LinkedIn' },
-      ].map((social, index) => (
-        <Link key={index} href={social.href} style={{ width: '100%' }}>
-          <SocialMediaButton>
-            <Image src={social.icon} alt={social.alt} width={28} height={28} />
-          </SocialMediaButton>
-        </Link>
-      ))}
+      {
+        [
+          {
+            href: `${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/google_oauth?account_type=${userMode}`,
+            icon: ICON_ASSETS.GOOGLE_ICON, alt: 'Google'
+          },
+          userMode === 'user'
+            ? {
+              href: `${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/line_oauth?account_type=${userMode}`,
+              icon: ICON_ASSETS.LINE_ICON, alt: 'Line'
+            }
+            : {
+              href: `${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/linkedin_oauth?account_type=${userMode}`,
+              icon: ICON_ASSETS.LINKEDIN_ICON, alt: 'LinkedIn'
+            },
+        ].map((social, index) => (
+          <Link key={index} href={social.href} style={{ width: '100%' }}>
+            <SocialMediaButton>
+              <Image src={social.icon} alt={social.alt} width={28} height={28} />
+            </SocialMediaButton>
+          </Link>
+        ))
+      }
     </SocialMediaContainer>
   )
 }

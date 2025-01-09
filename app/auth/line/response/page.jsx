@@ -24,13 +24,7 @@ const LineAuthResponsePage = () => {
       setCurrentUser(userData);
       setToken(token);
 
-      if (userData?.account_type === 'admin') {
-        router.push(`/${userData.account_type}`);
-      } else if (userData?.account_type === 'user') {
-        router.push('/user');
-      } else {
-        router.push('/');
-      }
+      router.push(`/${userData?.account_type || ''}`);
     }
 
     if (success === 'false') {
