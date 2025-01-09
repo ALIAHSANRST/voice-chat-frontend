@@ -350,6 +350,17 @@ const JPY = {
       INFO_ALERT: 'ソーシャルメディアアカウントで登録したため、パスワードを変更できません！',
     },
   },
+  NAVBAR: {
+    PROFILE_DROPDOWN: {
+      STUDENT: '学生',
+      TEACHER: '講師',
+      PROFILE: 'プロフィール',
+      LOGOUT: {
+        TITLE: 'ログアウト',
+        DESCRIPTION: 'ログアウトしてもよろしいですか？',
+      },
+    }
+  }
 };
 
 export default JPY;

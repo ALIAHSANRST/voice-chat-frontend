@@ -350,6 +350,17 @@ const ENG = {
       INFO_ALERT: 'You cannot change your password as you have registered using a social media account!',
     },
   },
+  NAVBAR: {
+    PROFILE_DROPDOWN: {
+      STUDENT: 'Student',
+      TEACHER: 'Teacher',
+      PROFILE: 'Profile',
+      LOGOUT: {
+        TITLE: 'Logout',
+        DESCRIPTION: 'Are you sure you want to logout?',
+      },
+    }
+  }
 };
 
 export default ENG;
