@@ -14,6 +14,7 @@ import { COMMON_COMPONENTS, USER_COMPONENTS } from '@/src/components';
 import { COMMON_CONTEXT } from '@/src/context';
 import { COMMON_VALIDATION } from '@/src/validation';
 import { ROUTES } from '@/src/utils/routes';
+import { ROLES } from '@/src/utils/constants';
 
 const SignInModal = () => {
   const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation()
@@ -31,7 +32,7 @@ const SignInModal = () => {
       setSubmitting(false);
       if (!currentUser) return;
 
-      if (currentUser?.account_type === 'user') {
+      if (currentUser?.account_type === ROLES.STUDENT) {
         router.push(ROUTES.USER_FREE_EXAM.path);
       } else {
         router.push(ROUTES.HOME.path);
@@ -58,7 +59,7 @@ const SignInModal = () => {
             title={translations.FREE_EXAM.SIGN_IN_MODAL.TITLE}
             description={translations.FREE_EXAM.SIGN_IN_MODAL.DESCRIPTION}>
 
-            <COMMON_COMPONENTS.Auth.SocialMedia userMode={'user'} />
+            <COMMON_COMPONENTS.Auth.SocialMedia userMode={ROLES.STUDENT} />
             <COMMON_COMPONENTS.Auth.OrSeperator />
 
             <COMMON_COMPONENTS.Auth.InputField

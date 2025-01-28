@@ -83,7 +83,7 @@ const DropdownItem = styled.li`
 `
 
 const LanguageSelect = () => {
-  const { LANGUAGES, currentLanguage, updateLanguage } = COMMON_CONTEXT.TranslationContext.useTranslation();
+  const { LANGUAGES, currentLanguage, updateLanguage, translations } = COMMON_CONTEXT.TranslationContext.useTranslation()
   const [isOpen, setIsOpen] = useState(false);
   const [openUpward, setOpenUpward] = useState(false);
   const wrapperRef = useRef(null);
@@ -126,13 +126,18 @@ const LanguageSelect = () => {
 
   return (
     <SelectWrapper ref={wrapperRef}>
-      <SelectButton type="button" onClick={() => setIsOpen(!isOpen)} isOpen={isOpen}>
+      <SelectButton
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        isOpen={isOpen}
+        title={translations.LANGUAGE_SELECT.TITLE}
+      >
         {currentLanguage.toUpperCase()}
       </SelectButton>
 
       <DropdownList isOpen={isOpen} openUpward={openUpward}>
         {Object.keys(LANGUAGES).map((language) => (
-          <DropdownItem key={language} onClick={() => handleSelect(language)}>
+          <DropdownItem key={language} onClick={() => handleSelect(language)} title={language}>
             {language}
           </DropdownItem>
         ))}

@@ -3,6 +3,7 @@
 import styled from "styled-components"
 
 import { COMMON_CONTEXT } from "@/src/context"
+import { ROLES } from "@/src/utils/constants"
 import PersonalInformationIcon from "./icons/PersonalInformationIcon"
 import ChangePasswordIcon from "./icons/ChangePasswordIcon"
 
@@ -81,6 +82,7 @@ const SideBar = ({
   setActiveItem = () => { }
 }) => {
   const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation();
+  const { currentUser } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext();
 
   return (
     <Container>
@@ -94,8 +96,19 @@ const SideBar = ({
             title: translations.PROFILE.SIDEBAR.CHANGE_PASSWORD,
             icon: <ChangePasswordIcon color={activeItem === 1 ? COLORS.iconActive : COLORS.iconInactive} />
           },
+          ...(
+            currentUser?.account_type === ROLES.TEACHER ? [{
+              title: translations.PROFILE.SIDEBAR.EXEPERIENCE,
+              icon: <PersonalInformationIcon color={activeItem === 2 ? COLORS.iconActive : COLORS.iconInactive} />
+            }] : []
+          )
         ].map((item, index) => (
-          <ItemWrapper key={`${index}-${item.title}`} active={activeItem === index} onClick={() => setActiveItem(index)}>
+          <ItemWrapper
+            key={`${index}-${item.title}`}
+            active={activeItem === index}
+            onClick={() => setActiveItem(index)}
+            title={item.title}
+          >
             <ItemIndicator active={activeItem === index} />
             <ItemContainer active={activeItem === index}>
               <IconContainer>{item.icon}</IconContainer>

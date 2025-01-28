@@ -1,3 +1,6 @@
+'use client';
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import styled from 'styled-components';
 
@@ -5,6 +8,9 @@ import { ICON_ASSETS } from "@/src/utils/assets";
 import { USER_COLORS } from "@/src/utils/colors";
 import { ROUTES } from "@/src/utils/routes";
 import { COMMON_CONTEXT } from "@/src/context";
+import { COMMON_COMPONENTS } from "@/src/components";
+import { ImageLoader } from "@/src/utils/api";
+import { FetchAllStudents } from "./axios";
 
 const Container = styled.div`
   display: flex;
@@ -48,6 +54,7 @@ const ListContainer = styled.div`
   gap: 1.5rem;
   border-radius: 1rem;
   background-color: ${USER_COLORS.CardLists.Background};
+  width: 100%;
 
   @media (max-width: 768px) {
     padding: 1rem;
@@ -60,6 +67,7 @@ const ItemContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  width: 100%;
 `
 
 const ProfileImage = styled.img`
@@ -79,6 +87,8 @@ const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  width: 100%;
+  overflow: hidden;
 
   @media (max-width: 768px) {
     gap: 0.1rem;
@@ -89,6 +99,9 @@ const Name = styled.span`
   font-size: 1.125rem;
   font-weight: 600;
   color: ${USER_COLORS.CardLists.Text.Primary};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   @media (max-width: 768px) {
     font-size: 1rem;
@@ -99,6 +112,9 @@ const Title = styled.span`
   font-size: 1rem;
   font-weight: 400;
   color: ${USER_COLORS.CardLists.Text.Secondary};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   @media (max-width: 768px) {
     font-size: 0.875rem;
@@ -126,42 +142,91 @@ const Divider = styled.div`
   }
 `
 
-const Students = ({ data, showViewAll = true }) => {
+const NoDataText = styled.span`
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: center;
+  color: ${USER_COLORS.CardLists.Text.Secondary};
+`
+
+const Students = ({ showViewAll = true, limit = 10 }) => {
   const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation();
+
+  const [data, setData] = useState({ records: [], totalRecords: 0 });
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      FetchAllStudents({
+        limit: limit,
+        page: 1,
+        query: null,
+        setIsLoading: setIsLoading,
+        setData: setData
+      });
+    }
+
+    fetchData();
+  }, []);
 
   return (
     <Container>
       <HeaderContainer>
         <Heading>{translations.CARD_LISTS.STUDENTS.TITLE}</Heading>
         {
-          showViewAll &&
+          showViewAll && !isLoading &&
           <ViewAllLink href={ROUTES.TEACHER_STUDENTS.path}>
             {translations.CARD_LISTS.STUDENTS.VIEW_ALL}
           </ViewAllLink>
         }
       </HeaderContainer>
 
-      <ListContainer>
-        {
-          data.map((item, index) => {
-            return (
-              <div key={`${item.title}-${item.from}`}>
-                <ItemContainer>
-                  <ProfileImage src={item.photoURL} alt={item.title} />
-                  <TextContainer>
-                    <Name>{item.name}</Name>
-                    <Title>{item.title}</Title>
-                  </TextContainer>
-                  <MessageIcon src={ICON_ASSETS.MESSAGE_LINK_ICON} alt="Message Link" />
-                </ItemContainer>
-                {
-                  index !== data.length - 1 && <Divider />
-                }
-              </div>
-            )
-          })
-        }
-      </ListContainer>
+      {
+        isLoading &&
+        <ListContainer>
+          <COMMON_COMPONENTS.Loader message={null} wrapped />
+        </ListContainer>
+      }
+
+      {
+        data && data.records.length === 0 && !isLoading &&
+        <ListContainer>
+          <NoDataText>
+            {translations.CARD_LISTS.STUDENTS.NO_STUDENTS}
+          </NoDataText>
+        </ListContainer>
+      }
+
+      {
+        data && data.records.length > 0 && !isLoading &&
+        <ListContainer>
+          {
+            data.records.map((item, index) => {
+              return (
+                <div key={`${item._id}`}>
+                  <ItemContainer>
+                    <ProfileImage src={ICON_ASSETS.PROFILE_IMAGE_PLACEHOLDER_ICON} alt={item.fullname} />
+                    <TextContainer>
+                      <Name title={item.fullname}>
+                        {item.fullname}
+                      </Name>
+                      <Title title={item.email || translations.CARD_LISTS.STUDENTS.UNKNOWN_EMAIL}>
+                        {item.email || translations.CARD_LISTS.STUDENTS.UNKNOWN_EMAIL}
+                      </Title>
+                    </TextContainer>
+                    <Link href={`${ROUTES.TEACHER_MESSAGES.path}?id=${item._id}`}>
+                      <MessageIcon src={ICON_ASSETS.MESSAGE_LINK_ICON} alt="Message Link" />
+                    </Link>
+                  </ItemContainer>
+                  {
+                    index !== data.records.length - 1 && <Divider />
+                  }
+                </div>
+              )
+            })
+          }
+        </ListContainer>
+      }
     </Container>
   )
 }

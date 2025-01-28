@@ -9,6 +9,7 @@ const ROUTES = {
   FORGOT_PASSWORD_RESET: { path: '/auth/forgot-password/reset', isProtected: false, name: 'Forgot Password' },
   LINE_OAUTH_RESPONSE: { path: '/auth/line/response', isProtected: false, name: 'Line OAuth' },
   GOOGLE_OAUTH_RESPONSE: { path: '/auth/google/response', isProtected: false, name: 'Google OAuth' },
+  LINKED_IN_OAUTH_RESPONSE: { path: '/auth/linkedin/response', isProtected: false, name: 'LinkedIn OAuth' },
 
   // ADMIN ROUTES
   ADMIN_HOME: { path: '/admin', isProtected: true, name: 'Admin' },
@@ -39,6 +40,7 @@ const ROUTES = {
   USER_PROFILE: { path: '/user/profile', isProtected: true, name: 'Profile' },
   USER_FREE_EXAM: { path: '/user/free-exam', isProtected: false, name: 'Free Exam' },
   USER_GIVE_FEEDBACK: { path: '/user/give-feedback', isProtected: true, name: 'Give Feedback' },
+  USER_TUTOR_LOBBY: { path: '/user/tutor-lobby', isProtected: true, name: 'Tutor Lobby' },
 
   // TEACHER ROUTES
   TEACHER_HOME: { path: '/teacher', isProtected: true, name: 'Teacher' },

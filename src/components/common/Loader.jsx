@@ -11,9 +11,12 @@ const Loader = ({
   if (wrapped) {
     return (
       <div className='d-flex justify-content-center align-items-center flex-column py-3'>
-        <span className='mb-2 fs-5 text-secondary'>
-          {message}
-        </span>
+        {
+          message &&
+          <span className='mb-2 fs-5 text-secondary'>
+            {message}
+          </span>
+        }
         <BeatLoader color={color} size={size} loading={true} speedMultiplier={1.5} />
       </div>
     )

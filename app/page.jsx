@@ -10,6 +10,7 @@ import { COMMON_ASSETS, HOMEPAGE_ASSETS, ICON_ASSETS } from "@/src/utils/assets"
 import { ROUTES } from "@/src/utils/routes";
 import { usePageTitle } from "@/src/hooks";
 import { COMMON_CONTEXT } from "@/src/context";
+import { ROLES } from "@/src/utils/constants";
 
 const HamburgerMenu = styled.div`
   display: none;
@@ -1323,8 +1324,9 @@ const HomePage = () => {
           </NavItemContainer>
           <NavRegisterButton>
             <Link href={(() => {
-              if (currentUser?.account_type === 'admin') return ROUTES.ADMIN_HOME.path;
-              else if (currentUser?.account_type === 'user') return ROUTES.USER_HOME.path;
+              if (currentUser?.account_type === ROLES.ADMIN) return ROUTES.ADMIN_HOME.path;
+              else if (currentUser?.account_type === ROLES.STUDENT) return ROUTES.USER_HOME.path;
+              else if (currentUser?.account_type === ROLES.TEACHER) return ROUTES.TEACHER_HOME.path;
               else return ROUTES.SIGN_UP.path;
             })()}>
               <span>

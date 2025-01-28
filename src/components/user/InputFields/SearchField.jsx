@@ -3,6 +3,8 @@ import styled from "styled-components";
 
 import { ICON_ASSETS } from "@/src/utils/assets";
 import { USER_COLORS } from "@/src/utils/colors";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const Container = styled.div`
   display: flex;
@@ -17,6 +19,8 @@ const Container = styled.div`
   &:focus-within {
     border-color: ${USER_COLORS.SearchField.BorderActive};
   }
+
+  ${props => props.style}
 `;
 
 const SearchIcon = styled.img`
@@ -36,6 +40,23 @@ const SearchInput = styled.input`
   &::placeholder {
     color: ${USER_COLORS.SearchField.Placeholder};
   }
+
+  ${props => props.style}
+`;
+
+const ClearButton = styled.button`
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: ${USER_COLORS.SearchField.Placeholder};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &:hover {
+    color: ${USER_COLORS.SearchField.Text};
+  }
 `;
 
 const SearchField = ({
@@ -45,10 +66,26 @@ const SearchField = ({
   containerStyle,
   inputStyle,
 }) => {
+  const handleClear = () => {
+    onChange({ target: { value: '' } });
+  };
+
   return (
     <Container style={containerStyle}>
       <SearchIcon src={ICON_ASSETS.SEARCH_ICON} alt="search" />
-      <SearchInput type="text" placeholder={placeholder} value={value} onChange={onChange} style={inputStyle} />
+      <SearchInput
+        type="text"
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        style={inputStyle}
+      />
+      {
+        value &&
+        <ClearButton onClick={handleClear}>
+          <FontAwesomeIcon icon={faTimes} size="lg" />
+        </ClearButton>
+      }
     </Container>
   )
 }

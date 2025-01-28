@@ -2,7 +2,7 @@ import { COMMON_COMPONENTS } from "@/src/components"
 import BaseAPI from "@/src/utils/api"
 import { ROUTES } from "@/src/utils/routes"
 
-const SaveChanges = async ({ payload, setIsSubmitting, router }) => {
+const SaveChanges = async ({ payload, setIsSubmitting, router, currentUser, setCurrentUser }) => {
   setIsSubmitting(true)
 
   try {
@@ -19,8 +19,15 @@ const SaveChanges = async ({ payload, setIsSubmitting, router }) => {
     const response = await BaseAPI.put(ENDPOINT, payload)
 
     if (response.data.success) {
-      COMMON_COMPONENTS.Toast.showSuccessToast('Changes Saved, Please Login Again!')
-      router.push(ROUTES.LOGOUT.path)
+      if (currentUser.email !== payload.email) {
+        COMMON_COMPONENTS.Toast.showSuccessToast('Changes Saved, Please Login Again!')
+        router.push(ROUTES.LOGOUT)
+      } else {
+        const changes = {}
+        for (const key in payload) if (payload[key] !== currentUser[key]) changes[key] = payload[key]
+        setCurrentUser({ ...currentUser, ...changes })
+        COMMON_COMPONENTS.Toast.showSuccessToast('Changes Saved!')
+      }
     }
     else COMMON_COMPONENTS.Toast.showErrorToast('Something Went Wrong!')
   } catch (error) {

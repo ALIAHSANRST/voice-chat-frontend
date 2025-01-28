@@ -49,7 +49,7 @@ export const USER_COMPONENTS = {
   },
   Calendar: require('./user/Calendar/Calendar').default,
   CardLists: {
-    Students: require('./user/CardLists/Students').default,
+    Students: require('./user/CardLists/Students/Students').default,
     UpcomingClasses: require('./user/CardLists/UpcomingClasses').default,
   },
   AudioVisualizer: {
@@ -65,5 +65,9 @@ export const USER_COMPONENTS = {
     InfoAlert: require('./user/Profile/InfoAlert').default,
     PersonalInformation: require('./user/Profile/PersonalInformation/PersonalInformation').default,
     ChangePassword: require('./user/Profile/ChangePassword/ChangePassword').default,
+    Experience: require('./user/Profile/Experience/Experience').default,
+  },
+  Message: {
+    Main: require('./user/Message/Message').default,
   }
 };

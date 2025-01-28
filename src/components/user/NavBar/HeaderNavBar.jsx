@@ -1,14 +1,18 @@
 'use client'
 
+import { useRouter } from "next/navigation"
 import Link from "next/link"
 import styled from "styled-components"
 import { useState } from "react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faHome } from "@fortawesome/free-solid-svg-icons"
 
 import { COMMON_ASSETS } from "@/src/utils/assets"
 import { USER_COLORS } from "@/src/utils/colors"
-import { COMMON_COMPONENTS } from "@/src/components"
+import { COMMON_COMPONENTS, USER_COMPONENTS } from "@/src/components"
 import { COMMON_CONTEXT } from "@/src/context"
 import { ROUTES } from "@/src/utils/routes"
+import { ROLES } from "@/src/utils/constants"
 import AccountDropDown from "./AccountDropDown"
 
 const NavBar = styled.nav`
@@ -19,7 +23,7 @@ const NavBar = styled.nav`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  gap: 3rem;
+  gap: 1.25rem;
 
   @media (max-width: 768px) {
     padding: 0;
@@ -84,7 +88,7 @@ const ItemContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 1.25rem;
+  padding: 1.25rem 1.1rem;
   font-size: 1rem;
   font-weight: 600;
   color: ${props => props['data-active'] ? USER_COLORS.NavBar.ActiveText : USER_COLORS.NavBar.Text};
@@ -146,15 +150,25 @@ const UtilityContainer = styled(WrapperContainer)`
 const HeaderNavBar = ({ activeItem = 'home', reference }) => {
   const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation()
   const { currentUser } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext();
+
+  const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
     <NavBar ref={reference} isMobileMenuOpen={isMobileMenuOpen}>
       <LogoContainer>
-        <img src={COMMON_ASSETS.WIDE_LOGO} alt="Globalie Logo" style={{ height: '2rem' }} />
+        <Link href={
+          (() => {
+            if (currentUser?.account_type === ROLES.STUDENT) return ROUTES.USER_HOME.path;
+            if (currentUser?.account_type === ROLES.TEACHER) return ROUTES.TEACHER_HOME.path;
+          })()
+        } style={{ display: 'flex', alignItems: 'center' }} title={translations.USER_HOME.TITLE}>
+          <img src={COMMON_ASSETS.WIDE_LOGO} alt="Globalie Logo" style={{ height: '2rem' }} />
+        </Link>
         <MobileMenuButton
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           isOpen={isMobileMenuOpen}
+          title={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
         >
           {isMobileMenuOpen ? '✕' : '☰'}
         </MobileMenuButton>
@@ -164,35 +178,46 @@ const HeaderNavBar = ({ activeItem = 'home', reference }) => {
         <ItemContainer data-active={activeItem === 'home'} isMobile>
           <Link href={
             (() => {
-              if (currentUser?.account_type === 'user') return ROUTES.USER_HOME.path;
-              if (currentUser?.account_type === 'teacher') return ROUTES.TEACHER_HOME.path;
+              if (currentUser?.account_type === ROLES.STUDENT) return ROUTES.USER_HOME.path;
+              if (currentUser?.account_type === ROLES.TEACHER) return ROUTES.TEACHER_HOME.path;
             })()
-          }>{translations.USER_HOME.TITLE}</Link>
+          } title={translations.USER_HOME.TITLE}>
+            {
+              isMobileMenuOpen ? 'Home' : <FontAwesomeIcon icon={faHome} fontSize={'1.125rem'} />
+            }
+          </Link>
         </ItemContainer>
 
         {
-          currentUser?.account_type === 'user' && (
+          currentUser?.account_type === ROLES.STUDENT && (
             <>
-              <ItemContainer data-active={activeItem === 'messages'} isMobile>
+              <ItemContainer data-active={activeItem === 'messages'} isMobile title={translations.MESSAGES.TITLE}>
                 <Link href={ROUTES.USER_MESSAGES.path}>{translations.MESSAGES.TITLE}</Link>
               </ItemContainer>
-              <ItemContainer data-active={activeItem === 'my_lesson'} isMobile>
+              <ItemContainer data-active={activeItem === 'my_lesson'} isMobile title={translations.MY_LESSON.TITLE}>
                 <Link href={ROUTES.USER_MY_LESSON.path}>{translations.MY_LESSON.TITLE}</Link>
               </ItemContainer>
-              <ItemContainer data-active={activeItem === 'history'} isMobile>
+              <ItemContainer data-active={activeItem === 'history'} isMobile title={translations.HISTORY.TITLE}>
                 <Link href={ROUTES.USER_EXAM_HISTORY.path}>{translations.HISTORY.TITLE}</Link>
               </ItemContainer>
+              {
+                isMobileMenuOpen && (
+                  <ItemContainer data-active={activeItem === 'lobby'} isMobile title={translations.TUTOR_LOBBY.REQUEST_TUTOR}>
+                    <Link href={ROUTES.USER_TUTOR_LOBBY.path}>{translations.TUTOR_LOBBY.REQUEST_TUTOR}</Link>
+                  </ItemContainer>
+                )
+              }
             </>
           )
         }
 
         {
-          currentUser?.account_type === 'teacher' && (
+          currentUser?.account_type === ROLES.TEACHER && (
             <>
-              <ItemContainer data-active={activeItem === 'messages'} isMobile>
+              <ItemContainer data-active={activeItem === 'messages'} isMobile title={translations.MESSAGES.TITLE}>
                 <Link href={ROUTES.TEACHER_MESSAGES.path}>{translations.MESSAGES.TITLE}</Link>
               </ItemContainer>
-              <ItemContainer data-active={activeItem === 'calendar'} isMobile>
+              <ItemContainer data-active={activeItem === 'calendar'} isMobile title={translations.CALENDAR.TITLE}>
                 <Link href={ROUTES.TEACHER_CALENDAR.path}>{translations.CALENDAR.TITLE}</Link>
               </ItemContainer>
             </>
@@ -205,9 +230,19 @@ const HeaderNavBar = ({ activeItem = 'home', reference }) => {
         </UtilityContainer>
       </WrapperContainer>
 
-      <WrapperContainer style={{ gap: '1.5rem' }} className="desktop-only">
-        <COMMON_COMPONENTS.LanguageSelect />
-        <AccountDropDown />
+      <WrapperContainer style={{ gap: '1.25rem' }}>
+        {
+          currentUser?.account_type === ROLES.STUDENT &&
+          <>
+            {
+              <USER_COMPONENTS.OutlinedButton text={'Request Tutor'}
+                style={{ minWidth: 'max-content' }}
+                onClick={() => router.push(ROUTES.USER_TUTOR_LOBBY.path)}
+              />
+            }
+          </>
+        }
+        <AccountDropDown withLanguage />
       </WrapperContainer>
     </NavBar>
   )
