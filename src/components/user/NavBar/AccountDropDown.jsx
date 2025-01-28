@@ -8,7 +8,8 @@ import { COMMON_COLORS } from '@/src/utils/colors';
 import { ROUTES } from '@/src/utils/routes';
 import { COMMON_CONTEXT } from '@/src/context';
 import { ICON_ASSETS } from '@/src/utils/assets';
-import { COMMON_COMPONENTS } from '../..';
+import { COMMON_COMPONENTS } from '@/src/components';
+import { ROLES } from '@/src/utils/constants';
 
 const AccountDropDownWrapper = styled.div`
   position: relative;
@@ -19,6 +20,8 @@ const AccountDropDownWrapper = styled.div`
   transition: all 0.2s ease;
   opacity: 1;
   font-family: 'Montserrat';
+  max-width: 12.5rem;
+  width: 100%;
 `
 
 const AccountButton = styled.button`
@@ -34,6 +37,7 @@ const AccountButton = styled.button`
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  width: 100%;
 
   &:after {
     content: '';
@@ -66,6 +70,10 @@ const UserInfo = styled.div`
 const UserName = styled.span`
   font-size: 0.875rem;
   font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 8rem;
 `
 
 const AccountType = styled.span`
@@ -102,7 +110,14 @@ const DropdownItem = styled.li`
   }
 `
 
-const AccountDropDown = () => {
+const Divider = styled.div`
+  width: calc(100% + 2rem);
+  height: 1px;
+  margin: 0 -1rem;
+  background: rgba(0, 0, 0, 0.1);
+`
+
+const AccountDropDown = ({ withLanguage = false }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [openUpward, setOpenUpward] = useState(false);
   const wrapperRef = useRef(null);
@@ -151,16 +166,24 @@ const AccountDropDown = () => {
 
   return (
     <AccountDropDownWrapper ref={wrapperRef}>
-      <AccountButton type="button" onClick={() => setIsOpen(!isOpen)} isOpen={isOpen}>
+      <AccountButton
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        isOpen={isOpen}
+        title={translations.NAVBAR.PROFILE_DROPDOWN.PROFILE}
+      >
         <ProfileImage
           src={currentUser?.profile_picture || ICON_ASSETS.PROFILE_IMAGE_PLACEHOLDER_ICON}
           alt="Profile"
+          title={currentUser?.fullname || 'Profile Picture'}
         />
         <UserInfo>
-          <UserName>{currentUser?.fullname}</UserName>
+          <UserName title={currentUser?.fullname}>
+            {currentUser?.fullname}
+          </UserName>
           <AccountType>
             {
-              currentUser?.account_type === 'user'
+              currentUser?.account_type === ROLES.STUDENT
                 ? translations.NAVBAR.PROFILE_DROPDOWN.STUDENT
                 : translations.NAVBAR.PROFILE_DROPDOWN.TEACHER
             }
@@ -175,12 +198,23 @@ const AccountDropDown = () => {
               ? ROUTES.USER_PROFILE.path
               : ROUTES.TEACHER_PROFILE.path
           )}
+          title={translations.NAVBAR.PROFILE_DROPDOWN.PROFILE}
         >
           {translations.NAVBAR.PROFILE_DROPDOWN.PROFILE}
         </DropdownItem>
-        <DropdownItem onClick={() => setShowLogoutDialogue(true)}>
+        <DropdownItem
+          onClick={() => setShowLogoutDialogue(true)}
+          title={translations.NAVBAR.PROFILE_DROPDOWN.LOGOUT.TITLE}
+        >
           {translations.NAVBAR.PROFILE_DROPDOWN.LOGOUT.TITLE}
         </DropdownItem>
+        {
+          withLanguage &&
+          <DropdownItem style={{ paddingBottom: 0 }}>
+            <Divider />
+            <COMMON_COMPONENTS.LanguageSelect />
+          </DropdownItem>
+        }
       </DropdownList>
 
       {

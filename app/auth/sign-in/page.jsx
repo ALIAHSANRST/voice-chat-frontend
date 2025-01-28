@@ -16,6 +16,7 @@ import { COMMON_COMPONENTS } from '@/src/components';
 import { COMMON_CONTEXT } from '@/src/context';
 import { COMMON_VALIDATION } from '@/src/validation';
 import { ROUTES } from '@/src/utils/routes';
+import { ROLES } from '@/src/utils/constants';
 
 const Container = styled.div`
   width: 100%;
@@ -61,7 +62,7 @@ const SignInPage = () => {
 
   const [initialValues, setInitialValues] = useState({ ...INITIAL_VALUES });
   const [showPassword, setShowPassword] = useState(false);
-  const [userMode, setUserMode] = useState('user')
+  const [userMode, setUserMode] = useState(ROLES.STUDENT)
 
   useEffect(() => {
     if (!currentUser) return
@@ -77,10 +78,12 @@ const SignInPage = () => {
       setSubmitting(false);
       if (!currentUser) return;
 
-      if (currentUser?.account_type === 'admin') {
+      if (currentUser?.account_type === ROLES.ADMIN) {
         router.push(ROUTES.ADMIN_HOME.path);
-      } else if (currentUser?.account_type === 'user') {
+      } else if (currentUser?.account_type === ROLES.STUDENT) {
         router.push(ROUTES.USER_HOME.path);
+      } else if (currentUser?.account_type === ROLES.TEACHER) {
+        router.push(ROUTES.TEACHER_HOME.path);
       } else {
         router.push(ROUTES.HOME.path);
       }

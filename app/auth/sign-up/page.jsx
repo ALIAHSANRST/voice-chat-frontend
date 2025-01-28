@@ -15,6 +15,7 @@ import { COMMON_COMPONENTS } from '@/src/components';
 import { COMMON_CONTEXT } from '@/src/context';
 import { COMMON_VALIDATION } from '@/src/validation';
 import { ROUTES } from '@/src/utils/routes';
+import { ROLES } from '@/src/utils/constants';
 
 const Container = styled.div`
   width: 100%;
@@ -45,7 +46,7 @@ const SignUpPage = () => {
 
   const [initialValues, setInitialValues] = useState({ ...INITIAL_VALUES });
   const [showPassword, setShowPassword] = useState(false);
-  const [userMode, setUserMode] = useState('user');
+  const [userMode, setUserMode] = useState(ROLES.STUDENT);
 
   useEffect(() => {
     if (!currentUser) return

@@ -14,6 +14,7 @@ import { usePageTitle, useMicrophoneAudioData } from '@/src/hooks';
 import { USER_CONTEXT, COMMON_CONTEXT } from '@/src/context';
 import { ROUTES } from '@/src/utils/routes';
 import { GenerateRandomText } from '@/src/utils/helpers';
+import SOCKET_EVENTS from '@/src/utils/socketEvents';
 
 const WrapperContainer = styled.div`
   width: 100%;
@@ -257,11 +258,11 @@ const ExamPage = () => {
   useEffect(() => {
     if (socket == null) return;
 
-    socket.on('error', errorMessage => {
+    socket.on(SOCKET_EVENTS.EXAM_TRANSCRIPTION.ERROR, errorMessage => {
       console.error('Server Error: ', errorMessage);
     })
 
-    socket.on('examResult', result => {
+    socket.on(SOCKET_EVENTS.EXAM_TRANSCRIPTION.RESULT, result => {
       stopTranscribing();
       setExamResult({ ...result, ...examMeta });
       setIsCalculatingScore(false);
@@ -295,10 +296,10 @@ const ExamPage = () => {
           int16Array[i] = Math.max(-32768, Math.min(32767, Math.floor(float32Array[i] * 32768)));
         }
 
-        socket.emit('audioData', int16Array.buffer);
+        socket.emit(SOCKET_EVENTS.EXAM_TRANSCRIPTION.AUDIO_DATA, int16Array.buffer);
       };
 
-      socket.emit('startExamTranscription', {
+      socket.emit(SOCKET_EVENTS.EXAM_TRANSCRIPTION.START, {
         examScript: examScript,
         ...examMeta,
       });
@@ -311,7 +312,7 @@ const ExamPage = () => {
     setIsCalculatingScore(calculatingScore);
     stopTranscribing();
     await leaveTest();
-    socket.emit('leaveTest', currentUser?._id);
+    socket.emit(SOCKET_EVENTS.EXAM_TRANSCRIPTION.LEAVE, currentUser?._id);
   }
 
   const HandleStartTest = () => {

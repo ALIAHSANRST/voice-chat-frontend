@@ -1,7 +1,5 @@
 'use client'
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 import styled from "styled-components";
 
 import { COMMON_COMPONENTS, USER_COMPONENTS } from '@/src/components';
@@ -245,20 +243,9 @@ const StatTitle = styled.span`
 
 const UserHomePage = () => {
   const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation()
-
-  const { currentUser, DeleteAccount } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext();
-  const router = useRouter();
+  const { currentUser } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext();
 
   usePageTitle({ title: currentUser?.fullname || translations.USER_HOME.TITLE })
-
-  const [showDeleteAccountDialogue, setShowDeleteAccountDialogue] = useState(false);
-  const [showIsDeletingAccount, setShowIsDeletingAccount] = useState(false);
-
-  if (showIsDeletingAccount) {
-    return (
-      <COMMON_COMPONENTS.LoaderFullScreen message={translations.USER_HOME.DELETING_ACCOUNT} />
-    )
-  }
 
   return (
     <MainContainer>
@@ -328,23 +315,7 @@ const UserHomePage = () => {
                 to: '2025-01-08T21:30:00Z',
               }
             ]} />
-            <USER_COMPONENTS.CardLists.Students data={[
-              {
-                photoURL: USER_ASSETS.PLACEHOLDER.PROFILE_PHOTO,
-                title: 'Critical Reading Strategies',
-                name: 'Adam Potter'
-              },
-              {
-                photoURL: USER_ASSETS.PLACEHOLDER.PROFILE_PHOTO,
-                title: 'Complex Sentences',
-                name: 'Eva Mathew'
-              },
-              {
-                photoURL: USER_ASSETS.PLACEHOLDER.PROFILE_PHOTO,
-                title: 'Close Reading Techniques',
-                name: 'John Doe'
-              }
-            ]} />
+            <USER_COMPONENTS.CardLists.Students limit={3} />
           </CardListsContainer>
         </FlexContainer>
       </ContentContainer>

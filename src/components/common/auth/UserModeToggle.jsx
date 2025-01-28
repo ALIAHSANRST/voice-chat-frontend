@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 import { COMMON_COLORS } from "@/src/utils/colors";
 import { COMMON_CONTEXT } from "@/src/context";
+import { ROLES } from "@/src/utils/constants";
 
 const Container = styled.div`
   display: flex;
@@ -34,15 +35,15 @@ const UserModeToggle = ({
     <Container>
       <StyledToggleButton
         type={'button'}
-        onClick={() => setMode('user')}
-        isSelected={mode === 'teacher'}
+        onClick={() => setMode(ROLES.STUDENT)}
+        isSelected={mode === ROLES.TEACHER}
       >
         {translations.USER_MODE_TOGGLE.STUDENT}
       </StyledToggleButton>
       <StyledToggleButton
         type={'button'}
-        onClick={() => setMode('teacher')}
-        isSelected={mode === 'user'}
+        onClick={() => setMode(ROLES.TEACHER)}
+        isSelected={mode === ROLES.STUDENT}
       >
         {translations.USER_MODE_TOGGLE.TUTOR}
       </StyledToggleButton>

@@ -174,6 +174,10 @@ export const USER_COLORS = {
           Selected: '#545D69',
           Unselected: '#FFFFFF',
         }
+      },
+      UnreadMessages: {
+        Background: '#0064FF',
+        Text: '#FFFFFF',
       }
     },
     MessageContainer: {
@@ -193,6 +197,11 @@ export const USER_COLORS = {
         Background: '#FFFFFF',
         Text: '#0064FF',
         Border: '#0064FF',
+      },
+      ReadIcon: '#0064FF',
+      LoadingOldMessages: {
+        Background: '#0064FF',
+        Text: '#FFFFFF',
       }
     }
   },
@@ -203,4 +212,28 @@ export const USER_COLORS = {
     Placeholder: '#6D7580',
     BorderActive: '#0064FF',
   },
+  TutorLobby: {
+    NoRecordsFound: {
+      Background: '#FFFFFF',
+      Border: '#DADEE3',
+      Text: '#1A1A1A',
+    },
+    Pagination: {
+      Background: '#0064FF1A',
+      Text: '#0064FF',
+      Border: '#EBEEF2',
+      SecondaryText: '#6D7580',
+    },
+    Header: {
+      PrimaryText: '#1A1A1A',
+      SecondaryText: '#6D7580',
+    },
+    Card: {
+      Border: '#E5E7EB',
+      Background: '#FFFFFF',
+      PrimaryText: '#111827',
+      SecondaryText: '#6B7280',
+      LinkedIn: '#0077B5', // official LinkedIn blue
+    }
+  }
 }

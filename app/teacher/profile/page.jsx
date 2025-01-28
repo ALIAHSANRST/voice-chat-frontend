@@ -3,7 +3,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-import { COMMON_COMPONENTS, USER_COMPONENTS } from '@/src/components';
+import { USER_COMPONENTS } from '@/src/components';
 import { COMMON_CONTEXT } from '@/src/context';
 import { USER_COLORS } from "@/src/utils/colors";
 import { usePageTitle } from "@/src/hooks";
@@ -89,6 +89,7 @@ const ProfilePage = () => {
           <RightContainer>
             {activeItem === 0 && <USER_COMPONENTS.Profile.PersonalInformation />}
             {activeItem === 1 && <USER_COMPONENTS.Profile.ChangePassword />}
+            {activeItem === 2 && <USER_COMPONENTS.Profile.Experience />}
           </RightContainer>
         </FlexContainer>
       </ContentContainer>

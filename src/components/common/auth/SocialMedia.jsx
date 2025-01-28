@@ -1,8 +1,10 @@
-import { ICON_ASSETS } from "@/src/utils/assets";
-import { COMMON_COLORS } from "@/src/utils/colors";
 import Image from "next/image";
 import Link from "next/link";
 import styled from "styled-components";
+
+import { ICON_ASSETS } from "@/src/utils/assets";
+import { COMMON_COLORS } from "@/src/utils/colors";
+import { ROLES } from "@/src/utils/constants";
 
 const SocialMediaButton = styled.span`
   background-color: ${COMMON_COLORS.AUTH.neutral_white};
@@ -46,7 +48,7 @@ const SocialMedia = ({ userMode }) => {
             href: `${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/google_oauth?account_type=${userMode}`,
             icon: ICON_ASSETS.GOOGLE_ICON, alt: 'Google'
           },
-          userMode === 'user'
+          userMode === ROLES.STUDENT
             ? {
               href: `${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/line_oauth?account_type=${userMode}`,
               icon: ICON_ASSETS.LINE_ICON, alt: 'Line'

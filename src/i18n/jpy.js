@@ -37,6 +37,10 @@ const JPY = {
     TITLE: 'LINE認証レスポンス',
     MESSAGE: 'LINEでログイン中...',
   },
+  LINKED_IN_AUTH_RESPONSE: {
+    TITLE: 'LinkedIn認証レスポンス',
+    MESSAGE: 'LinkedInでログイン中...',
+  },
   GOOGLE_AUTH_RESPONSE: {
     TITLE: 'Google認証レスポンス',
     MESSAGE: 'Googleでログイン中...',
@@ -275,6 +279,8 @@ const JPY = {
     NO_PARTICIPANTS: '参加者が見つかりません！',
     TYPE_MESSAGE: 'メッセージを入力...',
     SEND_MESSAGE: 'メッセージを送信',
+    LOADING_CHAT: 'チャットを読み込んでいます...',
+    OPEN_CHAT_TO_START: 'チャットを開いてメッセージを送信してください',
   },
   MY_LESSON: {
     TITLE: 'レッスン',
@@ -300,10 +306,13 @@ const JPY = {
     UPCOMING_CLASSES: {
       TITLE: '予定されたクラス',
       VIEW_ALL: 'すべて表示',
+      NO_CLASSES: '予定されたクラスがありません！',
     },
     STUDENTS: {
       TITLE: '生徒',
       VIEW_ALL: 'すべて表示',
+      NO_STUDENTS: '生徒が見つかりません！',
+      UNKNOWN_EMAIL: 'メールアドレスが不明',
     }
   },
   PROFILE: {
@@ -311,6 +320,7 @@ const JPY = {
     SIDEBAR: {
       PERSONAL_INFORMATION: '個人情報',
       CHANGE_PASSWORD: 'パスワード変更',
+      EXEPERIENCE: '経験',
     },
     PERSONAL_INFORMATION: {
       TITLE: '個人情報',
@@ -326,6 +336,18 @@ const JPY = {
       EMAIL: {
         LABEL: 'メールアドレス',
         PLACEHOLDER: 'メールアドレスを入力',
+      },
+      LINKED_IN: {
+        LABEL: 'LinkedIn ユーザー名',
+        PLACEHOLDER: 'LinkedIn ユーザー名を入力',
+      },
+      LOCATION: {
+        LABEL: '場所',
+        PLACEHOLDER: '場所を選択',
+      },
+      INTRODUCTORY: {
+        LABEL: '自己紹介',
+        PLACEHOLDER: '自己紹介を書く',
       },
       SAVE_CHANGES: '変更を保存',
       RESET: 'リセット',
@@ -349,6 +371,34 @@ const JPY = {
       RESET: 'リセット',
       INFO_ALERT: 'ソーシャルメディアアカウントで登録したため、パスワードを変更できません！',
     },
+    EXPERIENCE: {
+      TITLE: '経験',
+      SUB_HEADING: 'プロフィールに追加情報を入力してください',
+      INDUSTRY: {
+        LABEL: '業界',
+        PLACEHOLDER: '(例: テクノロジー、教育)'
+      },
+      ROLE: {
+        LABEL: '役割',
+        PLACEHOLDER: '(例: ソフトウェアエンジニア)'
+      },
+      START_DATE: {
+        LABEL: '開始日',
+        PLACEHOLDER: '開始日を選択'
+      },
+      END_DATE: {
+        LABEL: '終了日',
+        PLACEHOLDER: '終了日を選択'
+      },
+      COUNTER: '経験エントリー: {current}/10',
+      ADD_BUTTON: '経験を追加',
+      MAX_LIMIT: '(最大制限に達しました)',
+      REMOVE_TOOLTIP: '経験を削除',
+      ACTIONS: {
+        RESET: 'リセット',
+        SAVE: '変更を保存'
+      }
+    },
   },
   NAVBAR: {
     PROFILE_DROPDOWN: {
@@ -360,7 +410,23 @@ const JPY = {
         DESCRIPTION: 'ログアウトしてもよろしいですか？',
       },
     }
-  }
+  },
+  TUTOR_LOBBY: {
+    TITLE: '講師ロビー',
+    HEADING: '講師ロビー',
+    DESCRIPTION: '学習の旅のすべてのステップに対するパーソナライズされたサポート',
+    NO_TUTORS_FOUND: '講師が見つかりません！',
+    NEXT: '次へ',
+    PREV: '前へ',
+    REQUEST_TUTOR: '講師をリクエスト',
+    TUTOR: '講師',
+    REQUEST: 'リクエスト',
+    REQUESTED: 'リクエスト済み',
+    MESSAGE: 'メッセージ {tutor_name}',
+  },
+  LANGUAGE_SELECT: {
+    TITLE: '言語を選択',
+  },
 };
 
 export default JPY;

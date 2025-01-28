@@ -34,8 +34,12 @@ const ENG = {
     TITLE: 'Logout',
   },
   LINE_AUTH_RESPONSE: {
-    TITLE: 'Line Auth Response',
+    TITLE: 'LINE Auth Response',
     MESSAGE: 'Logging in with LINE...',
+  },
+  LINKED_IN_AUTH_RESPONSE: {
+    TITLE: 'LinkedIn Auth Response',
+    MESSAGE: 'Logging in with LinkedIn...',
   },
   GOOGLE_AUTH_RESPONSE: {
     TITLE: 'Google Auth Response',
@@ -275,6 +279,8 @@ const ENG = {
     NO_PARTICIPANTS: 'No Participants Found!',
     TYPE_MESSAGE: 'Type a message...',
     SEND_MESSAGE: 'Send Message',
+    LOADING_CHAT: 'Loading Chat...',
+    OPEN_CHAT_TO_START: 'Open a Chat to Start Messaging',
   },
   MY_LESSON: {
     TITLE: 'My Lesson',
@@ -300,10 +306,13 @@ const ENG = {
     UPCOMING_CLASSES: {
       TITLE: 'Upcoming Classes',
       VIEW_ALL: 'View All',
+      NO_CLASSES: 'No Classes Found!',
     },
     STUDENTS: {
       TITLE: 'Students',
       VIEW_ALL: 'View All',
+      NO_STUDENTS: 'No Students Found!',
+      UNKNOWN_EMAIL: 'Unknown Email',
     },
   },
   PROFILE: {
@@ -311,6 +320,7 @@ const ENG = {
     SIDEBAR: {
       PERSONAL_INFORMATION: 'Personal Information',
       CHANGE_PASSWORD: 'Change Password',
+      EXEPERIENCE: 'Experience',
     },
     PERSONAL_INFORMATION: {
       TITLE: 'Personal Information',
@@ -326,6 +336,18 @@ const ENG = {
       EMAIL: {
         LABEL: 'Email',
         PLACEHOLDER: 'Enter your email',
+      },
+      LINKED_IN: {
+        LABEL: 'LinkedIn Username',
+        PLACEHOLDER: 'Enter your LinkedIn username',
+      },
+      LOCATION: {
+        LABEL: 'Location',
+        PLACEHOLDER: 'Select your location',
+      },
+      INTRODUCTORY: {
+        LABEL: 'Introductory',
+        PLACEHOLDER: 'Write a brief introduction about yourself',
       },
       SAVE_CHANGES: 'Save Changes',
       RESET: 'Reset',
@@ -349,6 +371,34 @@ const ENG = {
       RESET: 'Reset',
       INFO_ALERT: 'You cannot change your password as you have registered using a social media account!',
     },
+    EXPERIENCE: {
+      TITLE: 'Experience',
+      SUB_HEADING: 'Add Your Professional Work Experience',
+      INDUSTRY: {
+        LABEL: 'Industry',
+        PLACEHOLDER: '(e.g. Technology, Education)'
+      },
+      ROLE: {
+        LABEL: 'Role',
+        PLACEHOLDER: '(e.g. Software Engineer)'
+      },
+      START_DATE: {
+        LABEL: 'Start Date',
+        PLACEHOLDER: 'Select Start Date'
+      },
+      END_DATE: {
+        LABEL: 'End Date',
+        PLACEHOLDER: 'Select End Date'
+      },
+      COUNTER: 'Experience Entries: {current}/10',
+      ADD_BUTTON: 'Add Experience',
+      MAX_LIMIT: '(Max Limit Reached)',
+      REMOVE_TOOLTIP: 'Remove Experience',
+      ACTIONS: {
+        RESET: 'Reset',
+        SAVE: 'Save Changes'
+      }
+    }
   },
   NAVBAR: {
     PROFILE_DROPDOWN: {
@@ -360,7 +410,23 @@ const ENG = {
         DESCRIPTION: 'Are you sure you want to logout?',
       },
     }
-  }
+  },
+  TUTOR_LOBBY: {
+    TITLE: 'Tutor Lobby',
+    HEADING: 'Tutor Lobby',
+    DESCRIPTION: 'Personalized Support for Every Step of the Learning Journey',
+    NO_TUTORS_FOUND: 'No Tutors Found!',
+    PREV: 'Prev',
+    NEXT: 'Next',
+    REQUEST_TUTOR: 'Request Tutor',
+    TUTOR: 'Tutor',
+    REQUEST: 'Request',
+    REQUESTED: 'Requested',
+    MESSAGE: 'Message {tutor_name}',
+  },
+  LANGUAGE_SELECT: {
+    TITLE: 'Select Language',
+  },
 };
 
 export default ENG;

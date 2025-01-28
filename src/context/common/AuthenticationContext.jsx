@@ -7,6 +7,7 @@ import { useLocalStorage } from '@/src/hooks';
 import BaseAPI, { ImageLoader } from '@/src/utils/api';
 import { GetPublicRoutes, ROUTES } from '@/src/utils/routes';
 import { COMMON_CONTEXT } from '@/src/context';
+import { ROLES } from '@/src/utils/constants';
 
 const AuthenticationContext = createContext();
 
@@ -38,18 +39,21 @@ export const AuthenticationProvider = ({ children }) => {
       return;
     }
 
-    const isAdmin = currentUser.account_type === "admin"
-    const isUser = currentUser.account_type === "user"
+    const isAdmin = currentUser.account_type === ROLES.ADMIN
+    const isStudent = currentUser.account_type === ROLES.STUDENT
+    const isTeacher = currentUser.account_type === ROLES.TEACHER
 
     const _ = window.location.pathname.split('/')
     const module = _.length > 1 ? _[1] : null
 
     if (!module) return setIsCheckingUserStatus(false);
 
-    if (isAdmin && module !== "admin") {
+    if (isAdmin && module !== ROLES.ADMIN) {
       window.location.href = ROUTES.ADMIN_HOME.path
-    } else if (isUser && module !== "user") {
+    } else if (isStudent && module !== ROLES.STUDENT) {
       window.location.href = ROUTES.USER_HOME.path
+    } else if (isTeacher && module !== ROLES.TEACHER) {
+      window.location.href = ROUTES.TEACHER_HOME.path
     }
 
     setIsCheckingUserStatus(false);
