@@ -17,6 +17,10 @@ const StyledButton = styled.button`
     border: 1px solid ${props => USER_COLORS.OutlinedButton[props.variant].HoverBorder};
     color: ${props => USER_COLORS.OutlinedButton[props.variant].HoverText};
   }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 `
 
 const OutlinedButton = ({

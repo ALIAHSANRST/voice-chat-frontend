@@ -1,15 +1,16 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import styled from 'styled-components';
+import moment from 'moment';
 
 import { ICON_ASSETS } from "@/src/utils/assets";
 import { USER_COLORS } from "@/src/utils/colors";
 import { ROUTES } from "@/src/utils/routes";
 import { COMMON_CONTEXT } from "@/src/context";
+import { FetchAllUpcomingClasses } from "./axios";
 import { COMMON_COMPONENTS } from "@/src/components";
-import { FetchAllStudents } from "./axios";
 
 const Container = styled.div`
   display: flex;
@@ -53,8 +54,7 @@ const ListContainer = styled.div`
   gap: 1.5rem;
   border-radius: 1rem;
   background-color: ${USER_COLORS.CardLists.Background};
-  width: 100%;
-
+  
   @media (max-width: 768px) {
     padding: 1rem;
     gap: 1rem;
@@ -66,7 +66,6 @@ const ItemContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  width: 100%;
 `
 
 const ProfileImage = styled.img`
@@ -86,49 +85,41 @@ const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  width: 100%;
-  overflow: hidden;
 
   @media (max-width: 768px) {
     gap: 0.1rem;
   }
 `
 
-const Name = styled.span`
+const Title = styled.span`
   font-size: 1.125rem;
   font-weight: 600;
   color: ${USER_COLORS.CardLists.Text.Primary};
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 
   @media (max-width: 768px) {
     font-size: 1rem;
   }
 `
 
-const Title = styled.span`
+const Time = styled.span`
   font-size: 1rem;
   font-weight: 400;
   color: ${USER_COLORS.CardLists.Text.Secondary};
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 
   @media (max-width: 768px) {
     font-size: 0.875rem;
   }
 `
 
-const MessageIcon = styled.img`
-  width: 3rem;
-  height: 3rem;
+const ViewIcon = styled.img`
+  width: 1.325rem;
+  height: 1.325rem;
   cursor: pointer;
   margin-left: auto;
 
   @media (max-width: 768px) {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 1.2rem;
+    height: 1.2rem;
   }
 `
 
@@ -148,26 +139,43 @@ const NoDataText = styled.span`
   color: ${USER_COLORS.CardLists.Text.Secondary};
 `
 
-export const StudentCard = ({ student, translations }) => {
+const FormatTime = ({ day, date, time }) => {
+  const currentDate = moment();
+  const classDate = moment(date);
+
+  const isToday = currentDate.isSame(classDate, 'day');
+  const isTomorrow = currentDate.add(1, 'day').isSame(classDate, 'day');
+
+  const formattedTime = moment(time, 'HH:mm').format('h:mm A');
+
+  if (isToday) {
+    return `Today, ${formattedTime}`;
+  } else if (isTomorrow) {
+    return `Tomorrow, ${formattedTime}`;
+  } else {
+    return `${classDate.format('MMM D, YYYY')}, ${formattedTime}`;
+  }
+}
+
+export const UpcomingClassCard = ({ item, translations }) => {
   return (
     <ItemContainer>
-      <ProfileImage src={ICON_ASSETS.PROFILE_IMAGE_PLACEHOLDER_ICON} alt={student.fullname} />
+      <ProfileImage src={ICON_ASSETS.PROFILE_IMAGE_PLACEHOLDER_ICON} alt={item.fullname} />
       <TextContainer>
-        <Name title={student.fullname}>
-          {student.fullname}
-        </Name>
-        <Title title={student.email || translations.CARD_LISTS.STUDENTS.UNKNOWN_EMAIL}>
-          {student.email || translations.CARD_LISTS.STUDENTS.UNKNOWN_EMAIL}
-        </Title>
+        <Title>{item.title}</Title>
+        <Time>{FormatTime(item.scheduledFor)}</Time>
       </TextContainer>
-      <Link href={`${ROUTES.TEACHER_MESSAGES.path}?id=${student._id}`}>
-        <MessageIcon src={ICON_ASSETS.MESSAGE_LINK_ICON} alt="Message Link" />
-      </Link>
+      <ViewIcon
+        style={{ cursor: moment(item.scheduledFor.date).isSame(moment(), 'day') ? 'pointer' : 'not-allowed' }}
+        title={moment(item.scheduledFor.date).isSame(moment(), 'day') ? '' : translations.COMMON.UNAVAILABLE}
+        src={ICON_ASSETS.VIEW_LINK_ICON}
+        alt="View Link"
+      />
     </ItemContainer>
   );
 };
 
-const Students = ({ showViewAll = true, limit = 10 }) => {
+const UpcomingClasses = ({ showViewAll = true, limit = 10 }) => {
   const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation();
 
   const [data, setData] = useState({ records: [], totalRecords: 0 });
@@ -175,7 +183,7 @@ const Students = ({ showViewAll = true, limit = 10 }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      FetchAllStudents({
+      FetchAllUpcomingClasses({
         limit: limit,
         page: 1,
         query: null,
@@ -190,11 +198,11 @@ const Students = ({ showViewAll = true, limit = 10 }) => {
   return (
     <Container>
       <HeaderContainer>
-        <Heading>{translations.CARD_LISTS.STUDENTS.TITLE}</Heading>
+        <Heading>{translations.CARD_LISTS.UPCOMING_CLASSES.TITLE}</Heading>
         {
           showViewAll && !isLoading &&
-          <ViewAllLink href={ROUTES.TEACHER_STUDENTS.path}>
-            {translations.CARD_LISTS.STUDENTS.VIEW_ALL}
+          <ViewAllLink href={ROUTES.TEACHER_UPCOMING_CLASSES.path}>
+            {translations.CARD_LISTS.UPCOMING_CLASSES.VIEW_ALL}
           </ViewAllLink>
         }
       </HeaderContainer>
@@ -210,7 +218,7 @@ const Students = ({ showViewAll = true, limit = 10 }) => {
         data && data.records.length === 0 && !isLoading &&
         <ListContainer>
           <NoDataText>
-            {translations.CARD_LISTS.STUDENTS.NO_STUDENTS}
+            {translations.CARD_LISTS.UPCOMING_CLASSES.NO_CLASSES}
           </NoDataText>
         </ListContainer>
       }
@@ -219,16 +227,20 @@ const Students = ({ showViewAll = true, limit = 10 }) => {
         data && data.records.length > 0 && !isLoading &&
         <ListContainer>
           {
-            data.records.map((item, index) => {
-              return (
-                <div key={`${item._id}`}>
-                  <StudentCard student={item} translations={translations} />
-                  {
-                    index !== data.records.length - 1 && <Divider />
-                  }
-                </div>
-              )
-            })
+            data.records.map((item, index) => (
+              <div key={`${item._id}`}>
+                <UpcomingClassCard
+                  key={item._id}
+                  item={item}
+                  index={index}
+                  totalItems={data.records.length}
+                  translations={translations}
+                />
+                {
+                  index !== data.records.length - 1 && <Divider />
+                }
+              </div>
+            ))
           }
         </ListContainer>
       }
@@ -236,4 +248,4 @@ const Students = ({ showViewAll = true, limit = 10 }) => {
   )
 }
 
-export default Students;
+export default UpcomingClasses;

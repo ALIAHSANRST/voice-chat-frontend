@@ -50,7 +50,9 @@ export const USER_COMPONENTS = {
   Calendar: require('./user/Calendar/Calendar').default,
   CardLists: {
     Students: require('./user/CardLists/Students/Students').default,
-    UpcomingClasses: require('./user/CardLists/UpcomingClasses').default,
+    StudentCard: require('./user/CardLists/Students/Students').StudentCard,
+    UpcomingClasses: require('./user/CardLists/UpcomingClasses/UpcomingClasses').default,
+    UpcomingClassCard: require('./user/CardLists/UpcomingClasses/UpcomingClasses').UpcomingClassCard,
   },
   AudioVisualizer: {
     Bar: require('./user/AudioVisualizer/BarAudioVisualizer').default,
@@ -69,5 +71,6 @@ export const USER_COMPONENTS = {
   },
   Message: {
     Main: require('./user/Message/Message').default,
-  }
+  },
+  DaySlots: require('./user/DaySlots/DaySlots').default,
 };

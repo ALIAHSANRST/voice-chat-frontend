@@ -220,6 +220,9 @@ const HeaderNavBar = ({ activeItem = 'home', reference }) => {
               <ItemContainer data-active={activeItem === 'calendar'} isMobile title={translations.CALENDAR.TITLE}>
                 <Link href={ROUTES.TEACHER_CALENDAR.path}>{translations.CALENDAR.TITLE}</Link>
               </ItemContainer>
+              <ItemContainer data-active={activeItem === 'requests'} isMobile title={translations.CALENDAR.REQUESTS}>
+                <Link href={ROUTES.TEACHER_REQUESTS.path}>{translations.REQUESTS.TITLE}</Link>
+              </ItemContainer>
             </>
           )
         }

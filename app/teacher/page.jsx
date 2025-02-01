@@ -1,12 +1,14 @@
 'use client'
 
 import styled from "styled-components";
+import { useEffect, useState } from "react";
 
 import { COMMON_COMPONENTS, USER_COMPONENTS } from '@/src/components';
 import { COMMON_CONTEXT } from '@/src/context';
 import { USER_COLORS } from "@/src/utils/colors";
 import { ICON_ASSETS, USER_ASSETS } from "@/src/utils/assets";
 import { usePageTitle } from "@/src/hooks";
+import { GetTeacherStats } from "./axios";
 
 const MainContainer = styled.div`
   width: 100%;
@@ -245,7 +247,35 @@ const UserHomePage = () => {
   const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation()
   const { currentUser } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext();
 
-  usePageTitle({ title: currentUser?.fullname || translations.USER_HOME.TITLE })
+  usePageTitle({ title: currentUser?.fullname || translations.USER_HOME.TITLE });
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [stats, setStats] = useState([
+    {
+      'title': translations.TEACHER_HOME.LESSONS,
+      'value': '0+'
+    },
+    {
+      'title': translations.TEACHER_HOME.STUDENTS,
+      'value': '60+'
+    },
+    // {
+    //   'title': translations.TEACHER_HOME.RATING,
+    //   'value': '8.9'
+    // }
+  ]);
+
+  useEffect(() => {
+    const FetchStats = async () => {
+      await GetTeacherStats({
+        setIsLoading: setIsLoading,
+        setData: setStats,
+        translations: translations,
+      })
+    }
+
+    FetchStats()
+  }, [])
 
   return (
     <MainContainer>
@@ -273,48 +303,35 @@ const UserHomePage = () => {
               <USER_COMPONENTS.CircularProgressWithLabel value={92} label={translations.TEACHER_HOME.COMPLETE_YOUR_PROFILE} />
             </StatsHeader>
             <Divider />
-            <StatsGrid>
-              {
-                [
-                  { 'title': translations.TEACHER_HOME.LESSONS, 'value': '250+' },
-                  { 'title': translations.TEACHER_HOME.STUDENTS, 'value': '60+' },
-                  { 'title': translations.TEACHER_HOME.RATING, 'value': '8.9' },
-                ].map((item, index) => (
-                  <StatItem key={`${item.title}-${index}`}>
-                    <StatValue>{item.value}</StatValue>
-                    <StatTitle>{item.title}</StatTitle>
-                  </StatItem>
-                ))
-              }
-            </StatsGrid>
+            {
+              !isLoading &&
+              <StatsGrid>
+                {
+                  stats.map((item, index) => (
+                    <StatItem key={`${item.title}-${index}`}>
+                      <StatValue>{item.value}</StatValue>
+                      <StatTitle>{item.title}</StatTitle>
+                    </StatItem>
+                  ))
+                }
+              </StatsGrid>
+            }
+
+            {
+              isLoading &&
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '1.5rem' }}>
+                <COMMON_COMPONENTS.Loader message={null} />
+              </div>
+            }
           </StatsContainer>
         </FlexContainer>
 
         <FlexContainer>
           <CalendarContainer>
-            <USER_COMPONENTS.Calendar />
+            <USER_COMPONENTS.Calendar showManageSlots={false} />
           </CalendarContainer>
           <CardListsContainer>
-            <USER_COMPONENTS.CardLists.UpcomingClasses data={[
-              {
-                photoURL: USER_ASSETS.PLACEHOLDER.PROFILE_PHOTO,
-                title: 'Critical Reading Strategies',
-                from: '2025-01-08T18:00:00Z',
-                to: '2025-01-08T19:00:00Z',
-              },
-              {
-                photoURL: USER_ASSETS.PLACEHOLDER.PROFILE_PHOTO,
-                title: 'Complex Sentences',
-                from: '2025-01-08T19:30:00Z',
-                to: '2025-01-08T20:00:00Z',
-              },
-              {
-                photoURL: USER_ASSETS.PLACEHOLDER.PROFILE_PHOTO,
-                title: 'Close Reading Techniques',
-                from: '2025-01-08T20:30:00Z',
-                to: '2025-01-08T21:30:00Z',
-              }
-            ]} />
+            <USER_COMPONENTS.CardLists.UpcomingClasses limit={3} />
             <USER_COMPONENTS.CardLists.Students limit={3} />
           </CardListsContainer>
         </FlexContainer>

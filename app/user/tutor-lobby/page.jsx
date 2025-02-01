@@ -1,11 +1,11 @@
 'use client'
 
-import styled from "styled-components";
+import { useEffect, useState, useCallback } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLinkedin } from "@fortawesome/free-brands-svg-icons";
-import { useCallback } from 'react';
+import Link from "next/link";
+import styled from "styled-components";
 import debounce from 'lodash/debounce';
-import { useEffect, useState } from "react";
 
 import { COMMON_COMPONENTS, USER_COMPONENTS } from '@/src/components';
 import { USER_COLORS } from "@/src/utils/colors";
@@ -13,9 +13,8 @@ import { usePageTitle } from "@/src/hooks";
 import { COMMON_CONTEXT } from '@/src/context';
 import { ICON_ASSETS } from "@/src/utils/assets";
 import { LOCATIONS } from "@/src/utils/constants";
-import { GetTutorsForLobby } from "./axios";
-import Link from "next/link";
 import { ROUTES } from "@/src/utils/routes";
+import { GetTutorsForLobby, GetTeacherSlots, RequestTeahcer } from "./axios";
 
 const MainContainer = styled.div`
   width: 100%;
@@ -249,10 +248,37 @@ const MessageIcon = styled.img`
   }
 `
 
+const ModalContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`
+
+const ModalDropDownContainer = styled.div`
+  display: flex;
+  gap: 1rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 1rem;
+  }
+`
+
+const ModalActionsContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+`
+
 const RequestButton = styled.div`
   flex: 1;
+  align-self: stretch;
   button {
     width: 100%;
+    font-size: 0.875rem;
+    padding: 0 1rem;
+    height: 100%;
   }
 `
 
@@ -269,6 +295,24 @@ const TutorLobbyPage = () => {
     search: '',
     page: 1,
     limit: 10,
+  });
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTeacher, setSelectedTeacher] = useState(null);
+  const [isLoadingSlots, setIsLoadingSlots] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [teacherSlots, setTeacherSlots] = useState({});
+  const [requestForm, setRequestForm] = useState({
+    title: '',
+    day: '',
+    slot: ''
+  });
+
+  const [formErrors, setFormErrors] = useState({
+    title: '',
+    day: '',
+    slot: ''
   });
 
   useEffect(() => {
@@ -292,14 +336,14 @@ const TutorLobbyPage = () => {
     return Array.from({ length: end - start + 1 }, (_, i) => start + i);
   };
 
-  const handlePageChange = (newPage) => {
+  const HandlePageChange = (newPage) => {
     setFilters(prev => ({
       ...prev,
       page: newPage
     }));
   };
 
-  const debouncedSearch = useCallback(
+  const DebouncedSearch = useCallback(
     debounce((value) => {
       setFilters(prev => ({
         ...prev,
@@ -310,10 +354,127 @@ const TutorLobbyPage = () => {
     []
   );
 
-  const handleSearch = (e) => {
+  const HandleSearch = (e) => {
     const value = e.target.value;
     setSearchValue(value);
-    debouncedSearch(value);
+    DebouncedSearch(value);
+  };
+
+  const HandleRequestClick = (teacher) => {
+    setSelectedTeacher(teacher);
+    setIsModalOpen(true);
+    setIsLoadingSlots(true);
+    setRequestForm({ title: '', day: '', slot: '' });
+
+    GetTeacherSlots({
+      setIsLoading: setIsLoadingSlots,
+      setData: setTeacherSlots,
+      userId: teacher._id,
+    });
+  };
+
+  const CloseModal = () => {
+    if (isSubmitting) return;
+
+    setIsModalOpen(false);
+    setSelectedTeacher(null);
+    setTeacherSlots({});
+    setRequestForm({ title: '', day: '', slot: '' });
+    setFormErrors({ title: '', day: '', slot: '' });
+    setIsSubmitting(false);
+  };
+
+  const ValidateModalField = (name, value) => {
+    switch (name) {
+      case 'title':
+        const trimmedTitle = value.trim();
+        if (!trimmedTitle) return translations.TUTOR_LOBBY.REQUEST_MODAL.ERRORS.REQUIRED;
+        if (trimmedTitle.length < 3) return translations.TUTOR_LOBBY.REQUEST_MODAL.ERRORS.MIN_LENGTH.replace('{length}', 3);
+        if (trimmedTitle.length > 50) return translations.TUTOR_LOBBY.REQUEST_MODAL.ERRORS.MAX_LENGTH.replace('{length}', 50);
+        return '';
+      case 'day':
+        return !value ? translations.TUTOR_LOBBY.REQUEST_MODAL.ERRORS.REQUIRED : '';
+      case 'slot':
+        return !value ? translations.TUTOR_LOBBY.REQUEST_MODAL.ERRORS.REQUIRED : '';
+      default:
+        return '';
+    }
+  };
+
+  const HandleInputChange = (e) => {
+    const { name, value } = e.target;
+    setRequestForm(prev => ({
+      ...prev,
+      [name]: value
+    }));
+
+    const error = ValidateModalField(name, value);
+    setFormErrors(prev => ({
+      ...prev,
+      [name]: error
+    }));
+
+    if (name === 'day') {
+      setRequestForm(prev => ({
+        ...prev,
+        [name]: value,
+        slot: ''
+      }));
+      setFormErrors(prev => ({
+        ...prev,
+        [name]: error,
+        slot: ''
+      }));
+    }
+  };
+
+  const HandleModalSubmit = async () => {
+    const errors = {
+      title: ValidateModalField('title', requestForm.title),
+      day: ValidateModalField('day', requestForm.day),
+      slot: ValidateModalField('slot', requestForm.slot)
+    };
+
+    setFormErrors(errors);
+    if (Object.values(errors).some(error => error)) return;
+
+    await RequestTeahcer({
+      setIsLoading: setIsSubmitting,
+      data: {
+        teacherId: selectedTeacher._id,
+        title: requestForm.title,
+        day: requestForm.day,
+        slot: requestForm.slot
+      },
+    })
+
+    CloseModal();
+
+    GetTutorsForLobby({
+      limit: filters.limit,
+      page: filters.page,
+      query: filters.search,
+      setIsLoading: setIsLoading,
+      setData: setData
+    });
+  };
+
+  const getAvailableDays = () => {
+    return Object.entries(teacherSlots)
+      .filter(([_, slots]) => slots.length > 0)
+      .map(([day]) => ({
+        value: day,
+        label: translations.MANAGE_SLOTS.DAYS[day]
+      }));
+  };
+
+  const getAvailableSlots = () => {
+    if (!requestForm.day || !teacherSlots[requestForm.day]) return [];
+
+    return teacherSlots[requestForm.day].map(slot => ({
+      value: slot.start,
+      label: `${slot.start}`
+    }));
   };
 
   return (
@@ -328,7 +489,7 @@ const TutorLobbyPage = () => {
           <div className="right">
             <USER_COMPONENTS.InputFields.SearchField
               placeholder={translations.TUTOR_LOBBY.SEARCH_PLACEHOLDER || "Search tutors..."}
-              onChange={handleSearch}
+              onChange={HandleSearch}
               containerStyle={{ padding: "0.7rem 1rem" }}
               value={searchValue}
             />
@@ -390,8 +551,11 @@ const TutorLobbyPage = () => {
                   <RequestButton>
                     {
                       teacher.is_requested
-                        ? <USER_COMPONENTS.Button text={translations.TUTOR_LOBBY.REQUEST} />
-                        : <USER_COMPONENTS.OutlinedButton text={translations.TUTOR_LOBBY.REQUESTED} />
+                        ? <USER_COMPONENTS.OutlinedButton text={translations.TUTOR_LOBBY.REQUESTED} />
+                        : <USER_COMPONENTS.Button
+                          text={translations.TUTOR_LOBBY.REQUEST}
+                          onClick={() => HandleRequestClick(teacher)}
+                        />
                     }
                   </RequestButton>
                 </ActionSection>
@@ -417,16 +581,16 @@ const TutorLobbyPage = () => {
         {
           !isLoading && data?.teachers?.length > 0 &&
           <PaginationContainer>
-            <button onClick={() => handlePageChange(filters.page - 1)}
+            <button onClick={() => HandlePageChange(filters.page - 1)}
               disabled={filters.page === 1 || isLoading}>
-              {translations.TUTOR_LOBBY.PREV}
+              {translations.COMMON.PREV}
             </button>
 
             {
               GetPaginationGroup().map(pageNumber => (
                 <button
                   key={pageNumber}
-                  onClick={() => handlePageChange(pageNumber)}
+                  onClick={() => HandlePageChange(pageNumber)}
                   className={filters.page === pageNumber ? 'active' : ''}
                   disabled={isLoading}
                 >{pageNumber}</button>
@@ -434,14 +598,88 @@ const TutorLobbyPage = () => {
             }
 
             <button
-              onClick={() => handlePageChange(filters.page + 1)}
+              onClick={() => HandlePageChange(filters.page + 1)}
               disabled={filters.page === data?.totalPages || isLoading}
             >
-              {translations.TUTOR_LOBBY.NEXT}
+              {translations.COMMON.NEXT}
             </button>
           </PaginationContainer>
         }
       </ContentContainer>
+
+      {
+        isModalOpen && (
+          <USER_COMPONENTS.Modal.Main
+            title={translations.TUTOR_LOBBY.REQUEST_MODAL.TITLE}
+            modalContainerStyle={{
+              padding: '2rem',
+              maxWidth: '47.5rem',
+              width: '100%',
+              overflowY: 'unset',
+            }}
+            subtitle={translations.TUTOR_LOBBY.REQUEST_MODAL.SUBTITLE.replace('{tutor_name}', selectedTeacher?.fullname)}
+            onClose={CloseModal}>
+            {
+              isLoadingSlots
+                ? <COMMON_COMPONENTS.Loader wrapped message={translations.COMMON.LOADING} />
+                : <ModalContentContainer>
+                  <USER_COMPONENTS.InputFields.TextInputField
+                    label={translations.TUTOR_LOBBY.REQUEST_MODAL.TITLE_LABEL}
+                    placeholder={translations.TUTOR_LOBBY.REQUEST_MODAL.TITLE_PLACEHOLDER}
+                    name="title"
+                    value={requestForm.title}
+                    onChange={HandleInputChange}
+                    error={formErrors.title}
+                  />
+
+                  <ModalDropDownContainer>
+                    <USER_COMPONENTS.InputFields.TextInputField
+                      type="dropdown"
+                      label={translations.TUTOR_LOBBY.REQUEST_MODAL.DAY_LABEL}
+                      placeholder={translations.TUTOR_LOBBY.REQUEST_MODAL.DAY_PLACEHOLDER}
+                      name="day"
+                      value={requestForm.day}
+                      onChange={HandleInputChange}
+                      values={getAvailableDays()}
+                      inputWrapperStyle={{ flex: 1 }}
+                      error={formErrors.day}
+                    />
+
+                    <USER_COMPONENTS.InputFields.TextInputField
+                      type="dropdown"
+                      label={translations.TUTOR_LOBBY.REQUEST_MODAL.SLOT_LABEL}
+                      placeholder={translations.TUTOR_LOBBY.REQUEST_MODAL.SLOT_PLACEHOLDER}
+                      name="slot"
+                      value={requestForm.slot}
+                      onChange={HandleInputChange}
+                      values={getAvailableSlots()}
+                      disabled={!requestForm.day}
+                      inputWrapperStyle={{ flex: 1 }}
+                      error={formErrors.slot}
+                      onClick={() => {
+                        if (requestForm.day) return;
+                        COMMON_COMPONENTS.Toast.showErrorToast(translations.TUTOR_LOBBY.REQUEST_MODAL.ERRORS.SELECT_DAY_FIRST)
+                      }}
+                    />
+                  </ModalDropDownContainer>
+
+                  <ModalActionsContainer>
+                    <USER_COMPONENTS.OutlinedButton
+                      text={translations.COMMON.CANCEL}
+                      onClick={CloseModal}
+                      disabled={isSubmitting}
+                    />
+                    <USER_COMPONENTS.Button
+                      text={isSubmitting ? '' : translations.TUTOR_LOBBY.REQUEST_MODAL.SUBMIT}
+                      onClick={HandleModalSubmit}
+                      disabled={isSubmitting}>
+                      {isSubmitting && <COMMON_COMPONENTS.Loader color="white" />}
+                    </USER_COMPONENTS.Button>
+                  </ModalActionsContainer>
+                </ModalContentContainer>
+            }
+          </USER_COMPONENTS.Modal.Main>
+        )}
     </MainContainer>
   )
 }

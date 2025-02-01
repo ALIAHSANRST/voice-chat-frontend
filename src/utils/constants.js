@@ -36,3 +36,13 @@ export const REGISTER_TYPES = {
   LINE: 'line',
   LINKED_IN: 'linkedIn',
 }
+
+export const SLOT_DURATION_IN_MINUTES = 30;
+
+export const MAXIMUM_SLOTS_PER_DAY = 16;
+
+export const REQUEST_STATUSES = {
+  PENDING: 'pending',
+  ACCEPTED: 'accepted',
+  REJECTED: 'rejected',
+}

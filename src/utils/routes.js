@@ -49,6 +49,8 @@ const ROUTES = {
   TEACHER_PROFILE: { path: '/teacher/profile', isProtected: true, name: 'Profile' },
   TEACHER_UPCOMING_CLASSES: { path: '/teacher/upcoming-classes', isProtected: true, name: 'Upcoming Classes' },
   TEACHER_STUDENTS: { path: '/teacher/students', isProtected: true, name: 'Students' },
+  TEACHER_REQUESTS: { path: '/teacher/requests', isProtected: true, name: 'Requests' },
+  TEACHER_MANAGE_SLOTS: { path: '/teacher/manage-slots', isProtected: true, name: 'Manage Slots' },
 }
 
 const GetPublicRoutes = () => {

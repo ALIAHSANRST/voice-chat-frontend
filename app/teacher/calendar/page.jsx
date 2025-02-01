@@ -33,6 +33,14 @@ const ContentContainer = styled.div`
   }
 `
 
+const ListContainer = styled.div`
+  width: 33%;
+  
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`
+
 const CalendarContainer = styled.div`
   width: 67%;
 
@@ -74,28 +82,9 @@ const CalendarPage = () => {
       <USER_COMPONENTS.HeaderNavBar activeItem="calendar" />
       <ContentContainer>
         <FlexContainer>
-          <USER_COMPONENTS.CardLists.UpcomingClasses
-            showViewAll={false}
-            data={[
-              {
-                photoURL: USER_ASSETS.PLACEHOLDER.PROFILE_PHOTO,
-                title: 'Critical Reading Strategies',
-                from: '2025-01-08T18:00:00Z',
-                to: '2025-01-08T19:00:00Z',
-              },
-              {
-                photoURL: USER_ASSETS.PLACEHOLDER.PROFILE_PHOTO,
-                title: 'Complex Sentences',
-                from: '2025-01-08T19:30:00Z',
-                to: '2025-01-08T20:00:00Z',
-              },
-              {
-                photoURL: USER_ASSETS.PLACEHOLDER.PROFILE_PHOTO,
-                title: 'Close Reading Techniques',
-                from: '2025-01-08T20:30:00Z',
-                to: '2025-01-08T21:30:00Z',
-              }
-            ]} />
+          <ListContainer>
+            <USER_COMPONENTS.CardLists.UpcomingClasses showViewAll={true} limit={5} />
+          </ListContainer>
           <CalendarContainer>
             <USER_COMPONENTS.Calendar />
           </CalendarContainer>

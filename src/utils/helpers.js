@@ -1,6 +1,7 @@
 'use client';
 
 import moment from 'moment';
+import { SLOT_DURATION_IN_MINUTES } from './constants';
 
 /**
  * Capitalizes the first letter of each word in a string
@@ -85,28 +86,39 @@ const GenerateRandomText = ({
 };
 
 /**
- * Formats the start and end time for a card list item
- * @param {string} startTime - The start time of the class
- * @param {string} endTime - The end time of the class
- * @returns {string} Formatted time string
+ * Validates a time slot for overlap with existing slots
+ * @param {Object} slot - The time slot to validate
+ * @param {Object[]} allSlots - All existing time slots
+ * @param {Object} translations - The translations object
+ * @returns {string|null} Error message if validation fails, null otherwise
  */
-const FormatCardListTime = (startTime, endTime) => {
-  const start = moment(startTime);
-  const end = moment(endTime);
-  const now = moment();
+const ValidateTimeSlot = (slot, allSlots, translations) => {
+  if (!slot.start) return null;
 
-  const _startTime = start.minute() === 0 ? start.format('hA') : start.format('h:mmA');
-  const _endTime = end.minute() === 0 ? end.format('hA') : end.format('h:mmA');
+  const start = moment(slot.start, 'HH:mm');
+  const end = moment(slot.start, 'HH:mm').add(SLOT_DURATION_IN_MINUTES, 'minutes');
 
-  if (start.isSame(now, 'day')) return `${_startTime} - ${_endTime} Today`;
-  if (start.isSame(now.add(1, 'day'), 'day')) return `${_startTime} - ${_endTime} Tomorrow`;
-  return `${_startTime} - ${_endTime} ${start.format('DD-MM-YYYY')}`;
-}
+  const hasOverlap = allSlots.some(existingSlot => {
+    if (!existingSlot.start) return false;
+
+    const existingStart = moment(existingSlot.start, 'HH:mm');
+    if (existingStart.isSame(start)) return false;
+
+    const existingEnd = moment(existingSlot.start, 'HH:mm').add(SLOT_DURATION_IN_MINUTES, 'minutes');
+    const startsInExistingSlot = start.isBetween(existingStart, existingEnd, 'minutes', '[)');
+    const endsInExistingSlot = end.isBetween(existingStart, existingEnd, 'minutes', '(]');
+    const containsExistingSlot = start.isSameOrBefore(existingStart) && end.isSameOrAfter(existingEnd);
+    return startsInExistingSlot || endsInExistingSlot || containsExistingSlot;
+  });
+
+  if (hasOverlap) return translations.MANAGE_SLOTS.ERRORS.SLOT_OVERLAP;
+  return null;
+};
 
 export {
   CapitalizeWords,
   DataTableDateFormat,
   HexToRGBA,
   GenerateRandomText,
-  FormatCardListTime
+  ValidateTimeSlot,
 };
