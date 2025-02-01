@@ -234,6 +234,53 @@ export const USER_COLORS = {
       PrimaryText: '#111827',
       SecondaryText: '#6B7280',
       LinkedIn: '#0077B5', // official LinkedIn blue
+    },
+  },
+  ManageSlots: {
+    LoadingContainer: {
+      Background: '#FFFFFF',
+      Border: '#DADEE3',
+    },
+    Header: {
+      PrimaryText: '#1A1A1A',
+      SecondaryText: '#6D7580',
+    },
+  },
+  Requests: {
+    NoRecordsFound: {
+      Background: '#FFFFFF',
+      Border: '#DADEE3',
+      Text: '#1A1A1A',
+    },
+    Pagination: {
+      Background: '#0064FF1A',
+      Text: '#0064FF',
+      Border: '#EBEEF2',
+      SecondaryText: '#6D7580',
+    },
+    Header: {
+      PrimaryText: '#1A1A1A',
+      SecondaryText: '#6D7580',
+    },
+    Card: {
+      Background: '#FFFFFF',
+      Border: '#E5E7EB',
+      PrimaryText: '#111827',
+      SecondaryText: '#6B7280',
+      Status: {
+        Pending: {
+          Background: '#FEF3C7',
+          Text: '#92400E'
+        },
+        Accepted: {
+          Background: '#D1FAE5',
+          Text: '#065F46'
+        },
+        Rejected: {
+          Background: '#FEE2E2',
+          Text: '#991B1B'
+        }
+      }
     }
   }
 }

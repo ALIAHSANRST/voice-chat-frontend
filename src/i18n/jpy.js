@@ -109,8 +109,6 @@ const JPY = {
     TIME: '時間',
     SCORE: 'スコア',
     NO_RECORDS_FOUND: '記録が見つかりません！',
-    PREV: '前へ',
-    NEXT: '次へ'
   },
   FREE_EXAM: {
     TITLE: '無料試験',
@@ -291,6 +289,7 @@ const JPY = {
   CALENDAR: {
     TITLE: 'カレンダー',
     WEEKLY_SCHEDULE: '週間スケジュール',
+    MANAGE_SLOTS: 'スロットを管理',
   },
   TEACHER_HOME: {
     VERIFIED_TEACHER: '認証済み講師',
@@ -416,17 +415,95 @@ const JPY = {
     HEADING: '講師ロビー',
     DESCRIPTION: '学習の旅のすべてのステップに対するパーソナライズされたサポート',
     NO_TUTORS_FOUND: '講師が見つかりません！',
-    NEXT: '次へ',
-    PREV: '前へ',
     REQUEST_TUTOR: '講師をリクエスト',
     TUTOR: '講師',
     REQUEST: 'リクエスト',
     REQUESTED: 'リクエスト済み',
     MESSAGE: 'メッセージ {tutor_name}',
+    REQUEST_MODAL: {
+      TITLE: 'セッションをリクエスト',
+      SUBTITLE: '{tutor_name}とセッションをスケジュール',
+      TITLE_LABEL: 'セッションタイトル',
+      TITLE_PLACEHOLDER: 'セッションタイトルを入力',
+      DAY_LABEL: '日付を選択',
+      DAY_PLACEHOLDER: '日付を選択',
+      SLOT_LABEL: '時間スロットを選択',
+      SLOT_PLACEHOLDER: '時間スロットを選択',
+      SUBMIT: 'リクエストを送信',
+      ERRORS: {
+        REQUIRED: '必須！',
+        MIN_LENGTH: '最小 {length} 文字！',
+        MAX_LENGTH: '最大 {length} 文字！',
+        SELECT_DAY_FIRST: '最初に日付を選択してください！',
+      }
+    },
   },
   LANGUAGE_SELECT: {
     TITLE: '言語を選択',
   },
+  REQUESTS: {
+    TITLE: 'リクエスト',
+    HEADING: 'リクエスト',
+    DESCRIPTION: 'リクエストを表示して管理します',
+    SEARCH_PLACEHOLDER: 'リクエストを検索...',
+    NO_REQUESTS_FOUND: 'リクエストが見つかりません！',
+    REJECT: '拒否',
+    ACCEPT: '承認',
+    SESSION_DATE: 'セッション日付',
+    SESSION_TIME: 'セッション時間',
+    REQUESTED_ON: 'リクエスト日',
+  },
+  MANAGE_SLOTS: {
+    TITLE: 'スロットを管理',
+    HEADING: 'スロットを管理',
+    DESCRIPTION: '生徒がレッスンを予約できるように、空き時間を設定してください',
+    GO_BACK: '戻る',
+    RESET: 'リセット',
+    SAVE_CHANGES: '変更を保存',
+    DAYS: {
+      MONDAY: '月曜日',
+      TUESDAY: '火曜日',
+      WEDNESDAY: '水曜日',
+      THURSDAY: '木曜日',
+      FRIDAY: '金曜日',
+      SATURDAY: '土曜日',
+      SUNDAY: '日曜日',
+    },
+    SLOT: 'スロット',
+    SLOTS: 'スロット',
+    ADD_SLOT: 'スロットを追加',
+    START_TIME: '開始時間',
+    MINS: '分',
+    ERROS: {
+      SLOT_OVERLAP: '時間スロットが重なってはいけません！',
+      FIX_ERRORS: '保存する前にすべてのエラーを修正してください！',
+    },
+    SUCCESS: {
+      SAVED: 'スロットが正常に保存されました！',
+    },
+    NO_SLOTS: 'スロットがありません！'
+  },
+  COMMON: {
+    LOADING: '読み込み中...',
+    CANCEL: 'キャンセル',
+    UNAVAILABLE: '利用不可',
+    PREV: '前へ',
+    NEXT: '次へ',
+  },
+  STUDENTS: {
+    TITLE: '生徒',
+    HEADING: '生徒',
+    DESCRIPTION: '生徒を表示してメッセージを送信します',
+    SEARCH_PLACEHOLDER: '生徒を検索...',
+    NO_STUDENTS_FOUND: '生徒が見つかりません！',
+  },
+  UPCOMING_CLASSES: {
+    TITLE: '予定されたクラス',
+    HEADING: '予定されたクラス',
+    DESCRIPTION: '予定されたクラスを表示してセッションを管理します',
+    SEARCH_PLACEHOLDER: 'クラスを検索...',
+    NO_CLASSES_FOUND: 'クラスが見つかりません！',
+  }
 };
 
 export default JPY;

@@ -306,7 +306,7 @@ const ExamHistoryPage = () => {
           !isLoading && data?.examHistory?.length > 0 &&
           <TablePaginationContainer>
             <button onClick={() => handlePageChange(filters.page - 1)} disabled={filters.page === 1 || isLoading}>
-              {translations.EXAM_HISTORY.PREV}
+              {translations.COMMON.PREV}
             </button>
 
             {GetPaginationGroup().map(pageNumber => (
@@ -319,7 +319,7 @@ const ExamHistoryPage = () => {
             ))}
 
             <button onClick={() => handlePageChange(filters.page + 1)} disabled={filters.page === data?.totalPages || isLoading}>
-              {translations.EXAM_HISTORY.NEXT}
+              {translations.COMMON.NEXT}
             </button>
           </TablePaginationContainer>
         }

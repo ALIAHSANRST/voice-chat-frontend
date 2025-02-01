@@ -479,10 +479,11 @@ const InputField = ({
   inputId,
   inputWrapperStyle,
   inputWrapperId,
-  showRequiredStar = true
+  showRequiredStar = true,
+  onClick,
 }) => {
   return (
-    <InputWrapper style={inputWrapperStyle} id={inputWrapperId}>
+    <InputWrapper style={inputWrapperStyle} id={inputWrapperId} onClick={onClick}>
       {label && (
         <Label>
           {label}

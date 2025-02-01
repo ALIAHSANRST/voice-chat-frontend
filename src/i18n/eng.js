@@ -109,8 +109,6 @@ const ENG = {
     TIME: 'Time',
     SCORE: 'Score',
     NO_RECORDS_FOUND: 'No Records Found!',
-    PREV: 'Prev',
-    NEXT: 'Next'
   },
   FREE_EXAM: {
     TITLE: 'Free Exam',
@@ -291,6 +289,7 @@ const ENG = {
   CALENDAR: {
     TITLE: 'Calendar',
     WEEKLY_SCHEDULE: 'Weekly Schedule',
+    MANAGE_SLOTS: 'Manage Slots',
   },
   TEACHER_HOME: {
     VERIFIED_TEACHER: 'Verified Teacher',
@@ -416,17 +415,95 @@ const ENG = {
     HEADING: 'Tutor Lobby',
     DESCRIPTION: 'Personalized Support for Every Step of the Learning Journey',
     NO_TUTORS_FOUND: 'No Tutors Found!',
-    PREV: 'Prev',
-    NEXT: 'Next',
     REQUEST_TUTOR: 'Request Tutor',
     TUTOR: 'Tutor',
     REQUEST: 'Request',
     REQUESTED: 'Requested',
     MESSAGE: 'Message {tutor_name}',
+    REQUEST_MODAL: {
+      TITLE: "Request Session",
+      SUBTITLE: "Schedule a Session with {tutor_name}",
+      TITLE_LABEL: "Session Title",
+      TITLE_PLACEHOLDER: "Enter Session Title",
+      DAY_LABEL: "Select Day",
+      DAY_PLACEHOLDER: "Choose a Day",
+      SLOT_LABEL: "Select Time Slot",
+      SLOT_PLACEHOLDER: "Choose a Time Slot",
+      SUBMIT: "Submit Request",
+      ERRORS: {
+        REQUIRED: "Required!",
+        MIN_LENGTH: "Minimum {length} Characters!",
+        MAX_LENGTH: "Maximum {length} Characters!",
+        SELECT_DAY_FIRST: "Please Select a Day First!",
+      }
+    }
   },
   LANGUAGE_SELECT: {
     TITLE: 'Select Language',
   },
+  REQUESTS: {
+    TITLE: 'Requests',
+    HEADING: 'Requests',
+    DESCRIPTION: 'View and Manage Your Requests',
+    SEARCH_PLACEHOLDER: 'Search Requests...',
+    NO_REQUESTS_FOUND: 'No Requests Found!',
+    REJECT: 'Reject',
+    ACCEPT: 'Accept',
+    SESSION_DATE: 'Session Date',
+    SESSION_TIME: 'Session Time',
+    REQUESTED_ON: 'Requested On',
+  },
+  MANAGE_SLOTS: {
+    TITLE: 'Manage Slots',
+    HEADING: 'Manage Slots',
+    DESCRIPTION: 'Set your availability for students to book lessons',
+    GO_BACK: 'Go Back',
+    RESET: 'Reset',
+    SAVE_CHANGES: 'Save Changes',
+    DAYS: {
+      MONDAY: 'Monday',
+      TUESDAY: 'Tuesday',
+      WEDNESDAY: 'Wednesday',
+      THURSDAY: 'Thursday',
+      FRIDAY: 'Friday',
+      SATURDAY: 'Saturday',
+      SUNDAY: 'Sunday',
+    },
+    SLOT: 'Slot',
+    SLOTS: 'Slots',
+    ADD_SLOT: 'Add Slot',
+    START_TIME: 'Start Time',
+    MINS: 'mins',
+    ERRORS: {
+      SLOT_OVERLAP: 'Time Slots Cannot Overlap!',
+      FIX_ERRORS: 'Please Fix All Errors Before Saving!',
+    },
+    SUCCESS: {
+      SAVED: 'Slots Saved Successfully!',
+    },
+    NO_SLOTS: 'No Slots!'
+  },
+  COMMON: {
+    LOADING: 'Loading...',
+    CANCEL: 'Cancel',
+    UNAVAILABLE: 'Unavailable',
+    PREV: 'Prev',
+    NEXT: 'Next',
+  },
+  STUDENTS: {
+    TITLE: 'Students',
+    HEADING: 'Students',
+    DESCRIPTION: 'View Your Students and Send Messages',
+    SEARCH_PLACEHOLDER: 'Search Students...',
+    NO_STUDENTS_FOUND: 'No Students Found!',
+  },
+  UPCOMING_CLASSES: {
+    TITLE: 'Upcoming Classes',
+    HEADING: 'Upcoming Classes',
+    DESCRIPTION: 'View Your Upcoming Classes and Manage Sessions',
+    SEARCH_PLACEHOLDER: 'Search Classes...',
+    NO_CLASSES_FOUND: 'No Classes Found!',
+  }
 };
 
 export default ENG;
