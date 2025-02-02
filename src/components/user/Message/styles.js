@@ -3,6 +3,7 @@
 import styled from "styled-components";
 
 import { USER_COLORS } from "@/src/utils/colors";
+import { COMMON_COMPONENTS } from "@/src/components";
 
 const MainContainer = styled.div`
   width: 100%;
@@ -215,6 +216,23 @@ const LoadingOlderMessagesContainer = styled.div`
   }
 `
 
+const MessageDateContainer = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  span {
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: ${USER_COLORS.MESSAGES.MessageContainer.Header.SecondaryText};
+    background-color: ${USER_COLORS.MESSAGES.MessageContainer.Background};
+    padding: 0.25rem 1rem;
+    border-radius: 10rem;
+    user-select: none;
+  }
+`
+
 const MessageInputContainer = styled.div`
   width: calc(100% - 2.5rem);
   background-color: ${USER_COLORS.MESSAGES.MessageContainer.Background};
@@ -325,7 +343,7 @@ const MessageTime = styled.div`
   text-align: ${props => props.isSender ? 'right' : 'left'};
 `
 
-const ProfilePicture = styled.img`
+const ProfilePicture = styled(COMMON_COMPONENTS.ImageLoader)`
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
@@ -408,5 +426,6 @@ export default {
   ParticipantRightContainer,
   ParticipantUnreadMessagesContainer,
   MessageMetaContainer,
-  LoadingOlderMessagesContainer
+  LoadingOlderMessagesContainer,
+  MessageDateContainer
 }

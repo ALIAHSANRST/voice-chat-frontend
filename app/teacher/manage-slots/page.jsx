@@ -174,7 +174,7 @@ const ManageSlotsPage = () => {
         {
           isLoading &&
           <LoadingContainer>
-            <COMMON_COMPONENTS.Loader wrapped message={'Loading...'} />
+            <COMMON_COMPONENTS.Loader wrapped message={translations.COMMON.LOADING} />
           </LoadingContainer>
         }
 

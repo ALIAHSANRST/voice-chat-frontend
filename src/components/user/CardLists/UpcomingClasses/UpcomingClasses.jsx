@@ -9,8 +9,8 @@ import { ICON_ASSETS } from "@/src/utils/assets";
 import { USER_COLORS } from "@/src/utils/colors";
 import { ROUTES } from "@/src/utils/routes";
 import { COMMON_CONTEXT } from "@/src/context";
-import { FetchAllUpcomingClasses } from "./axios";
 import { COMMON_COMPONENTS } from "@/src/components";
+import { FetchAllUpcomingClasses } from "./axios";
 
 const Container = styled.div`
   display: flex;
@@ -68,7 +68,7 @@ const ItemContainer = styled.div`
   gap: 0.75rem;
 `
 
-const ProfileImage = styled.img`
+const ProfileImage = styled(COMMON_COMPONENTS.ImageLoader)`
   width: 3.5rem;
   height: 3.5rem;
   border-radius: 0.25rem;
@@ -160,7 +160,7 @@ const FormatTime = ({ day, date, time }) => {
 export const UpcomingClassCard = ({ item, translations }) => {
   return (
     <ItemContainer>
-      <ProfileImage src={ICON_ASSETS.PROFILE_IMAGE_PLACEHOLDER_ICON} alt={item.fullname} />
+      <ProfileImage source={item.student.profile_picture} alt={item.fullname} />
       <TextContainer>
         <Title>{item.title}</Title>
         <Time>{FormatTime(item.scheduledFor)}</Time>

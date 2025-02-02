@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLinkedin } from "@fortawesome/free-brands-svg-icons";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import styled from "styled-components";
 import debounce from 'lodash/debounce';
@@ -170,9 +171,10 @@ const ImageSection = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
+  cursor: pointer;
 `
 
-const ProfileImage = styled.img`
+const ProfileImage = styled(COMMON_COMPONENTS.ImageLoader)`
   width: 5rem;
   height: 5rem;
   border-radius: 50%;
@@ -184,6 +186,7 @@ const InfoSection = styled.div`
   flex-direction: column;
   gap: 0.25rem;
   align-items: center;
+  cursor: pointer;
 `
 
 const TutorName = styled.h3`
@@ -286,6 +289,8 @@ const TutorLobbyPage = () => {
   const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation()
 
   usePageTitle({ title: translations.TUTOR_LOBBY.TITLE });
+
+  const router = useRouter();
 
   const [searchValue, setSearchValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -510,13 +515,13 @@ const TutorLobbyPage = () => {
                     <FontAwesomeIcon icon={faLinkedin} />
                   </LinkedInLink>
                 )}
-                <ImageSection>
+                <ImageSection onClick={() => router.push(`${ROUTES.USER_TUTOR_PROFILE.path}?id=${teacher._id}`)}>
                   <ProfileImage
-                    src={ICON_ASSETS.PROFILE_IMAGE_PLACEHOLDER_ICON}
+                    source={teacher.profile_picture}
                     alt={teacher.fullname}
                   />
                 </ImageSection>
-                <InfoSection>
+                <InfoSection onClick={() => router.push(`${ROUTES.USER_TUTOR_PROFILE.path}?id=${teacher._id}`)}>
                   <TutorName title={teacher.fullname}>
                     {teacher.fullname}
                   </TutorName>
@@ -574,7 +579,7 @@ const TutorLobbyPage = () => {
         {
           isLoading &&
           <LoadingContainer>
-            <COMMON_COMPONENTS.Loader wrapped message={'Loading...'} />
+            <COMMON_COMPONENTS.Loader wrapped message={translations.COMMON.LOADING} />
           </LoadingContainer>
         }
 

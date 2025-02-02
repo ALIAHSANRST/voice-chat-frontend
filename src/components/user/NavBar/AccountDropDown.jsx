@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation';
 import { COMMON_COLORS } from '@/src/utils/colors';
 import { ROUTES } from '@/src/utils/routes';
 import { COMMON_CONTEXT } from '@/src/context';
-import { ICON_ASSETS } from '@/src/utils/assets';
 import { COMMON_COMPONENTS } from '@/src/components';
 import { ROLES } from '@/src/utils/constants';
 
@@ -54,7 +53,7 @@ const AccountButton = styled.button`
   }
 `
 
-const ProfileImage = styled.img`
+const ProfileImage = styled(COMMON_COMPONENTS.ImageLoader)`
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
@@ -173,7 +172,7 @@ const AccountDropDown = ({ withLanguage = false }) => {
         title={translations.NAVBAR.PROFILE_DROPDOWN.PROFILE}
       >
         <ProfileImage
-          src={currentUser?.profile_picture || ICON_ASSETS.PROFILE_IMAGE_PLACEHOLDER_ICON}
+          source={currentUser?.profile_picture}
           alt="Profile"
           title={currentUser?.fullname || 'Profile Picture'}
         />

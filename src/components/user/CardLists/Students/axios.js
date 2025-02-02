@@ -1,4 +1,4 @@
-import BaseAPI from "@/src/utils/api"
+import BaseAPI, { HandleError } from "@/src/utils/api"
 
 const FetchAllStudents = async ({ limit, page, query, setIsLoading, setData }) => {
   try {

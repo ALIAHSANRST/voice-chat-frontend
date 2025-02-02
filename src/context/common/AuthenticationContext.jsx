@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 
 import { COMMON_COMPONENTS } from '@/src/components';
 import { useLocalStorage } from '@/src/hooks';
-import BaseAPI, { ImageLoader } from '@/src/utils/api';
+import BaseAPI from '@/src/utils/api';
 import { GetPublicRoutes, ROUTES } from '@/src/utils/routes';
 import { COMMON_CONTEXT } from '@/src/context';
 import { ROLES } from '@/src/utils/constants';
@@ -18,7 +18,7 @@ export const useAuthenticationContext = () => {
 export const AuthenticationProvider = ({ children }) => {
   const [currentUser, setCurrentUser, clearCurrentUser] = useLocalStorage('user', null);
   const [token, setToken, clearToken] = useLocalStorage('token', null);
-  const { currentLanguage } = COMMON_CONTEXT.TranslationContext.useTranslation();
+  const { currentLanguage, translations } = COMMON_CONTEXT.TranslationContext.useTranslation();
 
   const [isCheckingUserStatus, setIsCheckingUserStatus] = useState(true);
 
@@ -106,10 +106,7 @@ export const AuthenticationProvider = ({ children }) => {
       }
 
       setToken(response.data.token);
-      setCurrentUser({
-        ...response.data.user,
-        profile_picture: await ImageLoader(response.data.user.profile_picture)
-      });
+      setCurrentUser(response.data.user);
 
       COMMON_COMPONENTS.Toast.showSuccessToast('Successfully Signed In!');
       callback(response.data.user)
@@ -143,7 +140,7 @@ export const AuthenticationProvider = ({ children }) => {
       Logout,
       DeleteAccount
     }}>
-      {isCheckingUserStatus && <COMMON_COMPONENTS.LoaderFullScreen />}
+      {isCheckingUserStatus && <COMMON_COMPONENTS.LoaderFullScreen message={'Loading...'} />}
       {!isCheckingUserStatus && children}
     </AuthenticationContext.Provider>
   );

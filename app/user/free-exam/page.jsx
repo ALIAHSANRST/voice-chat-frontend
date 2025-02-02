@@ -325,7 +325,7 @@ const ExamPage = () => {
   }
 
   if (isLoadingExamScript) {
-    return <COMMON_COMPONENTS.LoaderFullScreen />
+    return <COMMON_COMPONENTS.LoaderFullScreen message={translations.COMMON.LOADING} />
   }
 
   if (isCalculatingScore) {

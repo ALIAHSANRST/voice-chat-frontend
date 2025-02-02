@@ -298,7 +298,7 @@ const ExamHistoryPage = () => {
             borderRadius: '1rem',
             backgroundColor: 'white'
           }}>
-            <COMMON_COMPONENTS.Loader wrapped message={'Loading...'} />
+            <COMMON_COMPONENTS.Loader wrapped message={translations.COMMON.LOADING} />
           </div>
         }
 

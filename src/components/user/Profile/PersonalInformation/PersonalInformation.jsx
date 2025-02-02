@@ -90,7 +90,7 @@ const ImageUploadContainer = styled.div`
   }
 `
 
-const ProfileImage = styled.img`
+const ProfileImage = styled(COMMON_COMPONENTS.ImageLoader)`
   border-radius: 50%;
   width: 5rem;
   height: 5rem;
@@ -290,7 +290,7 @@ const PersonalInformation = () => {
           <ImageUploadContainer>
             <ProfileImage
               alt={'Profile Image'}
-              src={formik.values.profilePhoto || ICON_ASSETS.PROFILE_IMAGE_PLACEHOLDER_ICON} />
+              source={formik.values.profilePhoto} />
             <ImageButtonContainer>
               <ImageInfoText>
                 {translations.PROFILE.PERSONAL_INFORMATION.UPLOAD_IMAGE.INFO}

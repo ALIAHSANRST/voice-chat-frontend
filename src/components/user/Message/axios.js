@@ -41,7 +41,7 @@ const FetchChats = async ({ limit, page, query, setIsLoading, setData }) => {
         id: chat._id,
         participantId: chat?.participant?._id || null,
         fullname: chat?.participant?.fullname || 'Unknown',
-        profilePicture: null, // [WAITING FOR S3]
+        profilePicture: chat?.participant?.profile_picture || null,
         lastMessage: chat?.lastMessage?.message || 'No Messages Yet',
         lastMessageTime: chat?.lastMessage?.timestamp || null,
         unreadCount: chat?.unreadCount || 0,
