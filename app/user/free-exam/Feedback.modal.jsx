@@ -197,7 +197,7 @@ const FeedbackModal = ({ setShowFeedbackModal }) => {
             isLoading &&
             <QuestionContainer>
               <div style={{ padding: '3rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <COMMON_COMPONENTS.Loader wrapped message='Loading...' />
+                <COMMON_COMPONENTS.Loader wrapped message={translations.COMMON.LOADING} />
               </div>
             </QuestionContainer>
           }

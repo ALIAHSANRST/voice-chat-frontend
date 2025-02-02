@@ -46,3 +46,8 @@ export const REQUEST_STATUSES = {
   ACCEPTED: 'accepted',
   REJECTED: 'rejected',
 }
+
+export const CLASS_STATUSES = {
+  SCHEDULED: "scheduled",
+  COMPLETED: "completed",
+}

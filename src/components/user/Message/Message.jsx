@@ -457,55 +457,77 @@ const Message = () => {
 
                   if (isMessageFromCurrentUser) {
                     return (
-                      <Styles.MessageSenderContainer key={m._id}>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-                          <Styles.MessageBubble isSender>{m?.message}</Styles.MessageBubble>
-                          <Styles.MessageMetaContainer>
-                            <Styles.MessageTime isSender>{moment(m?.timestamp).format('h:mm A')}</Styles.MessageTime>
+                      <>
+                        {
+                          messages.indexOf(m) === 0
+                          || (messages[messages.indexOf(m) - 1] && moment(m.timestamp).format('DD/MM/YYYY') !== moment(messages[messages.indexOf(m) - 1].timestamp).format('DD/MM/YYYY'))
+                          &&
+                          <Styles.MessageDateContainer>
+                            <span>{moment(m.timestamp).format('DD-MMM-YYYY')}</span>
+                          </Styles.MessageDateContainer>
+                        }
+
+                        <Styles.MessageSenderContainer key={m._id}>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                            <Styles.MessageBubble isSender>{m?.message}</Styles.MessageBubble>
+                            <Styles.MessageMetaContainer>
+                              <Styles.MessageTime isSender>{moment(m?.timestamp).format('h:mm A')}</Styles.MessageTime>
+                              {
+                                m?.is_read && <FontAwesomeIcon icon={faCheckDouble} color={USER_COLORS.MESSAGES.MessageContainer.Sender.ReadIcon} />
+                              }
+                            </Styles.MessageMetaContainer>
+                          </div>
+                          <div>
                             {
-                              m?.is_read && <FontAwesomeIcon icon={faCheckDouble} color={USER_COLORS.MESSAGES.MessageContainer.Sender.ReadIcon} />
+                              currentUser?.profile_picture
+                                ? <Styles.ProfilePictureSmall source={currentUser?.profile_picture} alt={currentUser?.fullname} />
+                                : <Styles.ProfilePictureInitialsSmall>
+                                  <span>{
+                                    (() => {
+                                      const words = currentUser?.fullname.toUpperCase().split(' ');
+                                      return words.length > 1 ? words[0][0] + words[1][0] : currentUser?.fullname.toUpperCase().slice(0, 2)
+                                    })()
+                                  }</span>
+                                </Styles.ProfilePictureInitialsSmall>
                             }
-                          </Styles.MessageMetaContainer>
-                        </div>
+                          </div>
+                        </Styles.MessageSenderContainer>
+                      </>
+                    )
+                  }
+
+                  return (
+                    <>
+                      {
+                        messages.indexOf(m) === 0
+                        || (messages[messages.indexOf(m) - 1] && moment(m.timestamp).format('DD/MM/YYYY') !== moment(messages[messages.indexOf(m) - 1].timestamp).format('DD/MM/YYYY'))
+                        &&
+                        <Styles.MessageDateContainer>
+                          <span>{moment(m.timestamp).format('DD-MMM-YYYY')}</span>
+                        </Styles.MessageDateContainer>
+                      }
+
+                      <Styles.MessageReceiverContainer key={m._id}>
                         <div>
                           {
-                            currentUser?.profile_picture
-                              ? <Styles.ProfilePictureSmall source={currentUser?.profile_picture} alt={currentUser?.fullname} />
+                            selectedParticipant?.profilePicture
+                              ? <Styles.ProfilePictureSmall source={selectedParticipant?.profilePicture} alt={selectedParticipant?.fullname} />
                               : <Styles.ProfilePictureInitialsSmall>
                                 <span>{
                                   (() => {
-                                    const words = currentUser?.fullname.toUpperCase().split(' ');
-                                    return words.length > 1 ? words[0][0] + words[1][0] : currentUser?.fullname.toUpperCase().slice(0, 2)
+                                    const words = selectedParticipant?.fullname.toUpperCase().split(' ') || [];
+                                    return words.length > 1 ? words[0][0] + words[1][0] : selectedParticipant?.fullname.toUpperCase().slice(0, 2)
                                   })()
                                 }</span>
                               </Styles.ProfilePictureInitialsSmall>
                           }
                         </div>
-                      </Styles.MessageSenderContainer>
-                    )
-                  }
-
-                  return (
-                    <Styles.MessageReceiverContainer key={m._id}>
-                      <div>
-                        {
-                          selectedParticipant?.profilePicture
-                            ? <Styles.ProfilePictureSmall source={selectedParticipant?.profilePicture} alt={selectedParticipant?.fullname} />
-                            : <Styles.ProfilePictureInitialsSmall>
-                              <span>{
-                                (() => {
-                                  const words = selectedParticipant?.fullname.toUpperCase().split(' ') || [];
-                                  return words.length > 1 ? words[0][0] + words[1][0] : selectedParticipant?.fullname.toUpperCase().slice(0, 2)
-                                })()
-                              }</span>
-                            </Styles.ProfilePictureInitialsSmall>
-                        }
-                      </div>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-                        <Styles.MessageBubble>{m.message}</Styles.MessageBubble>
-                        <Styles.MessageTime>{moment(m.timestamp).format('h:mm A')}</Styles.MessageTime>
-                      </div>
-                    </Styles.MessageReceiverContainer>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                          <Styles.MessageBubble>{m.message}</Styles.MessageBubble>
+                          <Styles.MessageTime>{moment(m.timestamp).format('h:mm A')}</Styles.MessageTime>
+                        </div>
+                      </Styles.MessageReceiverContainer>
+                    </>
                   )
                 })}
             </Styles.MessageContentContainer>

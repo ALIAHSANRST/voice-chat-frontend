@@ -41,6 +41,7 @@ const ROUTES = {
   USER_FREE_EXAM: { path: '/user/free-exam', isProtected: false, name: 'Free Exam' },
   USER_GIVE_FEEDBACK: { path: '/user/give-feedback', isProtected: true, name: 'Give Feedback' },
   USER_TUTOR_LOBBY: { path: '/user/tutor-lobby', isProtected: true, name: 'Tutor Lobby' },
+  USER_TUTOR_PROFILE: { path: '/user/tutor-profile', isProtected: true, name: 'Tutor Profile' },
 
   // TEACHER ROUTES
   TEACHER_HOME: { path: '/teacher', isProtected: true, name: 'Teacher' },

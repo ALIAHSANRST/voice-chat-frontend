@@ -290,6 +290,8 @@ const ENG = {
     TITLE: 'Calendar',
     WEEKLY_SCHEDULE: 'Weekly Schedule',
     MANAGE_SLOTS: 'Manage Slots',
+    TODAY: 'Today',
+    NO_CLASSES: 'No Classes!',
   },
   TEACHER_HOME: {
     VERIFIED_TEACHER: 'Verified Teacher',
@@ -489,6 +491,7 @@ const ENG = {
     UNAVAILABLE: 'Unavailable',
     PREV: 'Prev',
     NEXT: 'Next',
+    GO_BACK: 'Go Back',
   },
   STUDENTS: {
     TITLE: 'Students',
@@ -503,7 +506,17 @@ const ENG = {
     DESCRIPTION: 'View Your Upcoming Classes and Manage Sessions',
     SEARCH_PLACEHOLDER: 'Search Classes...',
     NO_CLASSES_FOUND: 'No Classes Found!',
-  }
+  },
+  TUTOR_PROFILE: {
+    TITLE: 'Tutor Profile',
+    ABOUT: 'About',
+    EXPERIENCE: 'Experience',
+    PRESENT: 'Present',
+    TUTOR: 'Tutor',
+    NO_EXPERIENCE: 'No Experience Found!',
+    TOTAL_LESSONS: 'Total Lessons',
+    TOTAL_STUDENTS: 'Total Students',
+  },
 };
 
 export default ENG;

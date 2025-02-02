@@ -18,7 +18,7 @@ export const useAuthenticationContext = () => {
 export const AuthenticationProvider = ({ children }) => {
   const [currentUser, setCurrentUser, clearCurrentUser] = useLocalStorage('user', null);
   const [token, setToken, clearToken] = useLocalStorage('token', null);
-  const { currentLanguage } = COMMON_CONTEXT.TranslationContext.useTranslation();
+  const { currentLanguage, translations } = COMMON_CONTEXT.TranslationContext.useTranslation();
 
   const [isCheckingUserStatus, setIsCheckingUserStatus] = useState(true);
 
@@ -140,7 +140,7 @@ export const AuthenticationProvider = ({ children }) => {
       Logout,
       DeleteAccount
     }}>
-      {isCheckingUserStatus && <COMMON_COMPONENTS.LoaderFullScreen />}
+      {isCheckingUserStatus && <COMMON_COMPONENTS.LoaderFullScreen message={'Loading...'} />}
       {!isCheckingUserStatus && children}
     </AuthenticationContext.Provider>
   );

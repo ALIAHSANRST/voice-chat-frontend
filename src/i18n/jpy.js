@@ -290,6 +290,8 @@ const JPY = {
     TITLE: 'カレンダー',
     WEEKLY_SCHEDULE: '週間スケジュール',
     MANAGE_SLOTS: 'スロットを管理',
+    TODAY: '今日',
+    NO_CLASSES: 'クラスがありません！',
   },
   TEACHER_HOME: {
     VERIFIED_TEACHER: '認証済み講師',
@@ -489,6 +491,7 @@ const JPY = {
     UNAVAILABLE: '利用不可',
     PREV: '前へ',
     NEXT: '次へ',
+    GO_BACK: '戻る',
   },
   STUDENTS: {
     TITLE: '生徒',
@@ -503,7 +506,17 @@ const JPY = {
     DESCRIPTION: '予定されたクラスを表示してセッションを管理します',
     SEARCH_PLACEHOLDER: 'クラスを検索...',
     NO_CLASSES_FOUND: 'クラスが見つかりません！',
-  }
+  },
+  TUTOR_PROFILE: {
+    TITLE: '講師プロフィール',
+    ABOUT: '概要',
+    EXPERIENCE: '経験',
+    PRESENT: '現在',
+    TUTOR: '講師',
+    NO_EXPERIENCE: '経験が見つかりません！',
+    TOTAL_LESSONS: '合計レッスン',
+    TOTAL_STUDENTS: '合計生徒',
+  },
 };
 
 export default JPY;

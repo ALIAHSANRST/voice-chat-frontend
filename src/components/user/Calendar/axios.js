@@ -1,17 +1,24 @@
 import BaseAPI, { HandleError } from "@/src/utils/api"
 
-const FetchAllUpcomingClasses = async ({ limit, page, query, setIsLoading, setData }) => {
+const FetchAllUpcomingClasses = async ({
+  limit = 100,
+  page = 1,
+  startDate,
+  endDate,
+  query,
+  setIsLoading,
+  setData
+}) => {
   try {
-    // validate required params
-    if (!setData || !setIsLoading) {
-      throw new Error('Required state setters missing');
-    }
+    setIsLoading(true);
 
     // build query params
     const queryParams = new URLSearchParams();
     if (typeof page === 'number') queryParams.set('page', page.toString());
     if (typeof limit === 'number') queryParams.set('limit', limit.toString());
     if (query?.trim()) queryParams.set('query', query.trim());
+    if (startDate) queryParams.set('startDate', startDate);
+    if (endDate) queryParams.set('endDate', endDate);
 
     const ENDPOINT = `/class?${queryParams}`;
     const response = await BaseAPI.get(ENDPOINT);
@@ -28,7 +35,7 @@ const FetchAllUpcomingClasses = async ({ limit, page, query, setIsLoading, setDa
   } catch (error) {
     // reset data on error
     setData({ records: [], totalRecords: 0 });
-    console.error('CardList > UpcomingClasses > FetchAllUpcomingClasses:', error);
+    console.error('Calendar > FetchAllUpcomingClasses:', error);
     HandleError(error, 'Failed To Fetch Upcoming Classes!');
   } finally {
     setIsLoading(false);
