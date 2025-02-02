@@ -25,7 +25,9 @@ const SaveChanges = async ({ payload, setIsSubmitting, router, currentUser, setC
       } else {
         const changes = {}
         for (const key in payload) if (payload[key] !== currentUser[key]) changes[key] = payload[key]
-        setCurrentUser({ ...currentUser, ...changes })
+        const __ = { ...currentUser, ...changes }
+        __.profile_picture = response.data.profile_picture
+        setCurrentUser(__)
         COMMON_COMPONENTS.Toast.showSuccessToast('Changes Saved!')
       }
     }

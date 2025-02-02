@@ -333,7 +333,7 @@ const Message = () => {
                         onClick={() => HandleChangeParticipant(participant)}>
                         {
                           participant.profilePicture
-                            ? <Styles.ProfilePicture src={participant.profilePicture} alt={participant.fullname} />
+                            ? <Styles.ProfilePicture source={participant.profilePicture} alt={participant.fullname} />
                             : <Styles.ParticipantProfilePicture selected={selectedParticipant?.id === participant.id}>
                               <Styles.ParticipantInitials selected={selectedParticipant?.id === participant.id}>{
                                 (() => {
@@ -411,7 +411,7 @@ const Message = () => {
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                 {
                   selectedParticipant?.profilePicture
-                    ? <Styles.ProfilePicture src={selectedParticipant?.profilePicture} alt={selectedParticipant?.fullname} />
+                    ? <Styles.ProfilePicture source={selectedParticipant?.profilePicture} alt={selectedParticipant?.fullname} />
                     : <Styles.ProfilePictureInitials>
                       <span>{
                         (() => {
@@ -469,8 +469,8 @@ const Message = () => {
                         </div>
                         <div>
                           {
-                            currentUser.profilePicture
-                              ? <Styles.ProfilePictureSmall src={currentUser?.profilePicture} alt={currentUser?.fullname} />
+                            currentUser?.profile_picture
+                              ? <Styles.ProfilePictureSmall source={currentUser?.profile_picture} alt={currentUser?.fullname} />
                               : <Styles.ProfilePictureInitialsSmall>
                                 <span>{
                                   (() => {
@@ -490,7 +490,7 @@ const Message = () => {
                       <div>
                         {
                           selectedParticipant?.profilePicture
-                            ? <Styles.ProfilePictureSmall src={selectedParticipant?.profilePicture} alt={selectedParticipant?.fullname} />
+                            ? <Styles.ProfilePictureSmall source={selectedParticipant?.profilePicture} alt={selectedParticipant?.fullname} />
                             : <Styles.ProfilePictureInitialsSmall>
                               <span>{
                                 (() => {

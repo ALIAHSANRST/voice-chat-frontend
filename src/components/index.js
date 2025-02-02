@@ -34,6 +34,7 @@ export const COMMON_COMPONENTS = {
   Toast: require('./common/Toast'),
   AlertDialogue: require('./common/AlertDialogue').default,
   LanguageSelect: require('./common/LanguageSelect').default,
+  ImageLoader: require('./common/ImageLoader').default,
 };
 
 export const USER_COMPONENTS = {

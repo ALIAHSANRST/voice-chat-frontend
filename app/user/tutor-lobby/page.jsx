@@ -172,7 +172,7 @@ const ImageSection = styled.div`
   width: 100%;
 `
 
-const ProfileImage = styled.img`
+const ProfileImage = styled(COMMON_COMPONENTS.ImageLoader)`
   width: 5rem;
   height: 5rem;
   border-radius: 50%;
@@ -512,7 +512,7 @@ const TutorLobbyPage = () => {
                 )}
                 <ImageSection>
                   <ProfileImage
-                    src={ICON_ASSETS.PROFILE_IMAGE_PLACEHOLDER_ICON}
+                    source={teacher.profile_picture}
                     alt={teacher.fullname}
                   />
                 </ImageSection>

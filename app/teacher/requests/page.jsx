@@ -9,7 +9,6 @@ import { COMMON_COMPONENTS, USER_COMPONENTS } from '@/src/components';
 import { USER_COLORS } from "@/src/utils/colors";
 import { usePageTitle } from "@/src/hooks";
 import { COMMON_CONTEXT } from '@/src/context';
-import { ICON_ASSETS } from "@/src/utils/assets";
 import { REQUEST_STATUSES } from "@/src/utils/constants";
 import { GetRequests, UpdateRequestStatus } from "./axios";
 
@@ -416,8 +415,8 @@ const RequestsPage = () => {
                   <CardContent>
                     <RequestHeader>
                       <div className="image-container">
-                        <img
-                          src={request.student.profile_picture || ICON_ASSETS.PROFILE_IMAGE_PLACEHOLDER_ICON}
+                        <COMMON_COMPONENTS.ImageLoader
+                          source={request.student.profile_picture}
                           alt={request.student.fullname}
                         />
                       </div>

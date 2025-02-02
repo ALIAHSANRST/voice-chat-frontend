@@ -41,23 +41,6 @@ BaseAPI.interceptors.response.use(
   }
 );
 
-export const ImageLoader = async (link) => {
-  try {
-    if (!link) return null;
-    if (link?.toLocaleLowerCase().startsWith("http")) return link;
-
-    const ENDPOINT = `/file/${link.split('/').pop()}`;
-    const response = await BaseAPI.get(ENDPOINT, { responseType: 'arraybuffer' });
-    const base64 = Buffer.from(response.data, 'binary').toString('base64');
-    const contentType = response.headers['content-type'];
-
-    return `data:${contentType};base64,${base64}`;
-  } catch (error) {
-    console.log(`Error in ImageLoader: ${error}`);
-    return null;
-  }
-}
-
 export const HandleError = (error, message) => {
   COMMON_COMPONENTS.Toast.showErrorToast(
     error?.response?.data?.errors?.[0]?.message

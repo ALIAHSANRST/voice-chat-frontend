@@ -3,6 +3,7 @@
 import styled from "styled-components";
 
 import { USER_COLORS } from "@/src/utils/colors";
+import { COMMON_COMPONENTS } from "@/src/components";
 
 const MainContainer = styled.div`
   width: 100%;
@@ -325,7 +326,7 @@ const MessageTime = styled.div`
   text-align: ${props => props.isSender ? 'right' : 'left'};
 `
 
-const ProfilePicture = styled.img`
+const ProfilePicture = styled(COMMON_COMPONENTS.ImageLoader)`
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;

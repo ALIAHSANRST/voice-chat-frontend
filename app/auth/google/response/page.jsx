@@ -6,7 +6,6 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { COMMON_COMPONENTS } from "@/src/components";
 import { COMMON_CONTEXT } from "@/src/context";
 import { usePageTitle } from "@/src/hooks"
-import { ImageLoader } from "@/src/utils/api";
 
 const GoogleAuthResponsePage = () => {
   const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation()
@@ -24,10 +23,7 @@ const GoogleAuthResponsePage = () => {
 
       if (success && userData && token) {
         setToken(token);
-        setCurrentUser({
-          ...userData,
-          profile_picture: await ImageLoader(userData.profile_picture)
-        });
+        setCurrentUser(userData);
 
         router.push(`/${userData?.account_type || ''}`);
       }
