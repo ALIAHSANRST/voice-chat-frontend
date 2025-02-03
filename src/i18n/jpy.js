@@ -88,7 +88,11 @@ const JPY = {
       '「試験開始」をクリックして開始',
       'スコアを確認してフィードバックを提供',
       'Globalieをどこで知ったか回答する'
-    ]
+    ],
+    WELCOME_BACK: 'おかえりなさい',
+    HAVE_A_NICE_DAY: '良い一日を！',
+    OVERVIEW: '概要',
+    PROFILE_COMPLETION: 'プロフィールの完了率',
   },
   GIVE_FEEDBACK: {
     TITLE: 'フィードバック',
@@ -294,11 +298,12 @@ const JPY = {
     NO_CLASSES: 'クラスがありません！',
   },
   TEACHER_HOME: {
+    TITLE: 'ユーザーホーム',
     VERIFIED_TEACHER: '認証済み講師',
     WELCOME_BACK: 'おかえりなさい',
     HAVE_A_NICE_DAY: '良い一日を！',
     OVERVIEW: '概要',
-    COMPLETE_YOUR_PROFILE: 'プロフィールを完成させる',
+    PROFILE_COMPLETION: 'プロフィールの完了率',
     LESSONS: 'レッスン',
     STUDENTS: '生徒',
     RATING: '評価',
@@ -308,13 +313,22 @@ const JPY = {
       TITLE: '予定されたクラス',
       VIEW_ALL: 'すべて表示',
       NO_CLASSES: '予定されたクラスがありません！',
+      PAST_MODE: {
+        TITLE: '完了したクラス',
+      }
     },
     STUDENTS: {
       TITLE: '生徒',
       VIEW_ALL: 'すべて表示',
       NO_STUDENTS: '生徒が見つかりません！',
       UNKNOWN_EMAIL: 'メールアドレスが不明',
-    }
+    },
+    TEACHERS: {
+      TITLE: '講師',
+      VIEW_ALL: 'すべて表示',
+      NO_TEACHERS: '講師が見つかりません！',
+      UNKNOWN_EMAIL: 'メールアドレスが不明',
+    },
   },
   PROFILE: {
     TITLE: 'プロフィール',
@@ -492,6 +506,16 @@ const JPY = {
     PREV: '前へ',
     NEXT: '次へ',
     GO_BACK: '戻る',
+    BACK: '戻る',
+    VIEW_DETAILS: '詳細を表示',
+    TUTOR: '講師',
+    DATE: '日付',
+    TIME: '時間',
+    TOPIC: 'トピック',
+    STUDENT: '生徒',
+    TODAY: '今日',
+    TOMORROW: '明日',
+    YESTERDAY: '昨日',
   },
   STUDENTS: {
     TITLE: '生徒',
@@ -506,6 +530,11 @@ const JPY = {
     DESCRIPTION: '予定されたクラスを表示してセッションを管理します',
     SEARCH_PLACEHOLDER: 'クラスを検索...',
     NO_CLASSES_FOUND: 'クラスが見つかりません！',
+    PAST_MODE: {
+      TITLE: '完了したクラス',
+      HEADING: '完了したクラス',
+      DESCRIPTION: '過去のクラスを表示して生徒の詳細を確認します',
+    }
   },
   TUTOR_PROFILE: {
     TITLE: '講師プロフィール',
@@ -517,6 +546,16 @@ const JPY = {
     TOTAL_LESSONS: '合計レッスン',
     TOTAL_STUDENTS: '合計生徒',
   },
+  CLASS_DETAILS: {
+    SESSION_INFO: 'セッション情報',
+    CLASS_DETAILS: 'クラスの詳細',
+    JOIN_SESSION: 'セッションに参加',
+    START_SESSION: 'セッションを開始',
+    SESSION_ONGOING: '進行中',
+    SESSION_SCHEDULED: '予定',
+    SESSION_COMPLETED: '完了',
+    SESSION_EXPIRED: '期限切れ',
+  }
 };
 
 export default JPY;

@@ -12,6 +12,7 @@ const FetchAllStudents = async ({ limit, page, query, setIsLoading, setData }) =
     if (typeof page === 'number') queryParams.set('page', page.toString());
     if (typeof limit === 'number') queryParams.set('limit', limit.toString());
     if (query?.trim()) queryParams.set('query', query.trim());
+    queryParams.set('random', 'true');
 
     const ENDPOINT = `/teacher/students?${queryParams}`;
     const response = await BaseAPI.get(ENDPOINT);

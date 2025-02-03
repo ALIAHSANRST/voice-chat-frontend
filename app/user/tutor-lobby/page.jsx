@@ -484,7 +484,7 @@ const TutorLobbyPage = () => {
 
   return (
     <MainContainer>
-      <USER_COMPONENTS.HeaderNavBar activeItem="lobby" />
+      <USER_COMPONENTS.HeaderNavBar />
       <ContentContainer>
         <HeaderContainer>
           <div className="left">

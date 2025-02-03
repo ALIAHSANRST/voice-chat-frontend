@@ -1,10 +1,9 @@
 'use client'
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 import styled from "styled-components";
+import { useRouter } from "next/navigation";
 
-import { COMMON_COMPONENTS, USER_COMPONENTS } from '@/src/components';
+import { USER_COMPONENTS } from '@/src/components';
 import { COMMON_CONTEXT } from '@/src/context';
 import { USER_COLORS } from "@/src/utils/colors";
 import { USER_ASSETS } from "@/src/utils/assets";
@@ -16,17 +15,21 @@ const MainContainer = styled.div`
   height: 100%;
   min-height: 100vh;
   background-color: ${USER_COLORS.Home.Background};
+  font-family: 'Montserrat', sans-serif;
 `
 
 const ContentContainer = styled.div`
   padding: 2rem 3rem;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 2rem;
+  max-width: 90rem;
+  margin: 0 auto;
+  width: 100%;
 
   @media (max-width: 768px) {
-    padding: 1rem 1.5rem;
-    gap: 1rem;
+    padding: 1.25rem;
+    gap: 1.25rem;
   }
 `
 
@@ -40,217 +43,184 @@ const Container = styled.div`
   gap: 1rem;
 
   @media (max-width: 768px) {
-    padding: 1.5rem;
-  }
-`
-
-const PrimaryText = styled.p`
-  padding: 0;
-  margin: 0;
-  font-size: 2rem;
-  font-weight: 600;
-  color: ${USER_COLORS.Home.Container.PrimaryText};
-
-  @media (max-width: 768px) {
-    font-size: 1.5rem;
-  }
-`
-
-const SecondaryText = styled.p`
-  padding: 0;
-  margin: 0;
-  font-size: 1.125rem;
-  font-weight: 300;
-  color: ${USER_COLORS.Home.Container.SecondaryText};
-
-  @media (max-width: 768px) {
-    font-size: 0.875rem;
+    padding: 1.25rem;
   }
 `
 
 const WelcomeContainer = styled(Container)`
+  display: flex;
   gap: 0;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  position: relative;
+  justify-content: center;
+  overflow: hidden;
+  width: 67%;
 
   @media (max-width: 768px) {
-    flex-direction: column;
+    width: 100%;
+    min-height: 15rem;
+    justify-content: flex-start;
   }
 `
 
-const ExamContainer = styled(Container)`
-  flex: 1.5;
-  align-items: center;
-  justify-content: center;
-  padding: 4rem 0rem;
+const StatsContainer = styled(Container)`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 33%;
 
   @media (max-width: 768px) {
-    padding: 1.5rem;
+    width: 100%;
   }
 `
 
 const ExamImage = styled.img`
+  position: absolute;
+  bottom: -4rem;
+  right: -5rem;
   width: 100%;
   max-width: 22.5rem;
   height: 100%;
 
   @media (max-width: 768px) {
-    max-width: 70vw;
-    margin: 2rem 0;
-  }
-`
-
-const ExamButton = styled(USER_COMPONENTS.Button)`
-  width: 100%;
-  max-width: 22.5rem;
-
-  @media (max-width: 768px) {
-    max-width: unset;
-  }
-`
-
-const SidebarContainer = styled.div`
-  flex: 1;
-  display: flex;
-  gap: 1rem;
-  flex-direction: column;
-  max-width: 35rem;
-
-  @media (max-width: 768px) {
-    max-width: unset;
-  }
-`
-
-const SectionTitle = styled(PrimaryText)`
-  font-size: 1.625rem;
-  line-height: 1.5rem;
-
-  @media (max-width: 768px) {
-    font-size: 1.25rem;
-    line-height: 1.25rem;
-  }
-`
-
-const SectionText = styled(SecondaryText)`
-  font-size: 1rem;
-
-  @media (max-width: 768px) {
-    font-size: 0.875rem;
+    max-width: 17.5rem;
   }
 `
 
 const FlexContainer = styled.div`
   display: flex;
-  gap: 1rem;
+  gap: 2rem;
+  width: 100%;
 
   @media (max-width: 768px) {
     flex-direction: column;
+    gap: 1.25rem;
   }
+`
+
+const CalendarContainer = styled.div`
+  width: 67%;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`
+
+const CardListsContainer = styled.div`
+  width: 33%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`
+
+const WelcomeText = styled.span`
+  font-size: 1.875rem;
+  font-weight: 400;
+  color: ${USER_COLORS.Home.Container.PrimaryText};
+
+  @media (max-width: 768px) {
+    font-size: 1.325rem;
+  }
+`
+
+const WelcomeName = styled.span`
+  font-size: 1.875rem;
+  font-weight: 600;
+  color: ${USER_COLORS.Home.Container.PrimaryText};
+
+  @media (max-width: 768px) {
+    font-size: 1.325rem;
+  }
+`
+
+const GreetingText = styled.span`
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: ${USER_COLORS.Home.Container.SecondaryText};
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+`
+
+const StatsHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  @media (max-width: 768px) {
+    gap: 0.5rem;
+  }
+`
+
+const StatsTitle = styled.span`
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: ${USER_COLORS.Home.Container.PrimaryText};
+  align-self: flex-start;
+
+  @media (max-width: 768px) {
+    font-size: 1.125rem;
+  }
+`
+
+const Divider = styled.hr`
+  background: ${USER_COLORS.Home.Container.Border};
+  margin: 0;
 `
 
 const UserHomePage = () => {
   const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation()
+  const { currentUser, completionPercentage } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext();
 
-  const { currentUser, DeleteAccount } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext();
+  usePageTitle({ title: currentUser?.fullname || translations.USER_HOME.TITLE });
+
   const router = useRouter();
-
-  usePageTitle({ title: currentUser?.fullname || translations.USER_HOME.TITLE })
-
-  const [showDeleteAccountDialogue, setShowDeleteAccountDialogue] = useState(false);
-  const [showIsDeletingAccount, setShowIsDeletingAccount] = useState(false);
-
-  if (showIsDeletingAccount) {
-    return (
-      <COMMON_COMPONENTS.LoaderFullScreen message={translations.USER_HOME.DELETING_ACCOUNT} />
-    )
-  }
 
   return (
     <MainContainer>
       <USER_COMPONENTS.HeaderNavBar />
 
       <ContentContainer>
-        <WelcomeContainer>
-          <div>
-            <PrimaryText>
-              {translations.USER_HOME.WELCOME.replace('{fullname}', currentUser.fullname)}
-            </PrimaryText>
-            <SecondaryText>
-              {translations.USER_HOME.WELCOME_MESSAGE}
-            </SecondaryText>
-          </div>
-
-          <USER_COMPONENTS.OutlinedButton text={'Delete Account'} variant={'danger'} onClick={() => {
-            setShowDeleteAccountDialogue(true);
-          }} />
-
-          {/* <USER_COMPONENTS.CircularProgressWithLabel /> */}
-        </WelcomeContainer>
-
         <FlexContainer>
-          <ExamContainer>
-            <PrimaryText>
-              {translations.USER_HOME.TEXT_1}
-            </PrimaryText>
-            <SecondaryText style={{ textAlign: 'center' }}>
-              {translations.USER_HOME.TEXT_2}
-            </SecondaryText>
+          <WelcomeContainer>
+            <div>
+              <WelcomeText>{translations.USER_HOME.WELCOME_BACK}, </WelcomeText>
+              <WelcomeName>{currentUser.fullname}</WelcomeName>
+            </div>
+            <GreetingText>{translations.USER_HOME.HAVE_A_NICE_DAY}</GreetingText>
             <ExamImage src={USER_ASSETS.HOME.TAKE_FREE_EXAM_ARTIFACT} alt="Take Free Exam" />
-            <ExamButton
+          </WelcomeContainer>
+          <StatsContainer>
+            <StatsHeader>
+              <StatsTitle>{translations.USER_HOME.OVERVIEW}</StatsTitle>
+              <USER_COMPONENTS.CircularProgressWithLabel
+                value={completionPercentage || 0}
+                label={translations.USER_HOME.PROFILE_COMPLETION} />
+            </StatsHeader>
+            <Divider />
+            <USER_COMPONENTS.Button
               text={translations.USER_HOME.TAKE_FREE_EXAM}
               onClick={() => router.push(ROUTES.USER_FREE_EXAM.path)}
             />
-          </ExamContainer>
+          </StatsContainer>
+        </FlexContainer>
 
-          <SidebarContainer>
-            <Container>
-              <SectionTitle>
-                {translations.USER_HOME.MY_TUTORS}
-              </SectionTitle>
-              <SectionText>
-                {translations.USER_HOME.TEXT_3}
-              </SectionText>
-              <USER_COMPONENTS.OutlinedButton
-                variant='primary'
-                text={translations.USER_HOME.JOIN_AS_STUDENT}
-                style={{ width: 'fit-content' }}
-              />
-            </Container>
-            <Container>
-              <SectionTitle>
-                {translations.USER_HOME.GETTING_STARTED_GUIDE}
-              </SectionTitle>
-              <SectionText>
-                {translations.USER_HOME.FOLLOW_THESE_STEPS}
-              </SectionText>
-              <USER_COMPONENTS.Stepper
-                steps={translations.USER_HOME.STEPS}
-                activeStep={-1}
-                orientation="vertical"
-              />
-            </Container>
-          </SidebarContainer>
+        <FlexContainer>
+          <CalendarContainer>
+            <USER_COMPONENTS.Calendar showManageSlots={false} />
+          </CalendarContainer>
+          <CardListsContainer>
+            <USER_COMPONENTS.CardLists.UpcomingClasses limit={3} />
+            <USER_COMPONENTS.CardLists.Teachers limit={3} />
+          </CardListsContainer>
         </FlexContainer>
       </ContentContainer>
-
-      {
-        showDeleteAccountDialogue &&
-        <COMMON_COMPONENTS.AlertDialogue
-          title='Warning'
-          positiveMessage='Yes'
-          negativeMessage='No'
-          positiveCallback={async () => {
-            setShowIsDeletingAccount(true);
-            await DeleteAccount();
-            setShowDeleteAccountDialogue(false);
-          }}
-          negativeCallback={() => setShowDeleteAccountDialogue(false)}
-          show={showDeleteAccountDialogue}
-          handleClose={() => setShowDeleteAccountDialogue(false)}>
-          <p>Are you sure you want to delete your account?</p>
-        </COMMON_COMPONENTS.AlertDialogue>
-      }
     </MainContainer>
   )
 }

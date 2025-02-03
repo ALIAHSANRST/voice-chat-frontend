@@ -19,7 +19,7 @@ const CircularProgressWithLabel = ({
       gap: '0.5rem',
     }}>
       <Box sx={{ position: 'relative', display: 'inline-flex' }}>
-        <CircularProgress variant="determinate" size={60} thickness={3} value={value} {...circularProgressProps} />
+        <CircularProgress variant="determinate" size={66} thickness={3} value={value} {...circularProgressProps} />
         <Box
           sx={{
             top: 0,
@@ -39,7 +39,13 @@ const CircularProgressWithLabel = ({
           >{`${Math.round(value)}%`}</Typography>
         </Box>
       </Box>
-      <span style={{ fontSize: '0.8125rem', fontWeight: '400', fontFamily: 'Montserrat', color: USER_COLORS.Home.Container.SecondaryText }}>{label}</span>
+      <span style={{
+        fontSize: '0.8125rem',
+        fontWeight: '400',
+        fontFamily: 'Montserrat',
+        color: USER_COLORS.Home.Container.SecondaryText,
+        textAlign: 'center'
+      }}>{label}</span>
     </div>
   );
 }

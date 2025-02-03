@@ -243,11 +243,11 @@ const StatTitle = styled.span`
   }
 `
 
-const UserHomePage = () => {
+const TeacherHomePage = () => {
   const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation()
-  const { currentUser } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext();
+  const { currentUser, completionPercentage } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext();
 
-  usePageTitle({ title: currentUser?.fullname || translations.USER_HOME.TITLE });
+  usePageTitle({ title: currentUser?.fullname || translations.TEACHER_HOME.TITLE });
 
   const [isLoading, setIsLoading] = useState(false);
   const [stats, setStats] = useState([
@@ -300,7 +300,9 @@ const UserHomePage = () => {
           <StatsContainer>
             <StatsHeader>
               <StatsTitle>{translations.TEACHER_HOME.OVERVIEW}</StatsTitle>
-              <USER_COMPONENTS.CircularProgressWithLabel value={92} label={translations.TEACHER_HOME.COMPLETE_YOUR_PROFILE} />
+              <USER_COMPONENTS.CircularProgressWithLabel
+                value={completionPercentage || 0}
+                label={translations.TEACHER_HOME.PROFILE_COMPLETION} />
             </StatsHeader>
             <Divider />
             {
@@ -340,4 +342,4 @@ const UserHomePage = () => {
   )
 }
 
-export default UserHomePage
+export default TeacherHomePage

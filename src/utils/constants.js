@@ -49,5 +49,6 @@ export const REQUEST_STATUSES = {
 
 export const CLASS_STATUSES = {
   SCHEDULED: "scheduled",
+  ON_GOING: "on-going",
   COMPLETED: "completed",
 }

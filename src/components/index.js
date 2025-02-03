@@ -52,6 +52,8 @@ export const USER_COMPONENTS = {
   CardLists: {
     Students: require('./user/CardLists/Students/Students').default,
     StudentCard: require('./user/CardLists/Students/Students').StudentCard,
+    Teachers: require('./user/CardLists/Teachers/Teachers').default,
+    TeacherCard: require('./user/CardLists/Teachers/Teachers').TeacherCard,
     UpcomingClasses: require('./user/CardLists/UpcomingClasses/UpcomingClasses').default,
     UpcomingClassCard: require('./user/CardLists/UpcomingClasses/UpcomingClasses').UpcomingClassCard,
   },
@@ -74,4 +76,8 @@ export const USER_COMPONENTS = {
     Main: require('./user/Message/Message').default,
   },
   DaySlots: require('./user/DaySlots/DaySlots').default,
+  UpcomingClasses: {
+    Main: require('./user/UpcomingClasses/UpcomingClasses').default,
+    ViewDetails: require('./user/UpcomingClasses/ViewDetails/ViewDetails').default,
+  },
 };
