@@ -21,6 +21,7 @@ const FileLoader = (link) => {
 const ImageLoader = (props) => {
   return (
     <img
+      style={{ userSelect: "none" }}
       src={FileLoader(props?.source)}
       onError={(e) => e.target.src = ICON_ASSETS.PROFILE_IMAGE_PLACEHOLDER_ICON}
       {...props}

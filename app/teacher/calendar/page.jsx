@@ -35,25 +35,18 @@ const ContentContainer = styled.div`
 
 const ListContainer = styled.div`
   width: 33%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
   
   @media (max-width: 768px) {
     width: 100%;
+    gap: 1.375rem;
   }
 `
 
 const CalendarContainer = styled.div`
   width: 67%;
-
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-`
-
-const CardListsContainer = styled.div`
-  width: 33%;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
 
   @media (max-width: 768px) {
     width: 100%;
@@ -84,6 +77,7 @@ const CalendarPage = () => {
         <FlexContainer>
           <ListContainer>
             <USER_COMPONENTS.CardLists.UpcomingClasses showViewAll={true} limit={5} />
+            <USER_COMPONENTS.CardLists.UpcomingClasses showViewAll={true} limit={5} pastMode />
           </ListContainer>
           <CalendarContainer>
             <USER_COMPONENTS.Calendar />

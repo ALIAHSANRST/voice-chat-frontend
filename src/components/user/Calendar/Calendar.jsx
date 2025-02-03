@@ -10,7 +10,7 @@ import moment from 'moment';
 import { COMMON_COMPONENTS, USER_COMPONENTS } from "@/src/components";
 import { COMMON_CONTEXT } from "@/src/context";
 import { USER_COLORS } from '@/src/utils/colors';
-import { CLASS_STATUSES } from '@/src/utils/constants';
+import { CLASS_STATUSES, SLOT_DURATION_IN_MINUTES } from '@/src/utils/constants';
 import { ROUTES } from "@/src/utils/routes";
 import { FetchAllUpcomingClasses } from "./axios";
 
@@ -367,14 +367,14 @@ const Calendar = ({ showManageSlots = true }) => {
                         GetClassesForDay(date).length > 0 &&
                         GetClassesForDay(date).map((cls, index) => {
                           const startTime = moment(cls.scheduledFor.time, 'HH:mm');
-                          const endTime = startTime.clone().add(1, 'hour');
+                          const endTime = startTime.clone().add(SLOT_DURATION_IN_MINUTES, 'minutes');
 
                           return (
                             <ClassSlot key={cls._id} $status={cls.status || CLASS_STATUSES.SCHEDULED}>
                               <div>
                                 <SlotTitle>{cls.title}</SlotTitle>
                                 <SlotTime>
-                                  {startTime.format('h:mm A')} - {endTime.format('h:mm A')}
+                                  {startTime.format('hh:mm A')} - {endTime.format('hh:mm A')}
                                 </SlotTime>
                               </div>
                               <StudentInfo className="student-info">

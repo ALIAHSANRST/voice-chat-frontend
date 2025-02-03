@@ -269,6 +269,7 @@ const TextAreaField = ({ name, placeholder, value, onChange, disabled, style, id
 const DropdownField = ({ name, placeholder, value, onChange, disabled, values, leftIcon, rightIcon, leftIconOnClick, rightIconOnClick }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
+  const [isFocused, setIsFocused] = useState(false);
   const dropdownRef = useRef(null);
   const listRef = useRef(null);
 
@@ -300,6 +301,8 @@ const DropdownField = ({ name, placeholder, value, onChange, disabled, values, l
 
   useEffect(() => {
     const handleKeyDown = (e) => {
+      if (!isFocused) return;
+
       const options = getOptions();
 
       if (!isOpen && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
@@ -354,7 +357,7 @@ const DropdownField = ({ name, placeholder, value, onChange, disabled, values, l
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isOpen, highlightedIndex, values, placeholder, value]);
+  }, [isOpen, highlightedIndex, values, placeholder, value, isFocused]);
 
   const scrollIntoView = (index) => {
     if (listRef.current && index >= 0) {
@@ -439,6 +442,8 @@ const DropdownField = ({ name, placeholder, value, onChange, disabled, values, l
         <DropdownButton
           onClick={handleDropdownClick}
           onKeyDown={handleDropdownKeyDown}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
           disabled={disabled}
           tabIndex={disabled ? -1 : 0}
           role="combobox"

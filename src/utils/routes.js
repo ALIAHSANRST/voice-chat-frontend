@@ -42,6 +42,10 @@ const ROUTES = {
   USER_GIVE_FEEDBACK: { path: '/user/give-feedback', isProtected: true, name: 'Give Feedback' },
   USER_TUTOR_LOBBY: { path: '/user/tutor-lobby', isProtected: true, name: 'Tutor Lobby' },
   USER_TUTOR_PROFILE: { path: '/user/tutor-profile', isProtected: true, name: 'Tutor Profile' },
+  USER_UPCOMING_CLASSES: { path: '/user/upcoming-classes', isProtected: true, name: 'Upcoming Classes' },
+  USER_COMPLETED_CLASSES: { path: '/user/completed-classes', isProtected: true, name: 'Completed Classes' },
+  USER_MEETING_SESSION: { path: '/user/meeting-session', isProtected: true, name: 'Meeting Session' },
+  USER_TEACHERS: { path: '/user/teachers', isProtected: true, name: 'Teachers' },
 
   // TEACHER ROUTES
   TEACHER_HOME: { path: '/teacher', isProtected: true, name: 'Teacher' },
@@ -49,9 +53,11 @@ const ROUTES = {
   TEACHER_CALENDAR: { path: '/teacher/calendar', isProtected: true, name: 'Calendar' },
   TEACHER_PROFILE: { path: '/teacher/profile', isProtected: true, name: 'Profile' },
   TEACHER_UPCOMING_CLASSES: { path: '/teacher/upcoming-classes', isProtected: true, name: 'Upcoming Classes' },
+  TEACHER_COMPLETED_CLASSES: { path: '/teacher/completed-classes', isProtected: true, name: 'Completed Classes' },
   TEACHER_STUDENTS: { path: '/teacher/students', isProtected: true, name: 'Students' },
   TEACHER_REQUESTS: { path: '/teacher/requests', isProtected: true, name: 'Requests' },
   TEACHER_MANAGE_SLOTS: { path: '/teacher/manage-slots', isProtected: true, name: 'Manage Slots' },
+  TEACHER_MEETING_SESSION: { path: '/teacher/meeting-session', isProtected: true, name: 'Meeting Session' },
 }
 
 const GetPublicRoutes = () => {

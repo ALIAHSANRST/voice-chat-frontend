@@ -41,6 +41,8 @@ export const ICON_ASSETS = {
   INFO_ICON: '/images/icons/info-icon.svg',
   SEND_MESSAGE_ICON: '/images/icons/send-message-icon.svg',
   PROFILE_IMAGE_PLACEHOLDER_ICON: '/images/icons/profile-image-placeholder-icon.svg',
+  CALENDAR_ICON: '/images/icons/calendar-icon.svg',
+  CLOCK_ICON: '/images/icons/clock-icon.svg',
 }
 
 export const HOMEPAGE_ASSETS = {

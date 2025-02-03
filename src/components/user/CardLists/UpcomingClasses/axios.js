@@ -1,6 +1,7 @@
+import moment from "moment";
 import BaseAPI, { HandleError } from "@/src/utils/api"
 
-const FetchAllUpcomingClasses = async ({ limit, page, query, setIsLoading, setData }) => {
+const FetchAllUpcomingClasses = async ({ limit, page, query, setIsLoading, setData, pastMode }) => {
   try {
     // validate required params
     if (!setData || !setIsLoading) {
@@ -12,6 +13,8 @@ const FetchAllUpcomingClasses = async ({ limit, page, query, setIsLoading, setDa
     if (typeof page === 'number') queryParams.set('page', page.toString());
     if (typeof limit === 'number') queryParams.set('limit', limit.toString());
     if (query?.trim()) queryParams.set('query', query.trim());
+    if (!pastMode) queryParams.set('startDate', moment().format('YYYY-MM-DD'));
+    if (pastMode) queryParams.set('endDate', moment().format('YYYY-MM-DD'));
 
     const ENDPOINT = `/class?${queryParams}`;
     const response = await BaseAPI.get(ENDPOINT);

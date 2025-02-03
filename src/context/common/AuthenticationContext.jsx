@@ -2,9 +2,9 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
 
+import BaseAPI from '@/src/utils/api';
 import { COMMON_COMPONENTS } from '@/src/components';
 import { useLocalStorage } from '@/src/hooks';
-import BaseAPI from '@/src/utils/api';
 import { GetPublicRoutes, ROUTES } from '@/src/utils/routes';
 import { COMMON_CONTEXT } from '@/src/context';
 import { ROLES } from '@/src/utils/constants';
@@ -18,7 +18,8 @@ export const useAuthenticationContext = () => {
 export const AuthenticationProvider = ({ children }) => {
   const [currentUser, setCurrentUser, clearCurrentUser] = useLocalStorage('user', null);
   const [token, setToken, clearToken] = useLocalStorage('token', null);
-  const { currentLanguage, translations } = COMMON_CONTEXT.TranslationContext.useTranslation();
+  const [completionPercentage, setCompletionPercentage] = useLocalStorage('completion', 0);
+  const { currentLanguage } = COMMON_CONTEXT.TranslationContext.useTranslation();
 
   const [isCheckingUserStatus, setIsCheckingUserStatus] = useState(true);
 
@@ -58,6 +59,29 @@ export const AuthenticationProvider = ({ children }) => {
 
     setIsCheckingUserStatus(false);
   }, [])
+
+  useEffect(() => {
+    if (!currentUser) return;
+    const percentage = CalculateProfileCompletionPercentage(currentUser);
+    setCompletionPercentage(percentage);
+  }, [currentUser])
+
+  const CalculateProfileCompletionPercentage = (user) => {
+    if (!user) return 0;
+    if (!user.account_type === ROLES.ADMIN) return 100;
+
+    if (user.account_type === ROLES.STUDENT) {
+      const requiredFields = ['fullname', 'email', 'profile_picture'];
+      const completedFields = requiredFields.filter(field => user[field]);
+      return Math.round((completedFields.length / requiredFields.length) * 100);
+    }
+
+    if (user.account_type === ROLES.TEACHER) {
+      const requiredFields = ['fullname', 'email', 'profile_picture', 'linkedInProfile', 'location', 'experience', 'introductory', 'slots'];
+      const completedFields = requiredFields.filter(field => user[field]);
+      return Math.round((completedFields.length / requiredFields.length) * 100);
+    }
+  }
 
   const DeleteAccount = async () => {
     try {
@@ -132,13 +156,14 @@ export const AuthenticationProvider = ({ children }) => {
       currentUser,
       setCurrentUser,
       clearCurrentUser,
+      completionPercentage,
       token,
       setToken,
       clearToken,
       SignUpLocal,
       SignInLocal,
       Logout,
-      DeleteAccount
+      DeleteAccount,
     }}>
       {isCheckingUserStatus && <COMMON_COMPONENTS.LoaderFullScreen message={'Loading...'} />}
       {!isCheckingUserStatus && children}

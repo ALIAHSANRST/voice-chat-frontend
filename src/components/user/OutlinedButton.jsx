@@ -30,7 +30,8 @@ const OutlinedButton = ({
 }) => {
   return (
     <StyledButton variant={CapitalizeWords(variant)} {...props}>
-      {text}
+      {text && text}
+      {!text && props.children}
     </StyledButton>
   )
 }

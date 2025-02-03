@@ -1,46 +1,39 @@
-import moment from "moment";
 import BaseAPI, { HandleError } from "@/src/utils/api"
 
-const FetchAllUpcomingClasses = async ({
-  limit = 100,
-  page = 1,
-  startDate,
-  endDate,
-  query,
-  setIsLoading,
-  setData
-}) => {
+const FetchAllTeachers = async ({ limit, page, query, setIsLoading, setData }) => {
   try {
-    setIsLoading(true);
+    // validate required params
+    if (!setData || !setIsLoading) {
+      throw new Error('Required state setters missing');
+    }
 
     // build query params
     const queryParams = new URLSearchParams();
     if (typeof page === 'number') queryParams.set('page', page.toString());
     if (typeof limit === 'number') queryParams.set('limit', limit.toString());
     if (query?.trim()) queryParams.set('query', query.trim());
-    if (startDate) queryParams.set('startDate', moment(startDate).format('YYYY-MM-DD'));
-    if (endDate) queryParams.set('endDate', moment(endDate).format('YYYY-MM-DD'));
+    queryParams.set('random', 'true');
 
-    const ENDPOINT = `/class?${queryParams}`;
+    const ENDPOINT = `/student/teachers?${queryParams}`;
     const response = await BaseAPI.get(ENDPOINT);
 
     // validate response data
-    if (!response?.data?.classes) {
+    if (!response?.data?.teachers) {
       throw new Error('Invalid Response Data');
     }
 
     setData({
-      records: response.data.classes,
+      records: response.data.teachers,
       totalRecords: response.data.totalRecords || 0,
     });
   } catch (error) {
     // reset data on error
     setData({ records: [], totalRecords: 0 });
-    console.error('Calendar > FetchAllUpcomingClasses:', error);
-    HandleError(error, 'Failed To Fetch Upcoming Classes!');
+    console.error('CardList > Teachers > FetchAllTeachers:', error);
+    HandleError(error, 'Failed To Fetch Teacher!');
   } finally {
     setIsLoading(false);
   }
 };
 
-export { FetchAllUpcomingClasses }
+export { FetchAllTeachers }

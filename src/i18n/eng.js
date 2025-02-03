@@ -76,7 +76,7 @@ const ENG = {
     WELCOME_MESSAGE: 'Welcome to Globalie Education!',
     TEXT_1: 'Take a Free Exam Today!',
     TEXT_2: 'Test your knowledge and get instant results — no cost, no commitment!',
-    TAKE_FREE_EXAM: 'Take a free exam',
+    TAKE_FREE_EXAM: 'Take a Free Exam',
     JOIN_AS_STUDENT: 'Join as student',
     MY_TUTORS: 'My tutors',
     TEXT_3: `Looks like you haven't contacted anyone yet. Let's get started!`,
@@ -88,7 +88,11 @@ const ENG = {
       'Click \'Start Exam\' to begin',
       'View your score and provide feedback',
       'Answer \'Where did you find Globalie?\''
-    ]
+    ],
+    WELCOME_BACK: 'Welcome Back',
+    HAVE_A_NICE_DAY: 'Have a nice day!',
+    OVERVIEW: 'Overview',
+    PROFILE_COMPLETION: 'Profile Completion',
   },
   GIVE_FEEDBACK: {
     TITLE: 'Give Feedback',
@@ -294,11 +298,12 @@ const ENG = {
     NO_CLASSES: 'No Classes!',
   },
   TEACHER_HOME: {
+    TITLE: 'Home',
     VERIFIED_TEACHER: 'Verified Teacher',
     WELCOME_BACK: 'Welcome Back',
     HAVE_A_NICE_DAY: 'Have a nice day!',
     OVERVIEW: 'Overview',
-    COMPLETE_YOUR_PROFILE: 'Complete your profile',
+    PROFILE_COMPLETION: 'Profile Completion',
     LESSONS: 'Lessons',
     STUDENTS: 'Students',
     RATING: 'Rating',
@@ -308,11 +313,20 @@ const ENG = {
       TITLE: 'Upcoming Classes',
       VIEW_ALL: 'View All',
       NO_CLASSES: 'No Classes Found!',
+      PAST_MODE: {
+        TITLE: 'Completed Classes',
+      }
     },
     STUDENTS: {
       TITLE: 'Students',
       VIEW_ALL: 'View All',
       NO_STUDENTS: 'No Students Found!',
+      UNKNOWN_EMAIL: 'Unknown Email',
+    },
+    TEACHERS: {
+      TITLE: 'Tutors',
+      VIEW_ALL: 'View All',
+      NO_TEACHERS: 'No Tutors Found!',
       UNKNOWN_EMAIL: 'Unknown Email',
     },
   },
@@ -492,6 +506,16 @@ const ENG = {
     PREV: 'Prev',
     NEXT: 'Next',
     GO_BACK: 'Go Back',
+    BACK: 'Back',
+    VIEW_DETAILS: 'View Details',
+    TUTOR: 'Tutor',
+    DATE: 'Date',
+    TIME: 'Time',
+    TOPIC: 'Topic',
+    STUDENT: 'Student',
+    TODAY: 'Today',
+    TOMMOROW: 'Tomorrow',
+    YESTERDAY: 'Yesterday',
   },
   STUDENTS: {
     TITLE: 'Students',
@@ -506,6 +530,11 @@ const ENG = {
     DESCRIPTION: 'View Your Upcoming Classes and Manage Sessions',
     SEARCH_PLACEHOLDER: 'Search Classes...',
     NO_CLASSES_FOUND: 'No Classes Found!',
+    PAST_MODE: {
+      TITLE: 'Completed Classes',
+      HEADING: 'Completed Classes',
+      DESCRIPTION: 'View Your Past Classes and Students Details',
+    }
   },
   TUTOR_PROFILE: {
     TITLE: 'Tutor Profile',
@@ -517,6 +546,16 @@ const ENG = {
     TOTAL_LESSONS: 'Total Lessons',
     TOTAL_STUDENTS: 'Total Students',
   },
+  CLASS_DETAILS: {
+    SESSION_INFO: 'Session Info',
+    CLASS_DETAILS: 'Class Details',
+    JOIN_SESSION: 'Join Session',
+    START_SESSION: 'Start Session',
+    SESSION_ONGOING: 'Ongoing',
+    SESSION_SCHEDULED: 'Scheduled',
+    SESSION_COMPLETED: 'Completed',
+    SESSION_EXPIRED: 'Expired',
+  }
 };
 
 export default ENG;

@@ -1,17 +1,15 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import styled from 'styled-components';
-import moment from 'moment';
 
 import { ICON_ASSETS } from "@/src/utils/assets";
 import { USER_COLORS } from "@/src/utils/colors";
 import { ROUTES } from "@/src/utils/routes";
 import { COMMON_CONTEXT } from "@/src/context";
 import { COMMON_COMPONENTS } from "@/src/components";
-import { FetchAllUpcomingClasses } from "./axios";
-import { ROLES } from "@/src/utils/constants";
+import { FetchAllTeachers } from "./axios";
 
 const Container = styled.div`
   display: flex;
@@ -55,7 +53,8 @@ const ListContainer = styled.div`
   gap: 1.5rem;
   border-radius: 1rem;
   background-color: ${USER_COLORS.CardLists.Background};
-  
+  width: 100%;
+
   @media (max-width: 768px) {
     padding: 1rem;
     gap: 1rem;
@@ -67,6 +66,7 @@ const ItemContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  width: 100%;
 `
 
 const ProfileImage = styled(COMMON_COMPONENTS.ImageLoader)`
@@ -86,44 +86,49 @@ const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  width: 100%;
+  overflow: hidden;
 
   @media (max-width: 768px) {
     gap: 0.1rem;
   }
 `
 
-const Title = styled.span`
+const Name = styled.span`
   font-size: 1.125rem;
   font-weight: 600;
   color: ${USER_COLORS.CardLists.Text.Primary};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   @media (max-width: 768px) {
     font-size: 1rem;
   }
 `
 
-const Time = styled.span`
+const Title = styled.span`
   font-size: 1rem;
   font-weight: 400;
   color: ${USER_COLORS.CardLists.Text.Secondary};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   @media (max-width: 768px) {
     font-size: 0.875rem;
   }
 `
 
-const ViewIcon = styled(Link)`
+const MessageIcon = styled.img`
+  width: 3rem;
+  height: 3rem;
+  cursor: pointer;
   margin-left: auto;
-  
-  img {
-    width: 1.325rem;
-    height: 1.325rem;
-    cursor: pointer;
 
-    @media (max-width: 768px) {
-      width: 1.2rem;
-      height: 1.2rem;
-    }
+  @media (max-width: 768px) {
+    width: 2.5rem;
+    height: 2.5rem;
   }
 `
 
@@ -143,63 +148,34 @@ const NoDataText = styled.span`
   color: ${USER_COLORS.CardLists.Text.Secondary};
 `
 
-const FormatTime = ({ day, date, time }) => {
-  const currentDate = moment();
-  const classDate = moment(date);
-
-  const isToday = currentDate.isSame(classDate, 'day');
-  const isTomorrow = currentDate.add(1, 'day').isSame(classDate, 'day');
-
-  const formattedTime = moment(time, 'HH:mm').format('h:mm A');
-
-  if (isToday) {
-    return `Today, ${formattedTime}`;
-  } else if (isTomorrow) {
-    return `Tomorrow, ${formattedTime}`;
-  } else {
-    return `${classDate.format('MMM D, YYYY')}, ${formattedTime}`;
-  }
-}
-
-export const UpcomingClassCard = ({ item, translations, role, pastMode }) => {
+export const TeacherCard = ({ teacher, translations }) => {
   return (
     <ItemContainer>
-      <ProfileImage source={
-        role === ROLES.TEACHER
-          ? item.student.profile_picture
-          : item.teacher.profile_picture
-      } alt={item.title} />
+      <ProfileImage source={teacher.profile_picture} alt={teacher.fullname} />
       <TextContainer>
-        <Title>{item.title}</Title>
-        <Time>{FormatTime(item.scheduledFor)}</Time>
+        <Name title={teacher.fullname}>
+          {teacher.fullname}
+        </Name>
+        <Title title={teacher.email || translations.CARD_LISTS.TEACHERS.UNKNOWN_EMAIL}>
+          {teacher.email || translations.CARD_LISTS.TEACHERS.UNKNOWN_EMAIL}
+        </Title>
       </TextContainer>
-      <ViewIcon
-        target="_blank"
-        href={
-          role === ROLES.TEACHER
-            ? pastMode
-              ? ROUTES.TEACHER_COMPLETED_CLASSES.path + `/${item._id}`
-              : ROUTES.TEACHER_UPCOMING_CLASSES.path + `/${item._id}`
-            : pastMode
-              ? ROUTES.TEACHER_COMPLETED_CLASSES.path + `/${item._id}`
-              : ROUTES.USER_UPCOMING_CLASSES.path + `/${item._id}`
-        } passHref>
-        <img src={ICON_ASSETS.VIEW_LINK_ICON} alt="View Link" title={translations.COMMON.VIEW_DETAILS} />
-      </ViewIcon>
+      <Link href={`${ROUTES.USER_MESSAGES.path}?id=${teacher._id}`}>
+        <MessageIcon src={ICON_ASSETS.MESSAGE_LINK_ICON} alt="Message Link" />
+      </Link>
     </ItemContainer>
   );
 };
 
-const UpcomingClasses = ({ showViewAll = true, limit = 10, pastMode = false }) => {
+const Teachers = ({ showViewAll = true, limit = 10 }) => {
   const { translations } = COMMON_CONTEXT.TranslationContext.useTranslation();
-  const { currentUser } = COMMON_CONTEXT.AuthenticationContext.useAuthenticationContext();
 
   const [data, setData] = useState({ records: [], totalRecords: 0 });
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      FetchAllUpcomingClasses({
+      FetchAllTeachers({
         limit: limit,
         page: 1,
         query: null,
@@ -214,19 +190,11 @@ const UpcomingClasses = ({ showViewAll = true, limit = 10, pastMode = false }) =
   return (
     <Container>
       <HeaderContainer>
-        <Heading>{
-          pastMode
-            ? translations.CARD_LISTS.UPCOMING_CLASSES.PAST_MODE.TITLE
-            : translations.CARD_LISTS.UPCOMING_CLASSES.TITLE
-        }</Heading>
+        <Heading>{translations.CARD_LISTS.TEACHERS.TITLE}</Heading>
         {
           showViewAll && !isLoading &&
-          <ViewAllLink href={
-            currentUser.account_type === ROLES.STUDENT
-              ? (pastMode ? ROUTES.USER_COMPLETED_CLASSES.path : ROUTES.USER_UPCOMING_CLASSES.path)
-              : (pastMode ? ROUTES.TEACHER_COMPLETED_CLASSES.path : ROUTES.TEACHER_UPCOMING_CLASSES.path)
-          }>
-            {translations.CARD_LISTS.UPCOMING_CLASSES.VIEW_ALL}
+          <ViewAllLink href={ROUTES.USER_TEACHERS.path}>
+            {translations.CARD_LISTS.TEACHERS.VIEW_ALL}
           </ViewAllLink>
         }
       </HeaderContainer>
@@ -242,7 +210,7 @@ const UpcomingClasses = ({ showViewAll = true, limit = 10, pastMode = false }) =
         data && data.records.length === 0 && !isLoading &&
         <ListContainer>
           <NoDataText>
-            {translations.CARD_LISTS.UPCOMING_CLASSES.NO_CLASSES}
+            {translations.CARD_LISTS.TEACHERS.NO_TEACHERS}
           </NoDataText>
         </ListContainer>
       }
@@ -251,20 +219,16 @@ const UpcomingClasses = ({ showViewAll = true, limit = 10, pastMode = false }) =
         data && data.records.length > 0 && !isLoading &&
         <ListContainer>
           {
-            data.records.map((item, index) => (
-              <div key={`${item._id}`}>
-                <UpcomingClassCard
-                  key={item._id}
-                  item={item}
-                  translations={translations}
-                  role={currentUser.account_type}
-                  pastMode={pastMode}
-                />
-                {
-                  index !== data.records.length - 1 && <Divider />
-                }
-              </div>
-            ))
+            data.records.map((item, index) => {
+              return (
+                <div key={`${item._id}`}>
+                  <TeacherCard teacher={item} translations={translations} />
+                  {
+                    index !== data.records.length - 1 && <Divider />
+                  }
+                </div>
+              )
+            })
           }
         </ListContainer>
       }
@@ -272,4 +236,4 @@ const UpcomingClasses = ({ showViewAll = true, limit = 10, pastMode = false }) =
   )
 }
 
-export default UpcomingClasses;
+export default Teachers;
