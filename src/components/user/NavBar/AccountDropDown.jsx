@@ -219,9 +219,9 @@ const AccountDropDown = ({ withLanguage = false }) => {
       {
         showLogoutDialogue &&
         <COMMON_COMPONENTS.AlertDialogue
-          title='Warning'
-          positiveMessage='Yes'
-          negativeMessage='No'
+          title={translations.COMMON.WARNING}
+          positiveMessage={translations.COMMON.YES}
+          negativeMessage={translations.COMMON.CANCEL}
           positiveCallback={() => {
             handleNavigate(ROUTES.LOGOUT.path);
             setShowLogoutDialogue(false);

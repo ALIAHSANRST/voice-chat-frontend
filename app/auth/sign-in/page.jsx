@@ -73,8 +73,6 @@ const SignInPage = () => {
     setSubmitting(true);
 
     const callback = (currentUser) => {
-      console.log(`currentUser: `, currentUser)
-
       setSubmitting(false);
       if (!currentUser) return;
 

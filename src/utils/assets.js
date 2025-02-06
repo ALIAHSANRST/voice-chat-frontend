@@ -43,6 +43,8 @@ export const ICON_ASSETS = {
   PROFILE_IMAGE_PLACEHOLDER_ICON: '/images/icons/profile-image-placeholder-icon.svg',
   CALENDAR_ICON: '/images/icons/calendar-icon.svg',
   CLOCK_ICON: '/images/icons/clock-icon.svg',
+  MICROPHONE_SLASH_ICON: '/images/icons/microphone-slash-icon.svg',
+  VOICE_SQUARE_ICON: '/images/icons/voice-square-icon.svg',
 }
 
 export const HOMEPAGE_ASSETS = {

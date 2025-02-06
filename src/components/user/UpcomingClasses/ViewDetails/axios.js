@@ -30,15 +30,17 @@ const GetUpcomingClass = async ({ id, setIsLoading, setData }) => {
 
     if (response?.data?.success) {
       const data = response?.data?.data
+      const parsedDate = moment(data?.scheduledFor?.date).format('YYYY-MM-DD')
+
       data.formatted = {
-        date: moment(data?.scheduledFor?.date).format("dddd, D MMMM"),
-        ...FormatTime(data?.scheduledFor?.time, data?.scheduledFor?.date)
+        date: moment(parsedDate).format("dddd, D MMMM"),
+        ...FormatTime(data?.scheduledFor?.time, parsedDate)
       }
 
-      const classDateTime = moment(`${data?.scheduledFor?.date} ${data?.scheduledFor?.time}`, 'YYYY-MM-DD HH:mm')
+      const classDateTime = moment(`${parsedDate} ${data?.scheduledFor?.time}`, 'YYYY-MM-DD HH:mm')
       const classEndDateTime = moment(classDateTime).add(SLOT_DURATION_IN_MINUTES, 'minutes')
-      data.isExpired = moment().isAfter(classEndDateTime)
 
+      data.isExpired = moment().isAfter(classEndDateTime)
       data.isReady = moment().isBetween(classDateTime, classEndDateTime)
 
       setData(data)

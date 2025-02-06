@@ -81,6 +81,11 @@ const NavigationContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 1rem;
+  }
 `
 
 const DateDisplay = styled.div`
@@ -325,7 +330,7 @@ const Calendar = ({ showManageSlots = true }) => {
       <CalendarWrapper>
         <NavigationContainer>
           <USER_COMPONENTS.OutlinedButton text={translations.CALENDAR.TODAY}
-            style={{ padding: '0.3rem 0.9rem' }}
+            style={{ padding: '0.3rem 0.9rem', alignSelf: 'flex-start' }}
             onClick={() => setCurrentWeekStart(moment().subtract(1, 'days'))} />
           <DateDisplay>
             <NavButton onClick={() => NavigateWeek('prev')}>

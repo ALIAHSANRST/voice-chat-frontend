@@ -194,7 +194,7 @@ const Message = () => {
   useEffect(() => {
     if (socket) {
       const handleMessage = (data) => {
-        console.log(`Socket Event: '${SOCKET_EVENTS.CHAT.MESSAGE}' - Data: ${JSON.stringify(data)}`);
+        console.error(`Socket Event: '${SOCKET_EVENTS.CHAT.MESSAGE}' - Data: ${JSON.stringify(data)}`);
 
         if (data.sender !== currentUser._id) {
           if (selectedParticipant?.id === data.chatId) {
@@ -224,7 +224,7 @@ const Message = () => {
       }
 
       const handleMarkRead = (data) => {
-        console.log(`Socket Event: '${SOCKET_EVENTS.CHAT.MARK_READ}' - Data: ${JSON.stringify(data)}`);
+        console.error(`Socket Event: '${SOCKET_EVENTS.CHAT.MARK_READ}' - Data: ${JSON.stringify(data)}`);
 
         const updatedParticipants = participants.map((participant) => {
           if (participant.id === data) {

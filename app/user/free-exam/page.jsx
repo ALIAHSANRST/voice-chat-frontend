@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
 
@@ -197,12 +197,6 @@ const ExamPage = () => {
   const [showExamInstructions, setShowExamInstructions] = useState(currentUser ? true : false)
   const [isAgreeToTerms, setIsAgreeToTerms] = useState(false);
 
-  const {
-    isJoined,
-    joinChannel,
-    leaveTest,
-    error,
-  } = useContext(USER_CONTEXT.VoiceContext.AgoraContext);
   const socket = USER_CONTEXT.SocketContext.useSocket();
 
   const [isLoadingExamScript, setIsLoadingExamScript] = useState(false);
@@ -218,7 +212,9 @@ const ExamPage = () => {
   const [processor, setProcessor] = useState(null);
   const [audioContext, setAudioContext] = useState(null);
   const [audioInput, setAudioInput] = useState(null);
-  const [isJoiningChannel, setIsJoiningChannel] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
+  const [isStartingTest, setIsStartingTest] = useState(false);
+  const [micPermissionError, setMicPermissionError] = useState(null);
 
   useEffect(() => {
     if (!currentUser) {
@@ -253,6 +249,7 @@ const ExamPage = () => {
       processor?.disconnect();
       audioContext.close();
     }
+    setIsRecording(false);
   }
 
   useEffect(() => {
@@ -303,25 +300,70 @@ const ExamPage = () => {
         examScript: examScript,
         ...examMeta,
       });
+      setIsRecording(true);
     } catch (error) {
       console.error('Error accessing microphone:', error);
+    }
+  };
+
+  const checkMicrophonePermission = async () => {
+    try {
+      const result = await navigator.permissions.query({ name: 'microphone' });
+      if (result.state === 'denied') {
+        setMicPermissionError(translations.FREE_EXAM.MICROPHONE_PERMISSION_ERROR);
+        return false;
+      }
+
+      // Even if permission state is prompt or granted, try accessing the mic
+      await navigator.mediaDevices.getUserMedia({ audio: true });
+      setMicPermissionError(null);
+      return true;
+    } catch (error) {
+      setMicPermissionError(translations.FREE_EXAM.MICROPHONE_PERMISSION_ERROR);
+      return false;
     }
   };
 
   const HandleLeaveTest = async ({ calculatingScore = true }) => {
     setIsCalculatingScore(calculatingScore);
     stopTranscribing();
-    await leaveTest();
     socket.emit(SOCKET_EVENTS.EXAM_TRANSCRIPTION.LEAVE, currentUser?._id);
   }
 
-  const HandleStartTest = () => {
-    setIsJoiningChannel(true);
-    joinChannel().then(() => {
-      startRecording();
-    }).finally(() => {
-      setIsJoiningChannel(false);
-    });
+  const HandleStartTest = async () => {
+    setIsStartingTest(true);
+    const hasMicPermission = await checkMicrophonePermission();
+
+    if (!hasMicPermission) {
+      setIsStartingTest(false);
+      return;
+    }
+
+    try {
+      await startRecording();
+    } finally {
+      setIsStartingTest(false);
+    }
+  }
+
+  if (micPermissionError) {
+    return (
+      <WrapperContainer>
+        <ResultMainContainer>
+          <p className='text-danger' style={{ fontSize: '1.25rem', margin: 0 }}>
+            {micPermissionError}
+          </p>
+
+          <USER_COMPONENTS.Button
+            text={translations.FREE_EXAM.TRY_AGAIN}
+            onClick={() => {
+              setMicPermissionError(null);
+              checkMicrophonePermission();
+            }}
+          />
+        </ResultMainContainer>
+      </WrapperContainer>
+    )
   }
 
   if (isLoadingExamScript) {
@@ -330,25 +372,6 @@ const ExamPage = () => {
 
   if (isCalculatingScore) {
     return <COMMON_COMPONENTS.LoaderFullScreen message={translations.FREE_EXAM.CALCULATING_SCORE} />
-  }
-
-  if (error) {
-    return (
-      <WrapperContainer>
-        <ResultMainContainer>
-          <p className='text-danger' style={{ fontSize: '1.25rem', margin: 0 }}>
-            {translations.FREE_EXAM.MICROPHONE_PERMISSION_ERROR}
-          </p>
-
-          <USER_COMPONENTS.Button
-            text={translations.FREE_EXAM.TRY_AGAIN}
-            onClick={() => {
-              window.location.reload();
-            }}
-          />
-        </ResultMainContainer>
-      </WrapperContainer>
-    )
   }
 
   if (examResult) {
@@ -428,7 +451,7 @@ const ExamPage = () => {
             <ContentTextContainer>
               {
                 examScript &&
-                <ContentText style={{ filter: !isJoined ? 'blur(4px)' : 'none' }}>
+                <ContentText style={{ filter: !isRecording ? 'blur(4px)' : 'none' }}>
                   {examScript}
                 </ContentText>
               }
@@ -445,24 +468,19 @@ const ExamPage = () => {
         </ContentContainer>
 
         <FooterContainer>
-          {error && <p className="text-danger">Error: {error?.message}</p>}
-          {!error && (
-            <>
-              {mediaRecorder ? <USER_COMPONENTS.AudioVisualizer.Bar audioData={audioData} /> : <span></span>}
-              <USER_COMPONENTS.Button
-                disabled={!examScript}
-                style={{ paddingLeft: '2rem', paddingRight: '2rem' }}
-                onClick={isJoined ? HandleLeaveTest : HandleStartTest}>
-                {
-                  isJoiningChannel
-                    ? <COMMON_COMPONENTS.Loader color='white' />
-                    : isJoined
-                      ? translations.FREE_EXAM.END_READING
-                      : translations.FREE_EXAM.START_READING
-                }
-              </USER_COMPONENTS.Button>
-            </>
-          )}
+          {mediaRecorder ? <USER_COMPONENTS.AudioVisualizer.Bar audioData={audioData} /> : <span></span>}
+          <USER_COMPONENTS.Button
+            disabled={!examScript}
+            style={{ paddingLeft: '2rem', paddingRight: '2rem' }}
+            onClick={isRecording ? HandleLeaveTest : HandleStartTest}>
+            {
+              isStartingTest
+                ? <COMMON_COMPONENTS.Loader color='white' />
+                : isRecording
+                  ? translations.FREE_EXAM.END_READING
+                  : translations.FREE_EXAM.START_READING
+            }
+          </USER_COMPONENTS.Button>
         </FooterContainer>
       </MainContainer>
     </WrapperContainer>
