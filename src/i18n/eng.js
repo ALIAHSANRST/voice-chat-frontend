@@ -516,6 +516,9 @@ const ENG = {
     TODAY: 'Today',
     TOMMOROW: 'Tomorrow',
     YESTERDAY: 'Yesterday',
+    WARNING: 'Warning',
+    LEAVE: 'Leave',
+    YES: 'Yes',
   },
   STUDENTS: {
     TITLE: 'Students',
@@ -555,6 +558,17 @@ const ENG = {
     SESSION_SCHEDULED: 'Scheduled',
     SESSION_COMPLETED: 'Completed',
     SESSION_EXPIRED: 'Expired',
+  },
+  MEETING_SESSION: {
+    TITLE: 'Meeting Session',
+    MIC: 'Mic',
+    SPEAKERS: 'Speakers',
+    SHARE_SCREEN: 'Share Screen',
+    JOINING_SESSION: 'Joining Session...',
+    CONNECTING: 'Connecting...',
+    SOMETHING_WENT_WRONG: 'Something Went Wrong!',
+    LEFT: 'Meeting Session Left!',
+    LEAVE_CONFIRMATION: 'Are you sure you want to leave the meeting session? You will not be able to rejoin.',
   }
 };
 

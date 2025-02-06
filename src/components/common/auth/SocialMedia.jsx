@@ -39,7 +39,6 @@ const SocialMediaContainer = styled.div`
 `
 
 const SocialMedia = ({ userMode }) => {
-  console.log(userMode);
   return (
     <SocialMediaContainer>
       {

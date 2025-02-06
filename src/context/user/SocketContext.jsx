@@ -30,7 +30,7 @@ export const SocketProvider = ({ children }) => {
         });
         setSocket(initSocket);
       } catch (error) {
-        console.log('Error connecting socket', error);
+        console.error('Error connecting socket', error);
       }
     };
 

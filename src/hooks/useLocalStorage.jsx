@@ -41,7 +41,7 @@ import { useState, useEffect } from 'react';
  * const [user, setUser, clearUser, hasUser, utils] = useLocalStorage('user', null, {
  *   ttl: 24 * 60 * 60 * 1000, // 24 hours
  *   transform: value => ({ ...value, lastModified: Date.now() }),
- *   onError: error => console.log('Storage error:', error)
+ *   onError: error => console.error('Storage error:', error)
  * });
  * 
  * // to set value with custom TTL
@@ -49,7 +49,7 @@ import { useState, useEffect } from 'react';
  * 
  * // to subscribe to changes
  * const unsubscribe = utils.subscribe(newValue => {
- *   console.log('Value changed:', newValue);
+ *   console.error('Value changed:', newValue);
  * });
  * ```
  */

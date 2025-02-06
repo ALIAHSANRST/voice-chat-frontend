@@ -516,6 +516,9 @@ const JPY = {
     TODAY: '今日',
     TOMORROW: '明日',
     YESTERDAY: '昨日',
+    WARNING: '警告',
+    LEAVE: '終了',
+    YES: 'はい',
   },
   STUDENTS: {
     TITLE: '生徒',
@@ -555,6 +558,18 @@ const JPY = {
     SESSION_SCHEDULED: '予定',
     SESSION_COMPLETED: '完了',
     SESSION_EXPIRED: '期限切れ',
+  },
+  MEETING_SESSION: {
+    TITLE: 'セッション',
+    MIC: 'マイク',
+    SPEAKERS: 'スピーカー',
+    SHARE_SCREEN: '画面共有',
+    JOINING_SESSION: 'セッションに参加中...',
+    CONNECTING: '接続中...',
+    SOMETHING_WENT_WRONG: 'エラーが発生しました！',
+    LEFT: 'セッションが終了しました！',
+    LEAVE_CONFIRMATION: 'セッションを終了してもよろしいですか？ セッションに再参加することはできません。',
+    LEAVE: '終了',
   }
 };
 

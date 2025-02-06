@@ -89,7 +89,7 @@ export const AuthenticationProvider = ({ children }) => {
       Logout();
       COMMON_COMPONENTS.Toast.showSuccessToast('Account Deleted Successfully!');
     } catch (error) {
-      console.log(`Error in DeleteAccount: ${error}`);
+      console.error(`Error in DeleteAccount: ${error}`);
       COMMON_COMPONENTS.Toast.showErrorToast('Failed to Delete Account. Please Try Again Later!');
     }
   }
@@ -105,7 +105,7 @@ export const AuthenticationProvider = ({ children }) => {
       COMMON_COMPONENTS.Toast.showSuccessToast('Successfully Signed Up! Please Verify Your Email!');
       callback(response.data.user)
     } catch (error) {
-      console.log(`Error in SignUpLocal: ${error}`)
+      console.error(`Error in SignUpLocal: ${error}`)
       COMMON_COMPONENTS.Toast.showErrorToast(
         error?.response?.data?.errors?.[0]?.message ||
         error?.response?.data?.message ||
@@ -135,7 +135,7 @@ export const AuthenticationProvider = ({ children }) => {
       COMMON_COMPONENTS.Toast.showSuccessToast('Successfully Signed In!');
       callback(response.data.user)
     } catch (error) {
-      console.log(`Error in SignInLocal: ${error}`)
+      console.error(`Error in SignInLocal: ${error}`)
       COMMON_COMPONENTS.Toast.showErrorToast(
         error?.response?.data?.errors?.[0]?.message ||
         error?.response?.data?.message ||

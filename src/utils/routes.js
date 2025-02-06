@@ -35,7 +35,7 @@ const ROUTES = {
   // USER ROUTES
   USER_HOME: { path: '/user', isProtected: true, name: 'User' },
   USER_MESSAGES: { path: '/user/messages', isProtected: true, name: 'Messages' },
-  USER_MY_LESSON: { path: '/user/my-lesson', isProtected: true, name: 'My Lesson' },
+  USER_CALENDAR: { path: '/user/calendar', isProtected: true, name: 'Calendar' },
   USER_EXAM_HISTORY: { path: '/user/exam-history', isProtected: true, name: 'Exam History' },
   USER_PROFILE: { path: '/user/profile', isProtected: true, name: 'Profile' },
   USER_FREE_EXAM: { path: '/user/free-exam', isProtected: false, name: 'Free Exam' },

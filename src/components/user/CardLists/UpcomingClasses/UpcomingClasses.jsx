@@ -204,7 +204,8 @@ const UpcomingClasses = ({ showViewAll = true, limit = 10, pastMode = false }) =
         page: 1,
         query: null,
         setIsLoading: setIsLoading,
-        setData: setData
+        setData: setData,
+        pastMode: pastMode
       });
     }
 

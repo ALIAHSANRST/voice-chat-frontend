@@ -35,6 +35,7 @@ export const COMMON_COMPONENTS = {
   AlertDialogue: require('./common/AlertDialogue').default,
   LanguageSelect: require('./common/LanguageSelect').default,
   ImageLoader: require('./common/ImageLoader').default,
+  FileLoader: require('./common/ImageLoader').FileLoader,
 };
 
 export const USER_COMPONENTS = {
@@ -80,4 +81,5 @@ export const USER_COMPONENTS = {
     Main: require('./user/UpcomingClasses/UpcomingClasses').default,
     ViewDetails: require('./user/UpcomingClasses/ViewDetails/ViewDetails').default,
   },
+  MeetingSession: require('./user/MeetingSession/MeetingSession').default,
 };

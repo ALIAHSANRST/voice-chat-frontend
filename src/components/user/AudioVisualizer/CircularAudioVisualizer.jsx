@@ -16,8 +16,8 @@ const rippleEffect = keyframes`
 
 const CircleContainer = styled.div`
   position: relative;
-  width: 200px;
-  height: 200px;
+  width: ${props => props.size}px;
+  height: ${props => props.size}px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -25,8 +25,8 @@ const CircleContainer = styled.div`
 
 const RippleCircle = styled.div`
   position: absolute;
-  width: ${props => 100 + props.intensity * 100}px;
-  height: ${props => 100 + props.intensity * 100}px;
+  width: ${props => (props.size / 2) + props.intensity * (props.size / 2)}px;
+  height: ${props => (props.size / 2) + props.intensity * (props.size / 2)}px;
   border-radius: 50%;
   background-color: ${props => HexToRGBA(USER_COLORS.FreeExam.AudioVisualizer.RippleColor, true, 0.5 - props.intensity * 0.2)};
   animation: ${rippleEffect} 2s ease-out infinite;
@@ -38,16 +38,18 @@ const CircularAudioVisualizer = ({
   audioData = [0, 0, 0, 0, 0],
   delay = 0.4,
   isReceivingAudio = false,
+  size = 200,
   ...props
 }) => {
   return (
-    <CircleContainer {...props}>
+    <CircleContainer size={size} {...props}>
       {
         isReceivingAudio && audioData.map((intensity, i) => (
           <RippleCircle
             key={i}
             delay={i * delay}
             intensity={intensity * 0.75}
+            size={size}
           />
         ))
       }

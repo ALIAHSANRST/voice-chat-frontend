@@ -2,7 +2,7 @@
 
 import { ICON_ASSETS } from "@/src/utils/assets";
 
-const FileLoader = (link) => {
+export const FileLoader = (link) => {
   try {
     if (!link) return ICON_ASSETS.PROFILE_IMAGE_PLACEHOLDER_ICON;
     if (link?.toLocaleLowerCase().startsWith("http")) return link;
@@ -13,7 +13,7 @@ const FileLoader = (link) => {
 
     return `${process.env.NEXT_PUBLIC_BASE_API_URL}/file/${filename}?token=${token}`;
   } catch (error) {
-    console.log(`Error in FileLoader: ${error}`);
+    console.error(`Error in FileLoader: ${error}`);
     return ICON_ASSETS.PROFILE_IMAGE_PLACEHOLDER_ICON;
   }
 }

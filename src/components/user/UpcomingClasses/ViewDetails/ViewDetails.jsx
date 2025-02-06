@@ -395,9 +395,9 @@ const ViewDetails = ({ id }) => {
                   }
                   onClick={() => {
                     if (currentUser.account_type === ROLES.STUDENT)
-                      router.push(`${ROUTES.USER_CLASS_SESSION.path}?id=${id}`)
+                      router.push(`${ROUTES.USER_MEETING_SESSION.path}?id=${id}`)
                     else if (currentUser.account_type === ROLES.TEACHER)
-                      router.push(`${ROUTES.TEACHER_CLASS_SESSION.path}?id=${id}`)
+                      router.push(`${ROUTES.TEACHER_MEETING_SESSION.path}?id=${id}`)
                   }}
                 />
               }
