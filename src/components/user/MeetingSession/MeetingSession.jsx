@@ -24,8 +24,9 @@ import { useBreakpoints, usePageTitle } from "@/src/hooks";
 import { COMMON_CONTEXT } from '@/src/context';
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/src/utils/routes";
-import { CLASS_STATUSES, ROLES } from "@/src/utils/constants";
+import { CLASS_STATUSES, ROLES, SLOT_DURATION_IN_MINUTES } from "@/src/utils/constants";
 import { EndClass, GetSessionInfo, GetStreamChatToken } from "./axios";
+import moment from 'moment';
 
 const MainContainer = styled.div`
   width: 100%;
@@ -127,6 +128,7 @@ const MeetingSession = ({ id }) => {
 
   const [callingState, setCallingState] = useState();
   const [showLeaveMeetingDialogue, setShowLeaveMeetingDialogue] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState(null);
 
   const { isMobile } = useBreakpoints();
 
@@ -191,7 +193,7 @@ const MeetingSession = ({ id }) => {
             members: [
               { user_id: data?.teacher?._id, role: 'host' },
               { user_id: data?.student?._id, role: 'user' },
-            ]
+            ],
           },
         });
       } catch (error) {
@@ -231,6 +233,35 @@ const MeetingSession = ({ id }) => {
       CallWrapperContainerRef.current.style.height = `calc(100vh - ${headerNavBarHeight}px)`;
     }
   }, [HeaderNavBarRef, CallWrapperContainerRef, call, callingState])
+
+  useEffect(() => {
+    if (!data?.scheduledFor?.date || !data?.scheduledFor?.time) return;
+
+    const parsedDate = moment(data?.scheduledFor?.date).format('YYYY-MM-DD')
+    const startTime = moment(`${parsedDate} ${data.scheduledFor.time}`, 'YYYY-MM-DD HH:mm');
+    const endTime = moment(startTime).add(SLOT_DURATION_IN_MINUTES, 'minutes');
+
+    const timer = setInterval(() => {
+      const now = moment();
+      const remaining = moment.duration(endTime.diff(now));
+
+      if (remaining.asMilliseconds() <= 0) {
+        clearInterval(timer);
+        setTimeRemaining(null);
+
+        if (currentUser?.account_type === ROLES.TEACHER && data?.status !== CLASS_STATUSES.COMPLETED) {
+          EndClass({ id });
+          if (call && callingState !== CallingState.LEFT) {
+            call.endCall();
+          }
+        }
+      } else {
+        setTimeRemaining(Math.floor(remaining.asSeconds()));
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [data, call, callingState]);
 
   return (
     <MainContainer>
@@ -297,7 +328,22 @@ const MeetingSession = ({ id }) => {
                     display: 'flex',
                     flexDirection: 'column',
                     height: '100%',
+                    position: 'relative',
                   }}>
+                    {timeRemaining !== null && (
+                      <div style={{
+                        position: 'absolute',
+                        top: '2rem',
+                        right: '2rem',
+                        backgroundColor: 'rgba(0, 0, 0, 0.675)',
+                        padding: '0.25rem 0.5rem',
+                        borderRadius: '0.325rem',
+                        fontSize: '0.875rem',
+                        zIndex: 1000,
+                      }}>
+                        {translations.MEETING_SESSION.TIME_LEFT}: {moment.utc(timeRemaining * 1000).format('mm:ss')}
+                      </div>
+                    )}
                     <SpeakerLayout participantsBarPosition={isMobile ? "bottom" : "left"} />
                     <CallActionsBar>
                       <div className="str-video__call-controls">

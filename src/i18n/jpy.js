@@ -569,7 +569,7 @@ const JPY = {
     SOMETHING_WENT_WRONG: 'エラーが発生しました！',
     LEFT: 'セッションが終了しました！',
     LEAVE_CONFIRMATION: 'セッションを終了してもよろしいですか？ セッションに再参加することはできません。',
-    LEAVE: '終了',
+    TIME_LEFT: '残り時間',
   }
 };
 
