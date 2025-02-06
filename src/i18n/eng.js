@@ -569,6 +569,7 @@ const ENG = {
     SOMETHING_WENT_WRONG: 'Something Went Wrong!',
     LEFT: 'Meeting Session Left!',
     LEAVE_CONFIRMATION: 'Are you sure you want to leave the meeting session? You will not be able to rejoin.',
+    TIME_LEFT: 'Time Left',
   }
 };
 
